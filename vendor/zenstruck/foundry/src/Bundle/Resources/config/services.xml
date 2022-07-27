@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="zenstruck_foundry.default_instantiator" class="Zenstruck\Foundry\Instantiator" />
+        <service id="zenstruck_foundry.faker" class="Faker\Generator">
+            <factory class="Faker\Factory" method="create" />
+        </service>
+
+        <service id="Zenstruck\Foundry\Configuration" public="true">
+            <call method="setManagerRegistry">
+                <argument type="service" id="Zenstruck\Foundry\ChainManagerRegistry" />
+            </call>
+            <call method="setStoryManager">
+                <argument type="service" id="Zenstruck\Foundry\StoryManager" />
+            </call>
+            <call method="setModelFactoryManager">
+                <argument type="service" id="Zenstruck\Foundry\ModelFactoryManager" />
+            </call>
+            <call method="setInstantiator">
+                <argument type="service" id="zenstruck_foundry.default_instantiator" />
+            </call>
+            <call method="setFaker">
+                <argument type="service" id="zenstruck_foundry.faker" />
+            </call>
+        </service>
+
+        <service id="Zenstruck\Foundry\StoryManager">
+            <argument type="tagged_iterator" tag="foundry.story" />
+        </service>
+
+        <service id="Zenstruck\Foundry\ModelFactoryManager">
+            <argument type="tagged_iterator" tag="foundry.factory" />
+        </service>
+
+        <service id="Zenstruck\Foundry\Bundle\Maker\MakeFactory">
+            <argument type="service" id="Zenstruck\Foundry\ChainManagerRegistry" />
+            <argument type="tagged_iterator" tag="foundry.factory" />
+            <tag name="maker.command" />
+        </service>
+
+        <service id="Zenstruck\Foundry\Bundle\Maker\MakeStory">
+            <tag name="maker.command" />
+        </service>
+
+        <service id="Zenstruck\Foundry\ChainManagerRegistry">
+            <argument/> <!-- list<ManagerRegistry> set by compiler pass -->
+        </service>
+    </services>
+</container>
