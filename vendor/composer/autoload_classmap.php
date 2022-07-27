@@ -6,13 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controller\\CartController' => $baseDir . '/src/Controller/CartController.php',
     'App\\Controller\\HomepageController' => $baseDir . '/src/Controller/HomepageController.php',
     'App\\Controller\\SecurityController' => $baseDir . '/src/Controller/SecurityController.php',
     'App\\DataFixtures\\AppFixtures' => $baseDir . '/src/DataFixtures/AppFixtures.php',
-    'App\\Entity\\User' => $baseDir . '/src/Entity/User.php',
     'App\\Factory\\UserFactory' => $baseDir . '/src/Factory/UserFactory.php',
     'App\\Kernel' => $baseDir . '/src/Kernel.php',
-    'App\\Repository\\UserRepository' => $baseDir . '/src/Repository/UserRepository.php',
     'Collator' => $vendorDir . '/symfony/polyfill-intl-icu/Resources/stubs/Collator.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'DeepCopy\\DeepCopy' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',

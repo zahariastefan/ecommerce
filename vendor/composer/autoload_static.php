@@ -615,13 +615,12 @@ class ComposerStaticInit802511350a5db38bbbde32b7aa950903
     );
 
     public static $classMap = array (
+        'App\\Controller\\CartController' => __DIR__ . '/../..' . '/src/Controller/CartController.php',
         'App\\Controller\\HomepageController' => __DIR__ . '/../..' . '/src/Controller/HomepageController.php',
         'App\\Controller\\SecurityController' => __DIR__ . '/../..' . '/src/Controller/SecurityController.php',
         'App\\DataFixtures\\AppFixtures' => __DIR__ . '/../..' . '/src/DataFixtures/AppFixtures.php',
-        'App\\Entity\\User' => __DIR__ . '/../..' . '/src/Entity/User.php',
         'App\\Factory\\UserFactory' => __DIR__ . '/../..' . '/src/Factory/UserFactory.php',
         'App\\Kernel' => __DIR__ . '/../..' . '/src/Kernel.php',
-        'App\\Repository\\UserRepository' => __DIR__ . '/../..' . '/src/Repository/UserRepository.php',
         'Collator' => __DIR__ . '/..' . '/symfony/polyfill-intl-icu/Resources/stubs/Collator.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DeepCopy\\DeepCopy' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',

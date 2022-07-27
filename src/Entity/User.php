@@ -3,14 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,23 +20,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    private ?string $password = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $lastName = null;
+    private ?string $password = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $birthDate = null;
-
-    #[ORM\Column(length: 10, nullable: true)]
-    private ?string $gender = null;
+    private $plainPassword;
 
     public function getId(): ?int
     {
@@ -88,9 +75,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see PasswordAuthenticatedUserInterface
+     * @see UserInterface
      */
-    public function getPassword(): string
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+         $this->plainPassword = null;
+    }
+
+    public function getAvatarUri(int $size = 32): string
+    {
+        //https://ui-avatars.com/api/?name={{ app.user.firstName|url_encode }}&size=32&background=random FROM base.html.twig
+        $url = 'https://ui-avatars.com/api/?' . http_build_query([
+                'name' => $this->getDisplayName(),
+                'size' => $size,
+                'background' => 'random',
+            ]);
+        return $url;
+    }
+
+    public function getDisplayName(): string
+    {
+        return $this->getFirstName() ?: $this->getEmail();
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -103,59 +124,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
+     * @return mixed
      */
-    public function eraseCredentials()
+    public function getPlainPassword()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        return $this->plainPassword;
     }
 
-    public function getFirstName(): ?string
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword): void
     {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getBirthDate(): ?\DateTimeInterface
-    {
-        return $this->birthDate;
-    }
-
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
-    {
-        $this->birthDate = $birthDate;
-
-        return $this;
-    }
-
-    public function getGender(): ?string
-    {
-        return $this->gender;
-    }
-
-    public function setGender(?string $gender): self
-    {
-        $this->gender = $gender;
-
-        return $this;
+        $this->plainPassword = $plainPassword;
     }
 }

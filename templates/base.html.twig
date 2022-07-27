@@ -5,8 +5,7 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spartan&display=swap">
-{#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />#}
-        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />        {{ encore_entry_link_tags('app') }}
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
@@ -30,17 +29,50 @@
 {#                    <a class="nav-link" href="{{ path('app_popular_answers') }}">Answers</a>#}
 {#                </li>#}
             </ul>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <div class="dropdown">
+                <button
+                        class="dropdown-toggle btn"
+                        type="button"
+                        id="user-dropdown"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                >
+                    <img
+                            src="{{ app.user.avatarUri }}"
+                            alt="{{ app.user.displayName }} Avatar">
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
 
-            <a class="nav-link text-black-50" href="{{ path('app_login') }}">Log In </a>
-            <a href="#" class="btn btn-dark">Sign up</a>
+                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_homepage' , {
+                                '_switch_user':'_exit'
+                            }) }}">Exit Impersonation</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-black-50 m-2" href="{{ path('app_cart') }}">Cart </a>
+                        </li>
+                    {% endif %}
 
+                </ul>
+            </div>
+            {% else %}
+            <a class="nav-link text-black-50 m-2" href="{{ path('app_login') }}">Log In </a>
+            <a href="#" class="btn btn-dark m-2">Sign up</a>
+            {% endif %}
         </div>
     </div>
 </nav>
 
 {% block body %}{% endblock %}
 <footer class="mt-5 p-3 text-center">
-    Made with <i style="color: red;" class="fa fa-heart"></i> by the guys and gals at <a style="color: #444; text-decoration: underline;" href="https://symfonycasts.com">SymfonyCasts</a>
+    <i class="fa-solid fa-bridge-suspension"></i>
+    Made by <i style="color: red;" class="far fa-heart"></i> <i class="fa-solid fa-heart"></i>Steve Developer
 </footer>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php return array (
   0 => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController',
-  1 => 'App\\Controller\\HomepageController',
-  2 => 'App\\Controller\\SecurityController',
-  3 => 'App\\Entity\\User',
+  1 => 'App\\Controller\\CartController',
+  2 => 'App\\Controller\\HomepageController',
+  3 => 'App\\Controller\\SecurityController',
   4 => 'Doctrine\\Bundle\\DoctrineBundle\\Controller\\ProfilerController',
   5 => 'Doctrine\\ORM\\Cache\\Persister\\Entity\\AbstractEntityPersister',
   6 => 'Doctrine\\ORM\\Cache\\Persister\\Entity\\CachedEntityPersister',

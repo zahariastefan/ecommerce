@@ -25,4 +25,10 @@ class SecurityController extends AbstractController
             'last_username' => $authenticationUtils->getLastUsername()
         ]);
     }
+
+    #[Route('/logout', name: 'app_logout')]
+    public function logout(AuthenticationUtils $authenticationUtils): Response
+    {
+        throw new \Exception('logout() should never be reached');
+    }
 }
