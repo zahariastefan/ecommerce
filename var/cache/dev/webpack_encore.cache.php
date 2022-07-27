@@ -13,11 +13,11 @@ return [[
         'app' => [
             'js' => [
                 '/build/runtime.js',
-                '/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_fontsource_roboto-conden-ec95e7.js',
+                '/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-c17a64.js',
                 '/build/app.js',
             ],
             'css' => [
-                '/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_fontsource_roboto-conden-ec95e7.css',
+                '/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-c17a64.css',
                 '/build/app.css',
             ],
         ],

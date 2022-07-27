@@ -63,36 +63,38 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 <body>
 <nav class=\"navbar navbar-expand-lg navbar-light bg-light px-1\">
     <div class=\"container-fluid\">
-";
-        // line 19
-        echo "            <p class=\"pl-2 d-inline font-weight-bold\" style=\"color: #444;\">
+        <a class=\"navbar-brand\" href=\"";
+        // line 18
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_homepage");
+        echo "\">
+            <p class=\"pl-2 d-inline font-weight-bold\" style=\"color: #444;\">
                 Cauldron Overflow</p>
-";
-        // line 22
-        echo "
+        </a>
+
         <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbar-collapsable\" aria-controls=\"navbarTogglerDemo01\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
             <span class=\"navbar-toggler-icon\"></span>
         </button>
 
         <div class=\"collapse navbar-collapse\" id=\"navbar-collapsable\">
             <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">
-                <li class=\"nav-item\">
 ";
-        // line 31
-        echo "                </li>
-            </ul>
+        // line 32
+        echo "            </ul>
 
-";
-        // line 35
-        echo "            <a href=\"#\" class=\"btn btn-dark\">Sign up</a>
+            <a class=\"nav-link text-black-50\" href=\"";
+        // line 34
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
+        echo "\">Log In </a>
+            <a href=\"#\" class=\"btn btn-dark\">Sign up</a>
+
         </div>
     </div>
 </nav>
 
 ";
-        // line 40
-        $this->displayBlock('body', $context, $blocks);
         // line 41
+        $this->displayBlock('body', $context, $blocks);
+        // line 42
         echo "<footer class=\"mt-5 p-3 text-center\">
     Made with <i style=\"color: red;\" class=\"fa fa-heart\"></i> by the guys and gals at <a style=\"color: #444; text-decoration: underline;\" href=\"https://symfonycasts.com\">SymfonyCasts</a>
 </footer>
@@ -138,9 +140,9 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
         // line 7
         echo "        <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Spartan&display=swap\">
-        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css\" integrity=\"sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=\" crossorigin=\"anonymous\" />
-        ";
+";
         // line 9
+        echo "        ";
         echo $this->extensions['Symfony\WebpackEncoreBundle\Twig\EntryFilesTwigExtension']->renderWebpackLinkTags("app");
         echo "
     ";
@@ -175,7 +177,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     }
 
-    // line 40
+    // line 41
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -198,9 +200,14 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         return "base.html.twig";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  179 => 40,  166 => 12,  156 => 11,  144 => 9,  140 => 7,  130 => 6,  111 => 5,  96 => 41,  94 => 40,  87 => 35,  82 => 31,  72 => 22,  68 => 19,  62 => 14,  59 => 11,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  181 => 41,  168 => 12,  158 => 11,  145 => 9,  142 => 7,  132 => 6,  113 => 5,  98 => 42,  96 => 41,  86 => 34,  82 => 32,  68 => 18,  62 => 14,  59 => 11,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -212,7 +219,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Spartan&display=swap\">
-        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css\" integrity=\"sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=\" crossorigin=\"anonymous\" />
+{#        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css\" integrity=\"sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=\" crossorigin=\"anonymous\" />#}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
     {% block javascripts %}
@@ -222,10 +229,10 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 <body>
 <nav class=\"navbar navbar-expand-lg navbar-light bg-light px-1\">
     <div class=\"container-fluid\">
-{#        <a class=\"navbar-brand\" href=\"{{ path('app_homepage') }}\">#}
+        <a class=\"navbar-brand\" href=\"{{ path('app_homepage') }}\">
             <p class=\"pl-2 d-inline font-weight-bold\" style=\"color: #444;\">
                 Cauldron Overflow</p>
-{#        </a>#}
+        </a>
 
         <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbar-collapsable\" aria-controls=\"navbarTogglerDemo01\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
             <span class=\"navbar-toggler-icon\"></span>
@@ -233,13 +240,14 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
         <div class=\"collapse navbar-collapse\" id=\"navbar-collapsable\">
             <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">
-                <li class=\"nav-item\">
+{#                <li class=\"nav-item\">#}
 {#                    <a class=\"nav-link\" href=\"{{ path('app_popular_answers') }}\">Answers</a>#}
-                </li>
+{#                </li>#}
             </ul>
 
-{#            <a class=\"nav-link text-black-50\" href=\"{{ path('app_login') }}\">Log In</a>#}
+            <a class=\"nav-link text-black-50\" href=\"{{ path('app_login') }}\">Log In </a>
             <a href=\"#\" class=\"btn btn-dark\">Sign up</a>
+
         </div>
     </div>
 </nav>

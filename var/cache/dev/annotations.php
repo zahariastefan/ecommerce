@@ -62,6 +62,8 @@ return [[
 '[C]App%5CController%5CSecurityController' => 1,
 'App%5CController%5CSecurityController%23index' => 0,
 '[C]App%5CController%5CSecurityController%23index' => 1,
+'App%5CController%5CSecurityController%23login' => 0,
+'[C]App%5CController%5CSecurityController%23login' => 1,
 'App%5CEntity%5CUser' => 0,
 '[C]App%5CEntity%5CUser' => 1,
 'App%5CEntity%5CUser%23getId' => 0,
@@ -664,6 +666,6 @@ return [[
 ], [
 
 0 => [],
-1 => 1658939355,
+1 => 1658942260,
 
 ]];
