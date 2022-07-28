@@ -9,6 +9,7 @@
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     {% endblock %}
 </head>
 <body>
@@ -30,6 +31,15 @@
 {#                </li>#}
             </ul>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div class="d-inline-flex ">
+                    <a href="{{ path('app_cart') }}" class="m-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                    <p class="items_number m-2">1230</p>
+                </div>
+
+
+
             <div class="dropdown">
                 <button
                         class="dropdown-toggle btn"

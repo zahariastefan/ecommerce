@@ -16,6 +16,8 @@ return [
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
         '/cart' => [[['_route' => 'app_cart', '_controller' => 'App\\Controller\\CartController::cart'], null, null, null, false, false, null]],
         '/' => [[['_route' => 'app_homepage', '_controller' => 'App\\Controller\\HomepageController::homepage'], null, null, null, false, false, null]],
+        '/comment' => [[['_route' => 'app_comment', '_controller' => 'App\\Controller\\ProductPageController::comment'], null, null, null, false, false, null]],
+        '/add-to-cart' => [[['_route' => 'app_add_cart', '_controller' => 'App\\Controller\\ProductPageController::addToCart'], null, null, null, false, false, null]],
         '/security' => [[['_route' => 'app_security', '_controller' => 'App\\Controller\\SecurityController::index'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
@@ -37,6 +39,7 @@ return [
                         .'|(*:159)'
                     .')'
                 .')'
+                .'|/product\\-page/([^/]++)(*:192)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -46,8 +49,9 @@ return [
         116 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
         136 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         149 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
-        159 => [
-            [['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null],
+        159 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
+        192 => [
+            [['_route' => 'app_product_page', '_controller' => 'App\\Controller\\ProductPageController::productPage'], ['slug'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

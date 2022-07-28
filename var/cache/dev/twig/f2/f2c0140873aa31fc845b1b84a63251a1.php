@@ -58,13 +58,13 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         // line 10
         echo "    ";
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 13
+        // line 14
         echo "</head>
 <body>
 <nav class=\"navbar navbar-expand-lg navbar-light bg-light px-1\">
     <div class=\"container-fluid\">
         <a class=\"navbar-brand\" href=\"";
-        // line 17
+        // line 18
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_homepage");
         echo "\">
             <p class=\"pl-2 d-inline font-weight-bold\" style=\"color: #444;\">
@@ -78,13 +78,25 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         <div class=\"collapse navbar-collapse\" id=\"navbar-collapsable\">
             <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">
 ";
-        // line 31
+        // line 32
         echo "            </ul>
             ";
-        // line 32
+        // line 33
         if ($this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
-            // line 33
-            echo "            <div class=\"dropdown\">
+            // line 34
+            echo "                <div class=\"d-inline-flex \">
+                    <a href=\"";
+            // line 35
+            echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_cart");
+            echo "\" class=\"m-2\">
+                        <i class=\"fa-solid fa-cart-shopping\"></i>
+                    </a>
+                    <p class=\"items_number m-2\">1230</p>
+                </div>
+
+
+
+            <div class=\"dropdown\">
                 <button
                         class=\"dropdown-toggle btn\"
                         type=\"button\"
@@ -94,66 +106,66 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
                 >
                     <img
                             src=\"";
-            // line 42
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 42, $this->source); })()), "user", [], "any", false, false, false, 42), "avatarUri", [], "any", false, false, false, 42), "html", null, true);
+            // line 52
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 52, $this->source); })()), "user", [], "any", false, false, false, 52), "avatarUri", [], "any", false, false, false, 52), "html", null, true);
             echo "\"
                             alt=\"";
-            // line 43
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 43, $this->source); })()), "user", [], "any", false, false, false, 43), "displayName", [], "any", false, false, false, 43), "html", null, true);
+            // line 53
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 53, $this->source); })()), "user", [], "any", false, false, false, 53), "displayName", [], "any", false, false, false, 53), "html", null, true);
             echo " Avatar\">
                 </button>
                 <ul class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"user-dropdown\">
 
                     ";
-            // line 47
+            // line 57
             if ($this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_PREVIOUS_ADMIN")) {
-                // line 48
+                // line 58
                 echo "                        <li>
                             <a class=\"dropdown-item\" href=\"";
-                // line 49
+                // line 59
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_homepage", ["_switch_user" => "_exit"]);
-                // line 51
+                // line 61
                 echo "\">Exit Impersonation</a>
                         </li>
                     ";
             } else {
-                // line 54
+                // line 64
                 echo "                        <li>
                             <a class=\"dropdown-item\" href=\"";
-                // line 55
+                // line 65
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
                 echo "\">Log Out</a>
                         </li>
                         <li>
                             <a class=\"nav-link text-black-50 m-2\" href=\"";
-                // line 58
+                // line 68
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_cart");
                 echo "\">Cart </a>
                         </li>
                     ";
             }
-            // line 61
+            // line 71
             echo "
                 </ul>
             </div>
             ";
         } else {
-            // line 65
+            // line 75
             echo "            <a class=\"nav-link text-black-50 m-2\" href=\"";
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
             echo "\">Log In </a>
             <a href=\"#\" class=\"btn btn-dark m-2\">Sign up</a>
             ";
         }
-        // line 68
+        // line 78
         echo "        </div>
     </div>
 </nav>
 
 ";
-        // line 72
+        // line 82
         $this->displayBlock('body', $context, $blocks);
-        // line 73
+        // line 83
         echo "<footer class=\"mt-5 p-3 text-center\">
     <i class=\"fa-solid fa-bridge-suspension\"></i>
     Made by <i style=\"color: red;\" class=\"far fa-heart\"></i> <i class=\"fa-solid fa-heart\"></i>Steve Developer
@@ -227,6 +239,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         echo "        ";
         echo $this->extensions['Symfony\WebpackEncoreBundle\Twig\EntryFilesTwigExtension']->renderWebpackScriptTags("app");
         echo "
+        <script src=\"https://code.jquery.com/jquery-3.6.0.js\" integrity=\"sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=\" crossorigin=\"anonymous\"></script>
     ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -236,7 +249,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     }
 
-    // line 72
+    // line 82
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -266,7 +279,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     public function getDebugInfo()
     {
-        return array (  240 => 72,  227 => 11,  217 => 10,  205 => 8,  202 => 7,  192 => 6,  173 => 5,  157 => 73,  155 => 72,  149 => 68,  142 => 65,  136 => 61,  130 => 58,  124 => 55,  121 => 54,  116 => 51,  114 => 49,  111 => 48,  109 => 47,  102 => 43,  98 => 42,  87 => 33,  85 => 32,  82 => 31,  68 => 17,  62 => 13,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  253 => 82,  239 => 11,  229 => 10,  217 => 8,  214 => 7,  204 => 6,  185 => 5,  169 => 83,  167 => 82,  161 => 78,  154 => 75,  148 => 71,  142 => 68,  136 => 65,  133 => 64,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -282,6 +295,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script src=\"https://code.jquery.com/jquery-3.6.0.js\" integrity=\"sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=\" crossorigin=\"anonymous\"></script>
     {% endblock %}
 </head>
 <body>
@@ -303,6 +317,15 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 {#                </li>#}
             </ul>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div class=\"d-inline-flex \">
+                    <a href=\"{{ path('app_cart') }}\" class=\"m-2\">
+                        <i class=\"fa-solid fa-cart-shopping\"></i>
+                    </a>
+                    <p class=\"items_number m-2\">1230</p>
+                </div>
+
+
+
             <div class=\"dropdown\">
                 <button
                         class=\"dropdown-toggle btn\"

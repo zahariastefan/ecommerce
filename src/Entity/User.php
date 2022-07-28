@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -27,6 +29,14 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     private ?string $password = null;
 
     private $plainPassword;
+
+    #[ORM\ManyToMany(targetEntity: Comment::class, mappedBy: 'user')]
+    private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,5 +147,32 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     public function setPlainPassword($plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            $comment->removeUser($this);
+        }
+
+        return $this;
     }
 }

@@ -77,19 +77,35 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
                 <button class=\"btn btn-question\">Ask a Question</button>
             </div>
         </div>
-        <div class=\"row\">
-
-
-            here have to be all products!
-
-
+            ";
+        // line 16
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["products"]) || array_key_exists("products", $context) ? $context["products"] : (function () { throw new RuntimeError('Variable "products" does not exist.', 16, $this->source); })()));
+        foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
+            // line 17
+            echo "                <strong>Product Title:</strong> <a href=\"";
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_product_page", ["slug" => twig_get_attribute($this->env, $this->source, $context["product"], "slug", [], "any", false, false, false, 17)]), "html", null, true);
+            echo "\">";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["product"], "title", [], "any", false, false, false, 17), "html", null, true);
+            echo " </a> <br>
+                <strong>Product Description:</strong>  ";
+            // line 18
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["product"], "description", [], "any", false, false, false, 18), "html", null, true);
+            echo " <br>
+                <br><br><br><br>
+            ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 21
+        echo "
 ";
         // line 54
         echo "
 ";
-        // line 56
-        echo "        </div>
-    </div>
+        // line 57
+        echo "    </div>
 ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -111,7 +127,7 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
 
     public function getDebugInfo()
     {
-        return array (  91 => 56,  88 => 54,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  108 => 57,  105 => 54,  102 => 21,  93 => 18,  86 => 17,  82 => 16,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -131,11 +147,11 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
                 <button class=\"btn btn-question\">Ask a Question</button>
             </div>
         </div>
-        <div class=\"row\">
-
-
-            here have to be all products!
-
+            {% for product in products %}
+                <strong>Product Title:</strong> <a href=\"{{ path('app_product_page', { slug: product.slug } ) }}\">{{ product.title }} </a> <br>
+                <strong>Product Description:</strong>  {{ product.description }} <br>
+                <br><br><br><br>
+            {% endfor %}
 
 {#            {% for question in pager %}#}
 {#                <div class=\"col-12 mb-3\">#}
@@ -171,7 +187,7 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
 {#            {% endfor %}#}
 
 {#            {{ pagerfanta(pager) }}#}
-        </div>
+{#        </div>#}
     </div>
 {% endblock %}
 

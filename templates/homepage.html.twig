@@ -13,11 +13,11 @@
                 <button class="btn btn-question">Ask a Question</button>
             </div>
         </div>
-        <div class="row">
-
-
-            here have to be all products!
-
+            {% for product in products %}
+                <strong>Product Title:</strong> <a href="{{ path('app_product_page', { slug: product.slug } ) }}">{{ product.title }} </a> <br>
+                <strong>Product Description:</strong>  {{ product.description }} <br>
+                <br><br><br><br>
+            {% endfor %}
 
 {#            {% for question in pager %}#}
 {#                <div class="col-12 mb-3">#}
@@ -53,7 +53,7 @@
 {#            {% endfor %}#}
 
 {#            {{ pagerfanta(pager) }}#}
-        </div>
+{#        </div>#}
     </div>
 {% endblock %}
 
