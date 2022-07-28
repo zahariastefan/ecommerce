@@ -18,9 +18,13 @@ return [
         '/' => [[['_route' => 'app_homepage', '_controller' => 'App\\Controller\\HomepageController::homepage'], null, null, null, false, false, null]],
         '/comment' => [[['_route' => 'app_comment', '_controller' => 'App\\Controller\\ProductPageController::comment'], null, null, null, false, false, null]],
         '/add-to-cart' => [[['_route' => 'app_add_cart', '_controller' => 'App\\Controller\\ProductPageController::addToCart'], null, null, null, false, false, null]],
+        '/register' => [[['_route' => 'app_register', '_controller' => 'App\\Controller\\RegistrationController::register'], null, null, null, false, false, null]],
+        '/verify/email' => [[['_route' => 'app_verify_email', '_controller' => 'App\\Controller\\RegistrationController::verifyUserEmail'], null, null, null, false, false, null]],
         '/security' => [[['_route' => 'app_security', '_controller' => 'App\\Controller\\SecurityController::index'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
+        '/user' => [[['_route' => 'app_user', '_controller' => 'App\\Controller\\UserController::index'], null, null, null, false, false, null]],
+        '/api/me' => [[['_route' => 'app_user_api_me', '_controller' => 'App\\Controller\\UserController::apiMe'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

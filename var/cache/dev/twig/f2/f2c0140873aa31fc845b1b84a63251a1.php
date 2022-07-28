@@ -154,18 +154,36 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
             echo "            <a class=\"nav-link text-black-50 m-2\" href=\"";
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
             echo "\">Log In </a>
-            <a href=\"#\" class=\"btn btn-dark m-2\">Sign up</a>
+            <a href=\"";
+            // line 76
+            echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_register");
+            echo "\" class=\"btn btn-dark m-2\">Sign up</a>
             ";
         }
         // line 78
         echo "        </div>
     </div>
 </nav>
-
 ";
-        // line 82
+        // line 81
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 81, $this->source); })()), "flashes", [0 => "success"], "method", false, false, false, 81));
+        foreach ($context['_seq'] as $context["_key"] => $context["flash"]) {
+            // line 82
+            echo "    <div class=\"alert alert-success\">
+        ";
+            // line 83
+            echo twig_escape_filter($this->env, $context["flash"], "html", null, true);
+            echo "
+    </div>
+";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['flash'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 86
         $this->displayBlock('body', $context, $blocks);
-        // line 83
+        // line 87
         echo "<footer class=\"mt-5 p-3 text-center\">
     <i class=\"fa-solid fa-bridge-suspension\"></i>
     Made by <i style=\"color: red;\" class=\"far fa-heart\"></i> <i class=\"fa-solid fa-heart\"></i>Steve Developer
@@ -249,7 +267,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     }
 
-    // line 82
+    // line 86
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -279,7 +297,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     public function getDebugInfo()
     {
-        return array (  253 => 82,  239 => 11,  229 => 10,  217 => 8,  214 => 7,  204 => 6,  185 => 5,  169 => 83,  167 => 82,  161 => 78,  154 => 75,  148 => 71,  142 => 68,  136 => 65,  133 => 64,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  271 => 86,  257 => 11,  247 => 10,  235 => 8,  232 => 7,  222 => 6,  203 => 5,  187 => 87,  185 => 86,  176 => 83,  173 => 82,  169 => 81,  164 => 78,  159 => 76,  154 => 75,  148 => 71,  142 => 68,  136 => 65,  133 => 64,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -359,12 +377,16 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
             </div>
             {% else %}
             <a class=\"nav-link text-black-50 m-2\" href=\"{{ path('app_login') }}\">Log In </a>
-            <a href=\"#\" class=\"btn btn-dark m-2\">Sign up</a>
+            <a href=\"{{ path('app_register') }}\" class=\"btn btn-dark m-2\">Sign up</a>
             {% endif %}
         </div>
     </div>
 </nav>
-
+{% for flash in app.flashes('success') %}
+    <div class=\"alert alert-success\">
+        {{ flash }}
+    </div>
+{% endfor %}
 {% block body %}{% endblock %}
 <footer class=\"mt-5 p-3 text-center\">
     <i class=\"fa-solid fa-bridge-suspension\"></i>

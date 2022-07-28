@@ -21,7 +21,11 @@ return [
     'app_product_page' => [['slug'], ['_controller' => 'App\\Controller\\ProductPageController::productPage'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/product-page']], [], [], []],
     'app_comment' => [[], ['_controller' => 'App\\Controller\\ProductPageController::comment'], [], [['text', '/comment']], [], [], []],
     'app_add_cart' => [[], ['_controller' => 'App\\Controller\\ProductPageController::addToCart'], [], [['text', '/add-to-cart']], [], [], []],
+    'app_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
+    'app_verify_email' => [[], ['_controller' => 'App\\Controller\\RegistrationController::verifyUserEmail'], [], [['text', '/verify/email']], [], [], []],
     'app_security' => [[], ['_controller' => 'App\\Controller\\SecurityController::index'], [], [['text', '/security']], [], [], []],
     'app_login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
     'app_logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
+    'app_user' => [[], ['_controller' => 'App\\Controller\\UserController::index'], [], [['text', '/user']], [], [], []],
+    'app_user_api_me' => [[], ['_controller' => 'App\\Controller\\UserController::apiMe'], [], [['text', '/api/me']], [], [], []],
 ];
