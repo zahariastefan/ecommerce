@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd8e8390d6bc9d9b17b97fd4acdedf8562caba567',
+        'reference' => '338c965e5027adc6f582f67b3bc9f91c0c21391b',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd8e8390d6bc9d9b17b97fd4acdedf8562caba567',
+            'reference' => '338c965e5027adc6f582f67b3bc9f91c0c21391b',
             'dev_requirement' => false,
         ),
         'beberlei/assert' => array(
@@ -119,12 +119,12 @@
             'dev_requirement' => false,
         ),
         'doctrine/event-manager' => array(
-            'pretty_version' => '1.1.1',
-            'version' => '1.1.1.0',
+            'pretty_version' => '1.1.2',
+            'version' => '1.1.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../doctrine/event-manager',
             'aliases' => array(),
-            'reference' => '41370af6a30faa9dc0368c4a6814d596e81aba7f',
+            'reference' => 'eb2ecf80e3093e8f3c2769ac838e27d8ede8e683',
             'dev_requirement' => false,
         ),
         'doctrine/inflector' => array(
@@ -218,12 +218,12 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-code' => array(
-            'pretty_version' => '4.5.2',
-            'version' => '4.5.2.0',
+            'pretty_version' => '4.6.0',
+            'version' => '4.6.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-code',
             'aliases' => array(),
-            'reference' => 'da01fb74c08f37e20e7ae49f1e3ee09aa401ebad',
+            'reference' => '16ec7577ff315d53ac2e1b1f03a344d8fe680a6e',
             'dev_requirement' => false,
         ),
         'masterminds/html5' => array(
@@ -484,8 +484,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '3.0.0',
-                1 => '1.0|2.0|3.0',
+                0 => '1.0|2.0|3.0',
+                1 => '3.0.0',
             ),
         ),
         'psr/simple-cache-implementation' => array(
@@ -501,6 +501,15 @@
             'install_path' => __DIR__ . '/../scheb/2fa-bundle',
             'aliases' => array(),
             'reference' => '4487d33db8ee02ab1904fe25edaad1524426712c',
+            'dev_requirement' => false,
+        ),
+        'scheb/2fa-google-authenticator' => array(
+            'pretty_version' => 'v6.1.0',
+            'version' => '6.1.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../scheb/2fa-google-authenticator',
+            'aliases' => array(),
+            'reference' => '91928e31655dea49ed9114ff5c79cec157b72970',
             'dev_requirement' => false,
         ),
         'scheb/2fa-totp' => array(

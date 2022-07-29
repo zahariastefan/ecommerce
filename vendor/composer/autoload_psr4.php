@@ -85,7 +85,7 @@ return array(
     'Symfony\\Bridge\\Doctrine\\' => array($vendorDir . '/symfony/doctrine-bridge'),
     'SymfonyCasts\\Bundle\\VerifyEmail\\' => array($vendorDir . '/symfonycasts/verify-email-bundle/src'),
     'Sensio\\Bundle\\FrameworkExtraBundle\\' => array($vendorDir . '/sensio/framework-extra-bundle/src'),
-    'Scheb\\TwoFactorBundle\\' => array($vendorDir . '/scheb/2fa-bundle', $vendorDir . '/scheb/2fa-totp'),
+    'Scheb\\TwoFactorBundle\\' => array($vendorDir . '/scheb/2fa-bundle', $vendorDir . '/scheb/2fa-google-authenticator', $vendorDir . '/scheb/2fa-totp'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'Psr\\Link\\' => array($vendorDir . '/psr/link/src'),
     'Psr\\EventDispatcher\\' => array($vendorDir . '/psr/event-dispatcher/src'),

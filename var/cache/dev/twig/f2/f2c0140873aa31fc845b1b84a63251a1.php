@@ -129,20 +129,8 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
                         </li>
                     ";
             } else {
-                // line 64
+                // line 70
                 echo "                        <li>
-                            <a class=\"dropdown-item\" href=\"";
-                // line 65
-                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_2fa_enable");
-                echo "\">Enable 2fa</a>
-                        </li>
-                        <li>
-                            <a class=\"dropdown-item\" href=\"";
-                // line 68
-                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_2fa_disable");
-                echo "\">Disable 2fa</a>
-                        </li>
-                        <li>
                             <a class=\"dropdown-item\" href=\"";
                 // line 71
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
@@ -326,7 +314,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     public function getDebugInfo()
     {
-        return array (  300 => 98,  286 => 11,  276 => 10,  264 => 8,  261 => 7,  251 => 6,  232 => 5,  216 => 99,  214 => 98,  205 => 95,  202 => 94,  198 => 93,  189 => 90,  186 => 89,  182 => 88,  176 => 84,  171 => 82,  166 => 81,  160 => 77,  154 => 74,  148 => 71,  142 => 68,  136 => 65,  133 => 64,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  288 => 98,  274 => 11,  264 => 10,  252 => 8,  249 => 7,  239 => 6,  220 => 5,  204 => 99,  202 => 98,  193 => 95,  190 => 94,  186 => 93,  177 => 90,  174 => 89,  170 => 88,  164 => 84,  159 => 82,  154 => 81,  148 => 77,  142 => 74,  136 => 71,  133 => 70,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -394,12 +382,12 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
                             }) }}\">Exit Impersonation</a>
                         </li>
                     {% else %}
-                        <li>
-                            <a class=\"dropdown-item\" href=\"{{ path('app_2fa_enable') }}\">Enable 2fa</a>
-                        </li>
-                        <li>
-                            <a class=\"dropdown-item\" href=\"{{ path('app_2fa_disable') }}\">Disable 2fa</a>
-                        </li>
+{#                        <li>#}
+{#                            <a class=\"dropdown-item\" href=\"{{ path('app_2fa_enable') }}\">Enable 2fa</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a class=\"dropdown-item\" href=\"{{ path('app_2fa_disable') }}\">Disable 2fa</a>#}
+{#                        </li>#}
                         <li>
                             <a class=\"dropdown-item\" href=\"{{ path('app_logout') }}\">Log Out</a>
                         </li>

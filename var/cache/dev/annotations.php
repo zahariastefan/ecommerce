@@ -266,7 +266,7 @@ return [[
 '[C]App%5CEntity%5CUser%24comments' => 1,
 'App%5CEntity%5CUser%24isVerified' => 0,
 '[C]App%5CEntity%5CUser%24isVerified' => 1,
-'App%5CEntity%5CUser%24totpSecret' => 8,
+'App%5CEntity%5CUser%24totpSecret' => 0,
 '[C]App%5CEntity%5CUser%24totpSecret' => 1,
 'Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 0,
 '[C]Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 1,
@@ -848,7 +848,7 @@ return [[
 ], [
 
 0 => [],
-1 => 1659039335,
+1 => 1659090439,
 2 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -1160,37 +1160,6 @@ return [[
         [
             $o[0],
             $o[1],
-        ],
-        []
-    );
-},
-8 => static function () {
-    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
-        $o = [
-            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
-        ],
-        null,
-        [
-            'stdClass' => [
-                'type' => [
-                    'string',
-                ],
-                'length' => [
-                    255,
-                ],
-                'precision' => [
-                    null,
-                ],
-                'scale' => [
-                    null,
-                ],
-                'nullable' => [
-                    true,
-                ],
-            ],
-        ],
-        [
-            $o[0],
         ],
         []
     );

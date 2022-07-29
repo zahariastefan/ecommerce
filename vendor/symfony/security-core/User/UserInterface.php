@@ -28,7 +28,7 @@ namespace Symfony\Component\Security\Core\User;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface UserInterface extends \Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface
+interface UserInterface
 {
     /**
      * Returns the roles granted to the user.
