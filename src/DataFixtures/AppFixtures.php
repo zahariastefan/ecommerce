@@ -18,8 +18,11 @@ class AppFixtures extends Fixture
     {
         // $product = new Product();
 //        // $manager->persist($product);
-        UserFactory::createOne(['email' => 'abraca_admin@example.com',
-            'roles'=>['ROLE_ADMIN', 'ROLE_USER']]);
+        UserFactory::createOne([
+            'email' => 'abraca_admin@example.com',
+            'roles'=>['ROLE_ADMIN', 'ROLE_USER'],
+            'is_verified' => 1
+        ]);
 //        $users = UserFactory::createMany(10);
 //
 //        $description = DescriptionContentFactory::createMany(100);

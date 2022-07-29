@@ -2,18 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\Comment;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Factory\CommentFactory;
 use App\Factory\ProductFactory;
 use App\Factory\UserFactory;
+use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -56,10 +60,39 @@ class ProductPageController extends  AbstractController
     }
 
     #[Route('/add-to-cart', name:'app_add_cart')]
-    public function addToCart()
+    public function addToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
-        //if logged in add to cart and also on DB
-        //if not logged in add to cookie!
+//        $productNameFromAddMoreBtn = trim($request->request->get('itemId'));
+        $itemId = trim($request->request->get('itemId'));
+        $cartPage = trim($request->request->get('cartPage'));
+        if(!empty($cartPage)){
+            $productObject = $productRepository->findBy([
+                'title' => $itemId
+            ]);
+//            dd($productObject);
+        }else{
+            $productObject = $productRepository->findBy([
+                'id' => $itemId
+            ]);
+        }
+        $userId = $this->getUser()->getId();
+        $user = $userRepository->findBy([
+            'id' => $userId
+        ]);
+
+
+        //check if logged in
+        if($this->getUser()){//if logged in add to cart and also on DB
+            $cart = new Cart();
+            $cart->setUser($user[0]);
+            $cart->addProduct($productObject[0]);
+            $entityManager->persist($cart);
+            $entityManager->flush();
+//            dd($checkIfExist);
+        }else{//if not logged in add to cookie!
+
+        }
+
         return new JsonResponse(['hello'=>'world']);
     }
 }

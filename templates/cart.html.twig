@@ -1,1 +1,53 @@
 {% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {%  set arrayItems = [] %}
+    {% for nameOfProduct, nrOfPresence in productsInCart %}
+        {% if nameOfProduct == 0 %}
+        {% set nameOfProduct = 1 %}
+        {% endif %}
+
+        {%  set arrayItems = arrayItems|merge(
+            [
+                {
+                    nrPresence : nrOfPresence,
+            title : nameOfProduct
+                }
+            ]
+        ) %}
+    {% endfor %}
+
+    {% for key, oneItemArr in arrayItems %}
+        <div class="oneItemDiv{{ key }}">
+            <p class="oneItemTitle">{{ oneItemArr.title }} </p>  <p class="nr_total_presence">{{ oneItemArr.nrPresence }}</p> <br>
+            <button class="add_to_cart_button">add more</button> <br>
+        </div>
+    {% endfor %}
+
+    <script>
+        $('.add_to_cart_button').click((e)=>{
+            var items_number = $('.items_number').text();
+            $('.items_number').text(parseInt(items_number) + 1);
+            var classNameOfParent = $(e.target).parent().attr('class');
+            var oneItemName = $('.'+classNameOfParent + ' > p.oneItemTitle').text();
+
+            var nrOfPresence = $('.'+classNameOfParent + ' > p.nr_total_presence').text();
+            $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
+
+            var path = '{{ path('app_add_cart') }}';
+            var fullUrl   = window.location.origin + path;
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    itemId :oneItemName,
+                    cartPage : 1,
+                },
+                complete: function (data) {
+
+                }
+            });
+        });
+    </script>
+{% endblock %}

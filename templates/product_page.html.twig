@@ -33,7 +33,16 @@
     <script>
         $('.add_to_cart_button').click(()=>{
             var items_number = $('.items_number').text();
-            alert(items_number);
+            $('.items_number').text(parseInt(items_number) + 1);
+            var path = '{{ path('app_add_cart', {itemId: product.id}) }}';
+            var fullUrl   = window.location.origin + path;
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                complete: function (data) {
+
+                }
+            });
         });
     </script>
 

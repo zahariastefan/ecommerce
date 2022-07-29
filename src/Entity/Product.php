@@ -35,11 +35,13 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-
+    #[ORM\ManyToMany(targetEntity: Cart::class, mappedBy: 'product')]
+    private Collection $carts;
 
     public function __construct()
     {
         $this->comment = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,5 +145,30 @@ class Product
         return $this;
     }
 
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
 
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts->add($cart);
+            $cart->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->removeElement($cart)) {
+            $cart->removeProduct($this);
+        }
+
+        return $this;
+    }
 }

@@ -80,19 +80,20 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 ";
         // line 32
         echo "            </ul>
+            <div class=\"d-inline-flex \">
+                <a href=\"";
+        // line 34
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_cart");
+        echo "\" class=\"m-2\">
+                    <i class=\"fa-solid fa-cart-shopping\"></i>
+                </a>
+                <p class=\"items_number m-2\"></p>
+            </div>
             ";
-        // line 33
+        // line 39
         if ($this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
-            // line 34
-            echo "                <div class=\"d-inline-flex \">
-                    <a href=\"";
-            // line 35
-            echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_cart");
-            echo "\" class=\"m-2\">
-                        <i class=\"fa-solid fa-cart-shopping\"></i>
-                    </a>
-                    <p class=\"items_number m-2\">1230</p>
-                </div>
+            // line 40
+            echo "
 
 
 
@@ -106,74 +107,74 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
                 >
                     <img
                             src=\"";
-            // line 52
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 52, $this->source); })()), "user", [], "any", false, false, false, 52), "avatarUri", [], "any", false, false, false, 52), "html", null, true);
+            // line 53
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 53, $this->source); })()), "user", [], "any", false, false, false, 53), "avatarUri", [], "any", false, false, false, 53), "html", null, true);
             echo "\"
                             alt=\"";
-            // line 53
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 53, $this->source); })()), "user", [], "any", false, false, false, 53), "displayName", [], "any", false, false, false, 53), "html", null, true);
+            // line 54
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 54, $this->source); })()), "user", [], "any", false, false, false, 54), "displayName", [], "any", false, false, false, 54), "html", null, true);
             echo " Avatar\">
                 </button>
                 <ul class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"user-dropdown\">
 
                     ";
-            // line 57
+            // line 58
             if ($this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_PREVIOUS_ADMIN")) {
-                // line 58
+                // line 59
                 echo "                        <li>
                             <a class=\"dropdown-item\" href=\"";
-                // line 59
+                // line 60
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_homepage", ["_switch_user" => "_exit"]);
-                // line 61
+                // line 62
                 echo "\">Exit Impersonation</a>
                         </li>
                     ";
             } else {
-                // line 70
+                // line 71
                 echo "                        <li>
                             <a class=\"dropdown-item\" href=\"";
-                // line 71
+                // line 72
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
                 echo "\">Log Out</a>
                         </li>
                         <li>
                             <a class=\"nav-link text-black-50 m-2\" href=\"";
-                // line 74
+                // line 75
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_cart");
                 echo "\">Cart </a>
                         </li>
                     ";
             }
-            // line 77
+            // line 78
             echo "
                 </ul>
             </div>
             ";
         } else {
-            // line 81
+            // line 82
             echo "            <a class=\"nav-link text-black-50 m-2\" href=\"";
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
             echo "\">Log In </a>
             <a href=\"";
-            // line 82
+            // line 83
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_register");
             echo "\" class=\"btn btn-dark m-2\">Sign up</a>
             ";
         }
-        // line 84
+        // line 85
         echo "        </div>
     </div>
 </nav>
 
 ";
-        // line 88
+        // line 89
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 88, $this->source); })()), "flashes", [0 => "success"], "method", false, false, false, 88));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 89, $this->source); })()), "flashes", [0 => "success"], "method", false, false, false, 89));
         foreach ($context['_seq'] as $context["_key"] => $context["flash"]) {
-            // line 89
+            // line 90
             echo "    <div class=\"alert alert-success\">
         ";
-            // line 90
+            // line 91
             echo twig_escape_filter($this->env, $context["flash"], "html", null, true);
             echo "
     </div>
@@ -182,14 +183,14 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['flash'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 93
+        // line 94
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 93, $this->source); })()), "flashes", [0 => "error"], "method", false, false, false, 93));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 94, $this->source); })()), "flashes", [0 => "error"], "method", false, false, false, 94));
         foreach ($context['_seq'] as $context["_key"] => $context["flash"]) {
-            // line 94
+            // line 95
             echo "    <div class=\"alert alert-danger\">
         ";
-            // line 95
+            // line 96
             echo twig_escape_filter($this->env, $context["flash"], "html", null, true);
             echo "
     </div>
@@ -198,13 +199,32 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['flash'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 98
-        $this->displayBlock('body', $context, $blocks);
         // line 99
+        $this->displayBlock('body', $context, $blocks);
+        // line 100
         echo "<footer class=\"mt-5 p-3 text-center\">
     <i class=\"fa-solid fa-bridge-suspension\"></i>
     Made by <i style=\"color: red;\" class=\"far fa-heart\"></i> <i class=\"fa-solid fa-heart\"></i>Steve Developer
 </footer>
+
+
+<script>
+    var path = '";
+        // line 107
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_get_cart_data");
+        echo "';
+    var fullUrl   = window.location.origin + path;
+    \$.ajax({
+        type: \"POST\",
+        url: fullUrl,
+        complete: function (data) {
+            var itemNr = data.responseText;
+            \$('.items_number').text(itemNr);
+            // alert(itemNr);
+        }
+    });
+</script>
+
 </body>
 </html>
 ";
@@ -284,7 +304,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     }
 
-    // line 98
+    // line 99
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -314,7 +334,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     public function getDebugInfo()
     {
-        return array (  288 => 98,  274 => 11,  264 => 10,  252 => 8,  249 => 7,  239 => 6,  220 => 5,  204 => 99,  202 => 98,  193 => 95,  190 => 94,  186 => 93,  177 => 90,  174 => 89,  170 => 88,  164 => 84,  159 => 82,  154 => 81,  148 => 77,  142 => 74,  136 => 71,  133 => 70,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  308 => 99,  294 => 11,  284 => 10,  272 => 8,  269 => 7,  259 => 6,  240 => 5,  214 => 107,  205 => 100,  203 => 99,  194 => 96,  191 => 95,  187 => 94,  178 => 91,  175 => 90,  171 => 89,  165 => 85,  160 => 83,  155 => 82,  149 => 78,  143 => 75,  137 => 72,  134 => 71,  129 => 62,  127 => 60,  124 => 59,  122 => 58,  115 => 54,  111 => 53,  96 => 40,  94 => 39,  86 => 34,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -351,13 +371,14 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 {#                    <a class=\"nav-link\" href=\"{{ path('app_popular_answers') }}\">Answers</a>#}
 {#                </li>#}
             </ul>
+            <div class=\"d-inline-flex \">
+                <a href=\"{{ path('app_cart') }}\" class=\"m-2\">
+                    <i class=\"fa-solid fa-cart-shopping\"></i>
+                </a>
+                <p class=\"items_number m-2\"></p>
+            </div>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <div class=\"d-inline-flex \">
-                    <a href=\"{{ path('app_cart') }}\" class=\"m-2\">
-                        <i class=\"fa-solid fa-cart-shopping\"></i>
-                    </a>
-                    <p class=\"items_number m-2\">1230</p>
-                </div>
+
 
 
 
@@ -421,6 +442,22 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
     <i class=\"fa-solid fa-bridge-suspension\"></i>
     Made by <i style=\"color: red;\" class=\"far fa-heart\"></i> <i class=\"fa-solid fa-heart\"></i>Steve Developer
 </footer>
+
+
+<script>
+    var path = '{{ path('app_get_cart_data') }}';
+    var fullUrl   = window.location.origin + path;
+    \$.ajax({
+        type: \"POST\",
+        url: fullUrl,
+        complete: function (data) {
+            var itemNr = data.responseText;
+            \$('.items_number').text(itemNr);
+            // alert(itemNr);
+        }
+    });
+</script>
+
 </body>
 </html>
 ", "base.html.twig", "C:\\xampp\\htdocs\\ecommerce\\tablouri\\templates\\base.html.twig");

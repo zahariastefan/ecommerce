@@ -30,13 +30,14 @@
 {#                    <a class="nav-link" href="{{ path('app_popular_answers') }}">Answers</a>#}
 {#                </li>#}
             </ul>
+            <div class="d-inline-flex ">
+                <a href="{{ path('app_cart') }}" class="m-2">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <p class="items_number m-2"></p>
+            </div>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <div class="d-inline-flex ">
-                    <a href="{{ path('app_cart') }}" class="m-2">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                    <p class="items_number m-2">1230</p>
-                </div>
+
 
 
 
@@ -100,5 +101,21 @@
     <i class="fa-solid fa-bridge-suspension"></i>
     Made by <i style="color: red;" class="far fa-heart"></i> <i class="fa-solid fa-heart"></i>Steve Developer
 </footer>
+
+
+<script>
+    var path = '{{ path('app_get_cart_data') }}';
+    var fullUrl   = window.location.origin + path;
+    $.ajax({
+        type: "POST",
+        url: fullUrl,
+        complete: function (data) {
+            var itemNr = data.responseText;
+            $('.items_number').text(itemNr);
+            // alert(itemNr);
+        }
+    });
+</script>
+
 </body>
 </html>
