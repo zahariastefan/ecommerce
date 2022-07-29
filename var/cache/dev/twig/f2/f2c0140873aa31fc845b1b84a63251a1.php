@@ -133,46 +133,59 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
                 echo "                        <li>
                             <a class=\"dropdown-item\" href=\"";
                 // line 65
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_2fa_enable");
+                echo "\">Enable 2fa</a>
+                        </li>
+                        <li>
+                            <a class=\"dropdown-item\" href=\"";
+                // line 68
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_2fa_disable");
+                echo "\">Disable 2fa</a>
+                        </li>
+                        <li>
+                            <a class=\"dropdown-item\" href=\"";
+                // line 71
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
                 echo "\">Log Out</a>
                         </li>
                         <li>
                             <a class=\"nav-link text-black-50 m-2\" href=\"";
-                // line 68
+                // line 74
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_cart");
                 echo "\">Cart </a>
                         </li>
                     ";
             }
-            // line 71
+            // line 77
             echo "
                 </ul>
             </div>
             ";
         } else {
-            // line 75
+            // line 81
             echo "            <a class=\"nav-link text-black-50 m-2\" href=\"";
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
             echo "\">Log In </a>
             <a href=\"";
-            // line 76
+            // line 82
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_register");
             echo "\" class=\"btn btn-dark m-2\">Sign up</a>
             ";
         }
-        // line 78
+        // line 84
         echo "        </div>
     </div>
 </nav>
+
 ";
-        // line 81
+        // line 88
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 81, $this->source); })()), "flashes", [0 => "success"], "method", false, false, false, 81));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 88, $this->source); })()), "flashes", [0 => "success"], "method", false, false, false, 88));
         foreach ($context['_seq'] as $context["_key"] => $context["flash"]) {
-            // line 82
+            // line 89
             echo "    <div class=\"alert alert-success\">
         ";
-            // line 83
+            // line 90
             echo twig_escape_filter($this->env, $context["flash"], "html", null, true);
             echo "
     </div>
@@ -181,9 +194,25 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['flash'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 86
+        // line 93
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 93, $this->source); })()), "flashes", [0 => "error"], "method", false, false, false, 93));
+        foreach ($context['_seq'] as $context["_key"] => $context["flash"]) {
+            // line 94
+            echo "    <div class=\"alert alert-danger\">
+        ";
+            // line 95
+            echo twig_escape_filter($this->env, $context["flash"], "html", null, true);
+            echo "
+    </div>
+";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['flash'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 98
         $this->displayBlock('body', $context, $blocks);
-        // line 87
+        // line 99
         echo "<footer class=\"mt-5 p-3 text-center\">
     <i class=\"fa-solid fa-bridge-suspension\"></i>
     Made by <i style=\"color: red;\" class=\"far fa-heart\"></i> <i class=\"fa-solid fa-heart\"></i>Steve Developer
@@ -267,7 +296,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     }
 
-    // line 86
+    // line 98
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -297,7 +326,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     public function getDebugInfo()
     {
-        return array (  271 => 86,  257 => 11,  247 => 10,  235 => 8,  232 => 7,  222 => 6,  203 => 5,  187 => 87,  185 => 86,  176 => 83,  173 => 82,  169 => 81,  164 => 78,  159 => 76,  154 => 75,  148 => 71,  142 => 68,  136 => 65,  133 => 64,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  300 => 98,  286 => 11,  276 => 10,  264 => 8,  261 => 7,  251 => 6,  232 => 5,  216 => 99,  214 => 98,  205 => 95,  202 => 94,  198 => 93,  189 => 90,  186 => 89,  182 => 88,  176 => 84,  171 => 82,  166 => 81,  160 => 77,  154 => 74,  148 => 71,  142 => 68,  136 => 65,  133 => 64,  128 => 61,  126 => 59,  123 => 58,  121 => 57,  114 => 53,  110 => 52,  90 => 35,  87 => 34,  85 => 33,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -366,6 +395,12 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
                         </li>
                     {% else %}
                         <li>
+                            <a class=\"dropdown-item\" href=\"{{ path('app_2fa_enable') }}\">Enable 2fa</a>
+                        </li>
+                        <li>
+                            <a class=\"dropdown-item\" href=\"{{ path('app_2fa_disable') }}\">Disable 2fa</a>
+                        </li>
+                        <li>
                             <a class=\"dropdown-item\" href=\"{{ path('app_logout') }}\">Log Out</a>
                         </li>
                         <li>
@@ -382,8 +417,14 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         </div>
     </div>
 </nav>
+
 {% for flash in app.flashes('success') %}
     <div class=\"alert alert-success\">
+        {{ flash }}
+    </div>
+{% endfor %}
+{% for flash in app.flashes('error') %}
+    <div class=\"alert alert-danger\">
         {{ flash }}
     </div>
 {% endfor %}

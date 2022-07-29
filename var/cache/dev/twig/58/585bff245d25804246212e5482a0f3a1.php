@@ -68,7 +68,15 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
         echo "    <div class=\"jumbotron-img p-2 mb-2\">
         <div class=\"container\">
             <h1 class=\"display-4\">Your Questions Answered</h1>
-            <div class=\"lead\">And even answers for those questions you didn't think to ask!</div>
+            ";
+        // line 7
+        if ((isset($context["alertDisabled2fa"]) || array_key_exists("alertDisabled2fa", $context) ? $context["alertDisabled2fa"] : (function () { throw new RuntimeError('Variable "alertDisabled2fa" does not exist.', 7, $this->source); })())) {
+            // line 8
+            echo "                <div class=\"alert alert-success\">You Successfully Disabled Two Factors Authentication</div>
+            ";
+        }
+        // line 10
+        echo "            <div class=\"lead\">And even answers for those questions you didn't think to ask!</div>
         </div>
     </div>
     <div class=\"container\">
@@ -78,19 +86,19 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
             </div>
         </div>
             ";
-        // line 16
+        // line 19
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable((isset($context["products"]) || array_key_exists("products", $context) ? $context["products"] : (function () { throw new RuntimeError('Variable "products" does not exist.', 16, $this->source); })()));
+        $context['_seq'] = twig_ensure_traversable((isset($context["products"]) || array_key_exists("products", $context) ? $context["products"] : (function () { throw new RuntimeError('Variable "products" does not exist.', 19, $this->source); })()));
         foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
-            // line 17
+            // line 20
             echo "                <strong>Product Title:</strong> <a href=\"";
-            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_product_page", ["slug" => twig_get_attribute($this->env, $this->source, $context["product"], "slug", [], "any", false, false, false, 17)]), "html", null, true);
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_product_page", ["slug" => twig_get_attribute($this->env, $this->source, $context["product"], "slug", [], "any", false, false, false, 20)]), "html", null, true);
             echo "\">";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["product"], "title", [], "any", false, false, false, 17), "html", null, true);
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["product"], "title", [], "any", false, false, false, 20), "html", null, true);
             echo " </a> <br>
                 <strong>Product Description:</strong>  ";
-            // line 18
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["product"], "description", [], "any", false, false, false, 18), "html", null, true);
+            // line 21
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["product"], "description", [], "any", false, false, false, 21), "html", null, true);
             echo " <br>
                 <br><br><br><br>
             ";
@@ -98,13 +106,13 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 21
-        echo "
-";
-        // line 54
+        // line 24
         echo "
 ";
         // line 57
+        echo "
+";
+        // line 60
         echo "    </div>
 ";
         
@@ -127,7 +135,7 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
 
     public function getDebugInfo()
     {
-        return array (  108 => 57,  105 => 54,  102 => 21,  93 => 18,  86 => 17,  82 => 16,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  116 => 60,  113 => 57,  110 => 24,  101 => 21,  94 => 20,  90 => 19,  79 => 10,  75 => 8,  73 => 7,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -138,6 +146,9 @@ class __TwigTemplate_470e4f9ae6fa3c25be2abb6028087c70 extends Template
     <div class=\"jumbotron-img p-2 mb-2\">
         <div class=\"container\">
             <h1 class=\"display-4\">Your Questions Answered</h1>
+            {% if alertDisabled2fa %}
+                <div class=\"alert alert-success\">You Successfully Disabled Two Factors Authentication</div>
+            {% endif %}
             <div class=\"lead\">And even answers for those questions you didn't think to ask!</div>
         </div>
     </div>

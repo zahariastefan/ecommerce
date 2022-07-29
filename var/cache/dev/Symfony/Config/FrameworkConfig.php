@@ -688,7 +688,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
 
     /**
      * Lock configuration
-     * @default {"enabled":false,"resources":{"default":["flock"]}}
+     * @default {"enabled":true,"resources":{"default":["flock"]}}
      * @return \Symfony\Config\Framework\LockConfig|$this
      */
     public function lock(mixed $value = []): \Symfony\Config\Framework\LockConfig|static
@@ -837,7 +837,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
 
     /**
      * Rate limiter configuration
-     * @default {"enabled":false,"limiters":[]}
+     * @default {"enabled":true,"limiters":[]}
      * @return \Symfony\Config\Framework\RateLimiterConfig|$this
      */
     public function rateLimiter(mixed $value = []): \Symfony\Config\Framework\RateLimiterConfig|static

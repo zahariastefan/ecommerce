@@ -4,6 +4,8 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
+    '2fa_login' => [[], ['_controller' => 'scheb_two_factor.form_controller::form'], [], [['text', '/2fa']], [], [], []],
+    '2fa_login_check' => [[], [], [], [['text', '/2fa_check']], [], [], []],
     '_wdt' => [['token'], ['_controller' => 'web_profiler.controller.profiler::toolbarAction'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/_wdt']], [], [], []],
     '_profiler_home' => [[], ['_controller' => 'web_profiler.controller.profiler::homeAction'], [], [['text', '/_profiler/']], [], [], []],
     '_profiler_search' => [[], ['_controller' => 'web_profiler.controller.profiler::searchAction'], [], [['text', '/_profiler/search']], [], [], []],
@@ -22,10 +24,14 @@ return [
     'app_comment' => [[], ['_controller' => 'App\\Controller\\ProductPageController::comment'], [], [['text', '/comment']], [], [], []],
     'app_add_cart' => [[], ['_controller' => 'App\\Controller\\ProductPageController::addToCart'], [], [['text', '/add-to-cart']], [], [], []],
     'app_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
-    'app_verify_email' => [[], ['_controller' => 'App\\Controller\\RegistrationController::verifyUserEmail'], [], [['text', '/verify/email']], [], [], []],
+    'app_verify_email' => [[], ['_controller' => 'App\\Controller\\RegistrationController::verifyUserEmail'], [], [['text', '/verify']], [], [], []],
+    'app_verify_resend_email' => [[], ['_controller' => 'App\\Controller\\RegistrationController::resendVerifyEmail'], [], [['text', '/verify/resend']], [], [], []],
     'app_security' => [[], ['_controller' => 'App\\Controller\\SecurityController::index'], [], [['text', '/security']], [], [], []],
     'app_login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
     'app_logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
+    'app_2fa_enable' => [[], ['_controller' => 'App\\Controller\\SecurityController::enable2fa'], [], [['text', '/authenticate/2fa/enable']], [], [], []],
+    'app_2fa_disable' => [[], ['_controller' => 'App\\Controller\\SecurityController::disable2fa'], [], [['text', '/authenticate/2fa/disable']], [], [], []],
+    'app_qr_code' => [[], ['_controller' => 'App\\Controller\\SecurityController::displayGoogleAuthenticatorQrCode'], [], [['text', '/authentication/2fa/qr-code']], [], [], []],
     'app_user' => [[], ['_controller' => 'App\\Controller\\UserController::index'], [], [['text', '/user']], [], [], []],
     'app_user_api_me' => [[], ['_controller' => 'App\\Controller\\UserController::apiMe'], [], [['text', '/api/me']], [], [], []],
 ];

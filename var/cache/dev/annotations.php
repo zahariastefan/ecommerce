@@ -72,14 +72,12 @@ return [[
 '[C]App%5CController%5CProductPageController%23addToCart' => 1,
 'App%5CController%5CRegistrationController' => 0,
 '[C]App%5CController%5CRegistrationController' => 1,
-'App%5CController%5CRegistrationController%23__construct' => 0,
-'[C]App%5CController%5CRegistrationController%23__construct' => 1,
-'App%5CController%5CRegistrationController%23register' => 0,
+'App%5CController%5CRegistrationController%23register' => 2,
 '[C]App%5CController%5CRegistrationController%23register' => 1,
-'App%5CController%5CRegistrationController%23verifyUserEmail' => 0,
+'App%5CController%5CRegistrationController%23verifyUserEmail' => 3,
 '[C]App%5CController%5CRegistrationController%23verifyUserEmail' => 1,
-'App%5CController%5CRegistrationController%24emailVerifier' => 0,
-'[C]App%5CController%5CRegistrationController%24emailVerifier' => 1,
+'App%5CController%5CRegistrationController%23resendVerifyEmail' => 4,
+'[C]App%5CController%5CRegistrationController%23resendVerifyEmail' => 1,
 'App%5CController%5CSecurityController' => 0,
 '[C]App%5CController%5CSecurityController' => 1,
 'App%5CController%5CSecurityController%23index' => 0,
@@ -88,6 +86,12 @@ return [[
 '[C]App%5CController%5CSecurityController%23login' => 1,
 'App%5CController%5CSecurityController%23logout' => 0,
 '[C]App%5CController%5CSecurityController%23logout' => 1,
+'App%5CController%5CSecurityController%23enable2fa' => 5,
+'[C]App%5CController%5CSecurityController%23enable2fa' => 1,
+'App%5CController%5CSecurityController%23disable2fa' => 6,
+'[C]App%5CController%5CSecurityController%23disable2fa' => 1,
+'App%5CController%5CSecurityController%23displayGoogleAuthenticatorQrCode' => 7,
+'[C]App%5CController%5CSecurityController%23displayGoogleAuthenticatorQrCode' => 1,
 'App%5CController%5CUserController' => 0,
 '[C]App%5CController%5CUserController' => 1,
 'App%5CController%5CUserController%23index' => 0,
@@ -234,10 +238,18 @@ return [[
 '[C]App%5CEntity%5CUser%23addComment' => 1,
 'App%5CEntity%5CUser%23removeComment' => 0,
 '[C]App%5CEntity%5CUser%23removeComment' => 1,
-'App%5CEntity%5CUser%23isVerified' => 0,
-'[C]App%5CEntity%5CUser%23isVerified' => 1,
+'App%5CEntity%5CUser%23getIsVerified' => 0,
+'[C]App%5CEntity%5CUser%23getIsVerified' => 1,
 'App%5CEntity%5CUser%23setIsVerified' => 0,
 '[C]App%5CEntity%5CUser%23setIsVerified' => 1,
+'App%5CEntity%5CUser%23isTotpAuthenticationEnabled' => 0,
+'[C]App%5CEntity%5CUser%23isTotpAuthenticationEnabled' => 1,
+'App%5CEntity%5CUser%23getTotpAuthenticationUsername' => 0,
+'[C]App%5CEntity%5CUser%23getTotpAuthenticationUsername' => 1,
+'App%5CEntity%5CUser%23getTotpAuthenticationConfiguration' => 0,
+'[C]App%5CEntity%5CUser%23getTotpAuthenticationConfiguration' => 1,
+'App%5CEntity%5CUser%23setTotpSecret' => 0,
+'[C]App%5CEntity%5CUser%23setTotpSecret' => 1,
 'App%5CEntity%5CUser%24id' => 0,
 '[C]App%5CEntity%5CUser%24id' => 1,
 'App%5CEntity%5CUser%24email' => 0,
@@ -254,6 +266,8 @@ return [[
 '[C]App%5CEntity%5CUser%24comments' => 1,
 'App%5CEntity%5CUser%24isVerified' => 0,
 '[C]App%5CEntity%5CUser%24isVerified' => 1,
+'App%5CEntity%5CUser%24totpSecret' => 8,
+'[C]App%5CEntity%5CUser%24totpSecret' => 1,
 'Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 0,
 '[C]Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 1,
 'Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%23__construct' => 0,
@@ -692,6 +706,36 @@ return [[
 '[C]Doctrine%5CORM%5CPersisters%5CEntity%5CSingleTablePersister%23generateFilterConditionSQL' => 1,
 'Doctrine%5CORM%5CPersisters%5CEntity%5CSingleTablePersister%23getSQLResultCasing' => 0,
 '[C]Doctrine%5CORM%5CPersisters%5CEntity%5CSingleTablePersister%23getSQLResultCasing' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23__construct' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23__construct' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23form' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23form' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTwoFactorToken' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTwoFactorToken' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23setPreferredProvider' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23setPreferredProvider' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTemplateVars' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTemplateVars' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23renderForm' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23renderForm' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23getLastAuthenticationException' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23getLastAuthenticationException' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%23canSetTrustedDevice' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23canSetTrustedDevice' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%24tokenStorage' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24tokenStorage' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%24providerRegistry' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24providerRegistry' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%24twoFactorFirewallContext' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24twoFactorFirewallContext' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%24logoutUrlGenerator' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24logoutUrlGenerator' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedDeviceManager' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedDeviceManager' => 1,
+'Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedFeatureEnabled' => 0,
+'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedFeatureEnabled' => 1,
 'Symfony%5CBundle%5CFrameworkBundle%5CController%5CRedirectController' => 0,
 '[C]Symfony%5CBundle%5CFrameworkBundle%5CController%5CRedirectController' => 1,
 'Symfony%5CBundle%5CFrameworkBundle%5CController%5CRedirectController%23__construct' => 0,
@@ -804,6 +848,352 @@ return [[
 ], [
 
 0 => [],
-1 => 1659030660,
+1 => 1659039335,
+2 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+        ],
+        null,
+        [
+            'Symfony\\Component\\Routing\\Annotation\\Route' => [
+                'path' => [
+                    '/register',
+                ],
+                'methods' => [
+                    [],
+                ],
+                'schemes' => [
+                    [],
+                ],
+                'name' => [
+                    'app_register',
+                ],
+                'requirements' => [
+                    [],
+                ],
+                'options' => [
+                    [],
+                ],
+                'defaults' => [
+                    [],
+                ],
+                'host' => [
+                    null,
+                ],
+                'condition' => [
+                    null,
+                ],
+                'priority' => [
+                    null,
+                ],
+                'env' => [
+                    null,
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
+3 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+        ],
+        null,
+        [
+            'Symfony\\Component\\Routing\\Annotation\\Route' => [
+                'path' => [
+                    '/verify',
+                ],
+                'methods' => [
+                    [],
+                ],
+                'schemes' => [
+                    [],
+                ],
+                'name' => [
+                    'app_verify_email',
+                ],
+                'requirements' => [
+                    [],
+                ],
+                'options' => [
+                    [],
+                ],
+                'defaults' => [
+                    [],
+                ],
+                'host' => [
+                    null,
+                ],
+                'condition' => [
+                    null,
+                ],
+                'priority' => [
+                    null,
+                ],
+                'env' => [
+                    null,
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
+4 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+        ],
+        null,
+        [
+            'Symfony\\Component\\Routing\\Annotation\\Route' => [
+                'path' => [
+                    '/verify/resend',
+                ],
+                'methods' => [
+                    [],
+                ],
+                'schemes' => [
+                    [],
+                ],
+                'name' => [
+                    'app_verify_resend_email',
+                ],
+                'requirements' => [
+                    [],
+                ],
+                'options' => [
+                    [],
+                ],
+                'defaults' => [
+                    [],
+                ],
+                'host' => [
+                    null,
+                ],
+                'condition' => [
+                    null,
+                ],
+                'priority' => [
+                    null,
+                ],
+                'env' => [
+                    null,
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
+5 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+            clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted')),
+        ],
+        null,
+        [
+            'Symfony\\Component\\Routing\\Annotation\\Route' => [
+                'path' => [
+                    '/authenticate/2fa/enable',
+                ],
+                'methods' => [
+                    [],
+                ],
+                'schemes' => [
+                    [],
+                ],
+                'name' => [
+                    'app_2fa_enable',
+                ],
+                'requirements' => [
+                    [],
+                ],
+                'options' => [
+                    [],
+                ],
+                'defaults' => [
+                    [],
+                ],
+                'host' => [
+                    null,
+                ],
+                'condition' => [
+                    null,
+                ],
+                'priority' => [
+                    null,
+                ],
+                'env' => [
+                    null,
+                ],
+            ],
+            'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted' => [
+                'attributes' => [
+                    1 => 'ROLE_USER',
+                ],
+            ],
+        ],
+        [
+            $o[0],
+            $o[1],
+        ],
+        []
+    );
+},
+6 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+            clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted')),
+        ],
+        null,
+        [
+            'Symfony\\Component\\Routing\\Annotation\\Route' => [
+                'path' => [
+                    '/authenticate/2fa/disable',
+                ],
+                'methods' => [
+                    [],
+                ],
+                'schemes' => [
+                    [],
+                ],
+                'name' => [
+                    'app_2fa_disable',
+                ],
+                'requirements' => [
+                    [],
+                ],
+                'options' => [
+                    [],
+                ],
+                'defaults' => [
+                    [],
+                ],
+                'host' => [
+                    null,
+                ],
+                'condition' => [
+                    null,
+                ],
+                'priority' => [
+                    null,
+                ],
+                'env' => [
+                    null,
+                ],
+            ],
+            'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted' => [
+                'attributes' => [
+                    1 => 'ROLE_USER',
+                ],
+            ],
+        ],
+        [
+            $o[0],
+            $o[1],
+        ],
+        []
+    );
+},
+7 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+            clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted')),
+        ],
+        null,
+        [
+            'Symfony\\Component\\Routing\\Annotation\\Route' => [
+                'path' => [
+                    '/authentication/2fa/qr-code',
+                ],
+                'methods' => [
+                    [],
+                ],
+                'schemes' => [
+                    [],
+                ],
+                'name' => [
+                    'app_qr_code',
+                ],
+                'requirements' => [
+                    [],
+                ],
+                'options' => [
+                    [],
+                ],
+                'defaults' => [
+                    [],
+                ],
+                'host' => [
+                    null,
+                ],
+                'condition' => [
+                    null,
+                ],
+                'priority' => [
+                    null,
+                ],
+                'env' => [
+                    null,
+                ],
+            ],
+            'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted' => [
+                'attributes' => [
+                    1 => 'ROLE_USER',
+                ],
+            ],
+        ],
+        [
+            $o[0],
+            $o[1],
+        ],
+        []
+    );
+},
+8 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+        ],
+        null,
+        [
+            'stdClass' => [
+                'type' => [
+                    'string',
+                ],
+                'length' => [
+                    255,
+                ],
+                'precision' => [
+                    null,
+                ],
+                'scale' => [
+                    null,
+                ],
+                'nullable' => [
+                    true,
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
 
 ]];

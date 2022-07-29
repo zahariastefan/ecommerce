@@ -5,6 +5,7 @@ namespace Symfony\Config\Security;
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'LogoutConfig.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'SwitchUserConfig.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'LoginThrottlingConfig.php';
+require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'TwoFactorConfig.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'X509Config.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'RemoteUserConfig.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'LoginLinkConfig.php';
@@ -42,6 +43,7 @@ class FirewallConfig
     private $requiredBadges;
     private $customAuthenticators;
     private $loginThrottling;
+    private $twoFactor;
     private $x509;
     private $remoteUser;
     private $loginLink;
@@ -287,6 +289,18 @@ class FirewallConfig
         return $this->loginThrottling;
     }
 
+    public function twoFactor(array $value = []): \Symfony\Config\Security\FirewallConfig\TwoFactorConfig
+    {
+        if (null === $this->twoFactor) {
+            $this->_usedProperties['twoFactor'] = true;
+            $this->twoFactor = new \Symfony\Config\Security\FirewallConfig\TwoFactorConfig($value);
+        } elseif (0 < \func_num_args()) {
+            throw new InvalidConfigurationException('The node created by "twoFactor()" has already been initialized. You cannot pass values the second time you call twoFactor().');
+        }
+
+        return $this->twoFactor;
+    }
+
     public function x509(array $value = []): \Symfony\Config\Security\FirewallConfig\X509Config
     {
         if (null === $this->x509) {
@@ -517,6 +531,12 @@ class FirewallConfig
             unset($value['login_throttling']);
         }
 
+        if (array_key_exists('two_factor', $value)) {
+            $this->_usedProperties['twoFactor'] = true;
+            $this->twoFactor = new \Symfony\Config\Security\FirewallConfig\TwoFactorConfig($value['two_factor']);
+            unset($value['two_factor']);
+        }
+
         if (array_key_exists('x509', $value)) {
             $this->_usedProperties['x509'] = true;
             $this->x509 = new \Symfony\Config\Security\FirewallConfig\X509Config($value['x509']);
@@ -638,6 +658,9 @@ class FirewallConfig
         }
         if (isset($this->_usedProperties['loginThrottling'])) {
             $output['login_throttling'] = $this->loginThrottling->toArray();
+        }
+        if (isset($this->_usedProperties['twoFactor'])) {
+            $output['two_factor'] = $this->twoFactor->toArray();
         }
         if (isset($this->_usedProperties['x509'])) {
             $output['x509'] = $this->x509->toArray();

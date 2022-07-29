@@ -62,6 +62,12 @@
                         </li>
                     {% else %}
                         <li>
+                            <a class="dropdown-item" href="{{ path('app_2fa_enable') }}">Enable 2fa</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_2fa_disable') }}">Disable 2fa</a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
                         </li>
                         <li>
@@ -78,8 +84,14 @@
         </div>
     </div>
 </nav>
+
 {% for flash in app.flashes('success') %}
     <div class="alert alert-success">
+        {{ flash }}
+    </div>
+{% endfor %}
+{% for flash in app.flashes('error') %}
+    <div class="alert alert-danger">
         {{ flash }}
     </div>
 {% endfor %}

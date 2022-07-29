@@ -27,9 +27,6 @@ security:
             lazy: true
             provider: app_user_provider
             entry_point: form_login
-#            custom_authenticator: App\Security\LoginFormAuthenticator
-#                - App\Security\LoginFormAuthenticator
-#                - App\Security\DummyAuthenticator
             form_login:
                 login_path: app_login
                 check_path: app_login
@@ -38,8 +35,10 @@ security:
                 enable_csrf: true
                 use_referer: true
                 target_path_parameter: _target_path
+
             logout: true
             switch_user: true
+            login_throttling: true
 
             remember_me:
                 secret: '%kernel.secret%'
@@ -56,8 +55,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # This makes the logout route accessible during two-factor authentication. Allows the user to
+        # cancel two-factor authentication, if they need to.
+        - { path: ^/logout, role: PUBLIC_ACCESS  }
+        # This ensures that the form can only be accessed when two-factor authentication is in progress.
+#        - { path: ^/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
-#        - { path: ^/comment, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }#        - { path: ^/comment, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
