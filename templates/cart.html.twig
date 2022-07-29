@@ -21,7 +21,8 @@
     {% for key, oneItemArr in arrayItems %}
         <div class="oneItemDiv{{ key }}">
             <p class="oneItemTitle">{{ oneItemArr.title }} </p>  <p class="nr_total_presence">{{ oneItemArr.nrPresence }}</p> <br>
-            <button class="add_to_cart_button">add more</button> <br>
+            <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+            <i class="fas fa-minus remove_to_cart_button m-3"></i>
         </div>
     {% endfor %}
 
@@ -30,12 +31,37 @@
             var items_number = $('.items_number').text();
             $('.items_number').text(parseInt(items_number) + 1);
             var classNameOfParent = $(e.target).parent().attr('class');
-            var oneItemName = $('.'+classNameOfParent + ' > p.oneItemTitle').text();
-
-            var nrOfPresence = $('.'+classNameOfParent + ' > p.nr_total_presence').text();
+            var oneItemName = $('.'+classNameOfParent + '  p.oneItemTitle').text();
+            var nrOfPresence = $('.'+classNameOfParent + '  p.nr_total_presence').text();
             $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
 
+            alert(oneItemName);
             var path = '{{ path('app_add_cart') }}';
+            var fullUrl   = window.location.origin + path;
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    itemId :oneItemName,
+                    cartPage : 1,
+                },
+                complete: function (data) {
+
+                }
+            });
+        });
+
+        $('.remove_to_cart_button').click((e)=>{
+            var items_number = $('.items_number').text();
+            $('.items_number').text(parseInt(items_number) - 1);
+            var classNameOfParent2 = $(e.target).parent().attr('class');
+
+            var oneItemName = $('.'+classNameOfParent2 + '  p.oneItemTitle').text();
+            var nrOfPresence = $('.'+classNameOfParent2 + '  p.nr_total_presence').text();
+            $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);
+            alert(classNameOfParent2);
+
+            var path = '{{ path('app_remove_cart') }}';
             var fullUrl   = window.location.origin + path;
             $.ajax({
                 type: "POST",

@@ -23,6 +23,7 @@ return [
     'app_product_page' => [['slug'], ['_controller' => 'App\\Controller\\ProductPageController::productPage'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/product-page']], [], [], []],
     'app_comment' => [[], ['_controller' => 'App\\Controller\\ProductPageController::comment'], [], [['text', '/comment']], [], [], []],
     'app_add_cart' => [[], ['_controller' => 'App\\Controller\\ProductPageController::addToCart'], [], [['text', '/add-to-cart']], [], [], []],
+    'app_remove_cart' => [[], ['_controller' => 'App\\Controller\\ProductPageController::removeToCart'], [], [['text', '/remove-to-cart']], [], [], []],
     'app_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'app_verify_email' => [[], ['_controller' => 'App\\Controller\\RegistrationController::verifyUserEmail'], [], [['text', '/verify']], [], [], []],
     'app_verify_resend_email' => [[], ['_controller' => 'App\\Controller\\RegistrationController::resendVerifyEmail'], [], [['text', '/verify/resend']], [], [], []],

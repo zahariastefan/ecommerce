@@ -62,37 +62,61 @@ class ProductPageController extends  AbstractController
     #[Route('/add-to-cart', name:'app_add_cart')]
     public function addToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
-//        $productNameFromAddMoreBtn = trim($request->request->get('itemId'));
-        $itemId = trim($request->request->get('itemId'));
-        $cartPage = trim($request->request->get('cartPage'));
-        if(!empty($cartPage)){
-            $productObject = $productRepository->findBy([
-                'title' => $itemId
-            ]);
-//            dd($productObject);
-        }else{
-            $productObject = $productRepository->findBy([
-                'id' => $itemId
-            ]);
-        }
-        $userId = $this->getUser()->getId();
-        $user = $userRepository->findBy([
-            'id' => $userId
-        ]);
+        if ($this->getUser()) {//if logged in add to cart and also on DB
+            $itemId = trim($request->request->get('itemId'));
+            if (empty($itemId)) {
+                $itemId = trim($request->query->get('itemId'));
+            }
+            if ((preg_match('~[0-9]+~', $itemId))) {
+                $productObject = $productRepository->findBy([
+                    'id' => $itemId
+                ]);
+            } else {
+                $productObject = $productRepository->findBy([
+                    'title' => $itemId
+                ]);
+            }
 
+            $userId = $this->getUser()->getId();
+            $user = $userRepository->findBy([
+                'id' => $userId
+            ]);
 
-        //check if logged in
-        if($this->getUser()){//if logged in add to cart and also on DB
+            //check if logged in
             $cart = new Cart();
             $cart->setUser($user[0]);
             $cart->addProduct($productObject[0]);
             $entityManager->persist($cart);
             $entityManager->flush();
-//            dd($checkIfExist);
-        }else{//if not logged in add to cookie!
+        } else {//if not logged in add to cookie!
 
         }
 
         return new JsonResponse(['hello'=>'world']);
+    }
+
+    #[Route('/remove-to-cart', name:'app_remove_cart')]
+    public function removeToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    {
+        $itemId = trim($request->request->get('itemId'));
+
+//        $userId = $this->getUser()->getId();
+//        $user = $userRepository->findBy([
+//            'id' => $userId
+//        ]);
+        $productObject = $productRepository->findBy([
+            'title' => $itemId
+        ]);
+
+//        dd($productObject[0]->getCarts()->toArray());
+        $productsFromCart = $productObject[0]->getCarts()->toArray();
+
+        $productToRemove = $productsFromCart[array_rand($productsFromCart)];
+
+//        dd($productsFromCart[12]);
+        $entityManager->remove($productToRemove);
+        $entityManager->flush();
+        return new JsonResponse(['hello' => 'world']);
+
     }
 }

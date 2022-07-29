@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cart;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,6 +40,27 @@ class CartRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCardFromProduct(string $productId = null)
+    {
+        $queryBuilder =$this->getOrCreateQueryBuilder()
+        ;
+
+
+        if($productId != null){
+            $queryBuilder->where('c.product = '.$productId);
+        }
+
+//        $queryBuilder->leftJoin('c.comment', 'comment')
+//            ->innerJoin('comment.user', 'user')
+//            ->addSelect(['comment','user'])
+//        ;
+        return $queryBuilder;
+    }
+
+    private function getOrCreateQueryBuilder(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?: $this->createQueryBuilder('c');
+    }
 //    /**
 //     * @return Cart[] Returns an array of Cart objects
 //     */

@@ -7110,7 +7110,7 @@
         <argument key="authenticationUtils" type="service_closure" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".service_locator.H3n8ylt" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.ji5DltG" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CartController::cart" type="service_closure" id=".service_locator.Zr0T2zl"/>
@@ -7118,6 +7118,7 @@
         <argument key="App\Controller\HomepageController::homepage" type="service_closure" id=".service_locator.0Fb1YCW"/>
         <argument key="App\Controller\ProductPageController::addToCart" type="service_closure" id=".service_locator.F8EjvxZ"/>
         <argument key="App\Controller\ProductPageController::productPage" type="service_closure" id=".service_locator.GNWJDld"/>
+        <argument key="App\Controller\ProductPageController::removeToCart" type="service_closure" id=".service_locator.F8EjvxZ"/>
         <argument key="App\Controller\RegistrationController::register" type="service_closure" id=".service_locator.yqq8oN5"/>
         <argument key="App\Controller\RegistrationController::verifyUserEmail" type="service_closure" id=".service_locator.m6Gvnlc"/>
         <argument key="App\Controller\SecurityController::login" type="service_closure" id=".service_locator.zFcJjKU"/>
@@ -7133,6 +7134,7 @@
         <argument key="App\Controller\HomepageController:homepage" type="service_closure" id=".service_locator.0Fb1YCW"/>
         <argument key="App\Controller\ProductPageController:addToCart" type="service_closure" id=".service_locator.F8EjvxZ"/>
         <argument key="App\Controller\ProductPageController:productPage" type="service_closure" id=".service_locator.GNWJDld"/>
+        <argument key="App\Controller\ProductPageController:removeToCart" type="service_closure" id=".service_locator.F8EjvxZ"/>
         <argument key="App\Controller\RegistrationController:register" type="service_closure" id=".service_locator.yqq8oN5"/>
         <argument key="App\Controller\RegistrationController:verifyUserEmail" type="service_closure" id=".service_locator.m6Gvnlc"/>
         <argument key="App\Controller\SecurityController:login" type="service_closure" id=".service_locator.zFcJjKU"/>
@@ -7982,12 +7984,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.H3n8ylt"/>
+      <argument type="service" id=".service_locator.ji5DltG"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.H3n8ylt"/>
+      <argument type="service" id=".service_locator.ji5DltG"/>
     </service>
     <service id="debug.traced.messenger.bus.default.inner" class="Symfony\Component\Messenger\MessageBus">
       <argument type="iterator">
@@ -8975,7 +8977,7 @@
     <service id="SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface" alias="symfonycasts.verify_email.helper"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.H3n8ylt"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.ji5DltG"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
@@ -9002,7 +9004,7 @@
     <service id=".service_locator.8SYoiOT" alias=".service_locator.GNWJDld"/>
     <service id=".service_locator.n6TAFEP" alias=".service_locator.F8EjvxZ"/>
     <service id=".service_locator.3SGNgb7" alias=".service_locator.m6Gvnlc"/>
-    <service id=".service_locator.HMyx7RE" alias=".service_locator.H3n8ylt"/>
+    <service id=".service_locator.6wUiSBM" alias=".service_locator.ji5DltG"/>
     <service id=".service_locator.wKF4yn1" alias=".service_locator.19_mNxd"/>
     <service id=".service_locator.yj07qm_" alias=".service_locator.ZyXYEQR"/>
     <service id=".service_locator.XW18Svm" alias=".service_locator.TcKhdzh"/>

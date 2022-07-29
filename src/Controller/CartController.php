@@ -24,6 +24,7 @@ class CartController extends AbstractController
             'user' => $user
         ]);
 //        dd($cart);
+//        dd($cart);
 //        $listOfTitles = [];
 //        foreach ($cart as $item) {
 //            $productArray =$item->getProduct()->toArray();
@@ -47,10 +48,24 @@ class CartController extends AbstractController
 //        }
         $listOfTitles = [];
         foreach ($cart as $singleCart){
-            $title = $singleCart->getProduct()->toArray()[0]->getTitle();
-            $listOfTitles[] = $title;
+//            dd(gettype($singleCart));
+            if(gettype($singleCart) == 'object'){
+//                dd($singleCart->getProduct()->toArray());
+                $title = $singleCart->getProduct()->toArray();
+                if(!empty($title)){
+                    $listOfTitles[] = $title[0]->getTitle();
+                }
+            }else{
+                $title = $singleCart->getProduct()->toArray()[0]->getTitle();
+                if(!empty($title)){
+                    $listOfTitles[] = $title;
+                }
+            }
+
+//            $listOfTitles[] = $title;
         }
-        $uniqueTitles = array_unique($listOfTitles);
+//        dd($listOfTitles);
+//        $uniqueTitles = array_unique($listOfTitles);
         //now get objects from list of titles
 
 
