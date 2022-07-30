@@ -160,7 +160,7 @@ footer {
     top: 60px;
 }
 
-.second_column_cart .form_checkout {
+.second_column_cart  {
     margin: 17px;
     position: absolute;
     right: 40px;

@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
+use App\Entity\Product;
 use App\Repository\CartRepository;
+use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,10 +55,40 @@ class CartController extends AbstractController
     }
 
     #[Route('/thanks', name:'app_thanks')]
-    public function thanks(Request $request)
+    public function thanks(Request $request, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
+        $user = $userRepository->findBy([
+            'email' => $this->getUser()->getUserIdentifier()
+        ]);
         $data = $request->query->all();
-        dd($data);
+        $allItems = [];
+        //starting adding products to order
+        foreach ($data as $key => $oneData) {
+            $array = json_decode($oneData, true);
+
+            if(str_contains($key, 'item') ){//if is a product
+                $product = $productRepository->findBy([
+                    'title' => $array['item']
+                ]);
+//                dd($data);
+                $allItems[] = $product;
+                $order = new Order();
+                $order->setUser($user[0]);
+                $order->setProduct($product[0]);
+                $order->setQuantity($array['quantity']);
+                $order->setAddress($data['street'].' '.$data['number'].' '.$data['building']);
+                $order->setPhone($data['phone']);
+                $entityManager->persist($order);
+            }
+
+        }
+        //products added to Order
+
+
+
+        $entityManager->flush();
+
+//        dd($data);
         return $this->render('thanks.html.twig');
     }
 }

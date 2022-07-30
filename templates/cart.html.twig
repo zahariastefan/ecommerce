@@ -27,7 +27,7 @@
                             <p class="nr_total_presence">{{ oneItemArr.nrPresence }}</p> <br>
                             <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
                             <i class="fas fa-minus remove_to_cart_button m-3"></i>
-                            <input type="text" name="item{{ key }}" value='{"{{ oneItemArr.title }}":{{ oneItemArr.nrPresence }}}'>
+                            <input type="text" name="item{{ key }}" value='{"item":"{{ oneItemArr.title }}","quantity":{{ oneItemArr.nrPresence }}}'>
                         </div>
                     {% endfor %}
 
