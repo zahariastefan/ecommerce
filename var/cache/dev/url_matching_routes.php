@@ -16,6 +16,8 @@ return [
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
         '/base' => [[['_route' => 'app_base', '_controller' => 'App\\Controller\\BaseController::index'], null, null, null, false, false, null]],
         '/cart' => [[['_route' => 'app_cart', '_controller' => 'App\\Controller\\CartController::cart'], null, null, null, false, false, null]],
+        '/checkout' => [[['_route' => 'app_checkout', '_controller' => 'App\\Controller\\CartController::checkout'], null, null, null, false, false, null]],
+        '/thanks' => [[['_route' => 'app_thanks', '_controller' => 'App\\Controller\\CartController::thanks'], null, null, null, false, false, null]],
         '/' => [[['_route' => 'app_homepage', '_controller' => 'App\\Controller\\HomepageController::homepage'], null, null, null, false, false, null]],
         '/get-cart-data' => [[['_route' => 'app_get_cart_data', '_controller' => 'App\\Controller\\HomepageController::getCart'], null, null, null, false, false, null]],
         '/comment' => [[['_route' => 'app_comment', '_controller' => 'App\\Controller\\ProductPageController::comment'], null, null, null, false, false, null]],

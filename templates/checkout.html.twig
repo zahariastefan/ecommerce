@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    Formular
+    <div class="container justify-content-center">
+        <form action="{{ path('app_thanks') }}" class="d-grid form_checkout justify-content-center">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="surname" placeholder="Surname" required>
+            <input type="text" name="city" placeholder="City" required>
+            <input type="text" name="street" placeholder="Street" required>
+            <input type="text" name="number" placeholder="Number" required>
+            <input type="text" name="building" placeholder="Building"  required>
+            <input type="text" name="phone" placeholder="phone" required>
+            if logged in not see this
+            <input type="text" name="email" placeholder="Email">
+
+            <p>Alege modalitatea de livrare</p>
+            <div class="d-inline-flex">
+                <input type="checkbox" name="ramburs"  required>
+                <label for="ramburs">Plata la Ramburs</label>
+            </div>
+            <br>
+            <button type="submit">Send Order</button>
+        </form>
+    </div>
+
+{% endblock %}

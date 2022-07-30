@@ -99,21 +99,11 @@ class ProductPageController extends  AbstractController
     public function removeToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
         $itemId = trim($request->request->get('itemId'));
-
-//        $userId = $this->getUser()->getId();
-//        $user = $userRepository->findBy([
-//            'id' => $userId
-//        ]);
         $productObject = $productRepository->findBy([
             'title' => $itemId
         ]);
-
-//        dd($productObject[0]->getCarts()->toArray());
         $productsFromCart = $productObject[0]->getCarts()->toArray();
-
         $productToRemove = $productsFromCart[array_rand($productsFromCart)];
-
-//        dd($productsFromCart[12]);
         $entityManager->remove($productToRemove);
         $entityManager->flush();
         return new JsonResponse(['hello' => 'world']);

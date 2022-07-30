@@ -17,14 +17,48 @@
             ]
         ) %}
     {% endfor %}
+    <div class="container container_cart justify-content-center">
+        <div class="row">
+            <div class="col-sm first_column_cart">
 
-    {% for key, oneItemArr in arrayItems %}
-        <div class="oneItemDiv{{ key }}">
-            <p class="oneItemTitle">{{ oneItemArr.title }} </p>  <p class="nr_total_presence">{{ oneItemArr.nrPresence }}</p> <br>
-            <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-            <i class="fas fa-minus remove_to_cart_button m-3"></i>
+                {% for key, oneItemArr in arrayItems %}
+                    <div class="oneItemDiv{{ key }}">
+                        <p class="oneItemTitle">{{ oneItemArr.title }} </p>
+                        <p class="nr_total_presence">{{ oneItemArr.nrPresence }}</p> <br>
+                        <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+                        <i class="fas fa-minus remove_to_cart_button m-3"></i>
+                    </div>
+                {% endfor %}
+
+                {#    <a href="{{ path('app_checkout') }}"> Checkout </a> #}
+            </div>
+            <div class="col-sm second_column_cart">
+
+
+                <form action="{{ path('app_thanks') }}" class="d-grid form_checkout justify-content-center">
+                    <p>Formular</p>
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="surname" placeholder="Surname" required>
+                    <input type="text" name="city" placeholder="City" required>
+                    <input type="text" name="street" placeholder="Street" required>
+                    <input type="text" name="number" placeholder="Number" required>
+                    <input type="text" name="building" placeholder="Building" required>
+                    <input type="text" name="phone" placeholder="phone" required>
+                    if logged in not see this
+                    <input type="text" name="email" placeholder="Email">
+
+                    <p>Alege modalitatea de livrare</p>
+                    <div class="d-inline-flex">
+                        <input type="checkbox" name="ramburs" required>
+                        <label for="ramburs">Plata la Ramburs</label>
+                    </div>
+                    <br>
+                    <button type="submit">Send Order</button>
+                </form>
+            </div>
         </div>
-    {% endfor %}
+    </div>
+
 
     <script>
         $('.add_to_cart_button').click((e)=>{
@@ -35,7 +69,6 @@
             var nrOfPresence = $('.'+classNameOfParent + '  p.nr_total_presence').text();
             $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
 
-            alert(oneItemName);
             var path = '{{ path('app_add_cart') }}';
             var fullUrl   = window.location.origin + path;
             $.ajax({
@@ -59,7 +92,11 @@
             var oneItemName = $('.'+classNameOfParent2 + '  p.oneItemTitle').text();
             var nrOfPresence = $('.'+classNameOfParent2 + '  p.nr_total_presence').text();
             $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);
-            alert(classNameOfParent2);
+
+            if(parseInt(nrOfPresence) === 1){
+                $(e.target).parent().remove();
+            }
+
 
             var path = '{{ path('app_remove_cart') }}';
             var fullUrl   = window.location.origin + path;

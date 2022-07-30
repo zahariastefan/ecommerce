@@ -7,6 +7,12 @@ body {
     color: #444;
 }
 
+.navbar{
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
+
 .jumbotron-img {
     background: rgb(237,116,88);
     background: linear-gradient(302deg, rgba(237,116,88,1) 16%, rgba(51,61,81,1) 97%);
@@ -137,3 +143,37 @@ fieldset[disabled] .btn-question.active {
 footer {
     background-color: #efefee;
 }
+
+
+.form_checkout input[type=text]{
+    margin: 5px !important;
+    /*width: 50%;*/
+}
+
+.form_checkout button {
+    margin: 5px !important;
+    /*width: 50%;*/
+}
+
+.container_cart{
+    position: relative;
+    top: 60px;
+}
+
+.second_column_cart .form_checkout {
+    margin: 17px;
+    position: absolute;
+    right: 239px;
+    background: wheat;
+    padding: 35px;
+}
+.second_column_cart{
+    position: fixed;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+

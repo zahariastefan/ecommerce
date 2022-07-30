@@ -18,6 +18,8 @@ return [
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::stylesheet'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     'app_base' => [[], ['_controller' => 'App\\Controller\\BaseController::index'], [], [['text', '/base']], [], [], []],
     'app_cart' => [[], ['_controller' => 'App\\Controller\\CartController::cart'], [], [['text', '/cart']], [], [], []],
+    'app_checkout' => [[], ['_controller' => 'App\\Controller\\CartController::checkout'], [], [['text', '/checkout']], [], [], []],
+    'app_thanks' => [[], ['_controller' => 'App\\Controller\\CartController::thanks'], [], [['text', '/thanks']], [], [], []],
     'app_homepage' => [[], ['_controller' => 'App\\Controller\\HomepageController::homepage'], [], [['text', '/']], [], [], []],
     'app_get_cart_data' => [[], ['_controller' => 'App\\Controller\\HomepageController::getCart'], [], [['text', '/get-cart-data']], [], [], []],
     'app_product_page' => [['slug'], ['_controller' => 'App\\Controller\\ProductPageController::productPage'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/product-page']], [], [], []],
