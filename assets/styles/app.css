@@ -163,12 +163,14 @@ footer {
 .second_column_cart .form_checkout {
     margin: 17px;
     position: absolute;
-    right: 239px;
+    right: 40px;
     background: wheat;
     padding: 35px;
+    width: 50%;
+    top: -18px;
 }
 .second_column_cart{
-    position: fixed;
+    /*position: fixed;*/
 }
 
 footer{
