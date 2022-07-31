@@ -4,14 +4,16 @@
     <div class="row profile_row_body">
         <div class="col">
             <h2 style="padding-top:100px">Comanzi Active</h2>
-            {% for orderedItem in orderedItems %}
-                {% for date, orderedItemArray in orderedItem %}
-                    <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                    {% for orderedItemSingle in orderedItemArray %}
-                        Product Title: {{ orderedItemSingle.title }} <br>
-                        Quantity: {{ orderedItemSingle.quantity }} <br>
-                        Address Delivery: {{ orderedItemSingle.address }} <br>
-                        Phone: {{ orderedItemSingle.phone }} <br><br>
+            {% for orderedItemArray in orderedItems %}
+                {% for date, orderedItemArray2 in orderedItemArray %}
+                    {% for orderedItemSingle in orderedItemArray2 %}
+                        {% if orderedItemSingle.status == 1 %}
+                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                            Product Title: {{ orderedItemSingle.product.title }} <br>
+                            Quantity: {{ orderedItemSingle.quantity }} <br>
+                            Address Delivery: {{ orderedItemSingle.address }} <br>
+                            Phone: {{ orderedItemSingle.phone }} <br><br>
+                        {% endif %}
                     {% endfor %}
                 {% endfor %}
             {% endfor %}
@@ -20,15 +22,16 @@
 
         <div class="col">
             <h2 style="padding-top:100px">Comanzi Livrate</h2>
-            {% for deliveredItem in deliveredItems %}
-                {% for date, deliveredItemArray in deliveredItem %}
-                    <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                    {% for deliveredItemSingle in deliveredItemArray %}
-                        <strong> Data Livrarii Comenzii: {{ deliveredItemSingle.delivered_at }} </strong><br><br>
-                        Product Title: {{ deliveredItemSingle.title }} <br>
-                        Quantity: {{ deliveredItemSingle.quantity }} <br>
-                        Address Delivery: {{ deliveredItemSingle.address }} <br>
-                        Phone: {{ deliveredItemSingle.phone }} <br><br>
+            {% for orderedItem in deliveredItems %}
+                {% for date, orderedItemArray in orderedItem %}
+                    {% for orderedItemSingle in orderedItemArray %}
+                        {% if orderedItemSingle.status == 2 %}
+                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                            Product Title: {{ orderedItemSingle.product.title }} <br>
+                            Quantity: {{ orderedItemSingle.quantity }} <br>
+                            Address Delivery: {{ orderedItemSingle.address }} <br>
+                            Phone: {{ orderedItemSingle.phone }} <br><br>
+                        {% endif %}
                     {% endfor %}
                 {% endfor %}
             {% endfor %}

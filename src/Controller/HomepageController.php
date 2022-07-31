@@ -35,6 +35,14 @@ class HomepageController extends AbstractController
             $cart = $cartRepository->findBy([
                 'user' => $this->getUser()
             ]);
+            $cart = $cartRepository->createQueryBuilder('cart')
+                ->where('cart.user = '.$this->getUser()->getId())
+                ->andWhere('cart.deleted_at IS NULL')
+                ->andWhere('cart.status = :status')
+                ->setParameter('status','0')
+                ->getQuery()
+                ->getResult()
+            ;
 //            dd($cart);
             if(!empty($cart)){//if yes
                 $cartNr = count($cart);
