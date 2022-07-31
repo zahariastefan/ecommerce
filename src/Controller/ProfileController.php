@@ -16,9 +16,6 @@ class ProfileController extends AbstractController
     #[Route('/profile', name: 'app_profile')]
     public function profile(CartRepository $cartRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
     {
-        $user = $userRepository->findBy([
-            'email' => $this->getUser()->getUserIdentifier()
-        ]);
         $ordersStatus1 = $cartRepository->createQueryBuilder('c')
             ->where('c.user = '.$this->getUser()->getId())
             ->andWhere('c.status = 1');
@@ -26,26 +23,28 @@ class ProfileController extends AbstractController
             ->where('c.user = '.$this->getUser()->getId())
             ->andWhere('c.status = 2');
 
-        $orderedItems = $this->loopOrders($ordersStatus1);
-        $deliveredItems = $this->loopOrders($ordersStatus2);
+        $orderedItems = $this->deleteDuplicates($ordersStatus1);
+        $deliveredItems = $this->deleteDuplicates($ordersStatus2);
         return $this->render('profile.html.twig', [
             'orderedItems' => $orderedItems,
             'deliveredItems' => $deliveredItems
         ]);
     }
 
-    public function loopOrders($orderObjs)
+    /**This function return Array with all ordered Orders without repetition and By date **/
+    public function deleteDuplicates($orderObjs)
     {
-        $dateAddedAt = [];
+        $dateAddedAt = [];//list of all dates
         $orderObj = $orderObjs->getQuery()->getResult();
         foreach ($orderObj as $order) {
             $dateObj = (array) $order->getAddedAt();
             $dateAddedAt[] =$dateObj['date'];
         }
         $uniqueDates = array_unique($dateAddedAt);
-        $arrayForTwigByDate=[];
+        $arrayForTwigByDate=[];//date => products (with duplicates)
         foreach ($uniqueDates as $uniqueDate) {
             $formattedDate = substr($uniqueDate,0,19);
+            /**getting all Cart By Date**/
             $orders = $orderObjs
                 ->where('c.added_at LIKE :date')
                 ->setParameter('date', $formattedDate)
@@ -53,11 +52,8 @@ class ProfileController extends AbstractController
                 ->getQuery()
                 ->getResult()
             ;
-            $titleOrders=[];
-            $dateAddedAt=[];
             foreach ($orders as $key=>$order) {
                 $date =substr(((array) $order->getAddedAt())['date'],0,19);//this change
-                $dateAddedAt[]=$formattedDate;//this is fixed in this loop
                 if($formattedDate == $date){
                     $arrayForTwigByDate[$formattedDate][] =
                         [
@@ -65,14 +61,23 @@ class ProfileController extends AbstractController
                             'address' => $order->getAddress(),
                             'phone' => '0' . $order->getPhone()
                         ];
-                    $titleOrders[] = $order->getProduct()->getTitle();
                 }
             }
         }
-
         $finalArray = [];
-        foreach ($arrayForTwigByDate as $date=>$listOfArrays) {
-
+        foreach ($arrayForTwigByDate as $date=>$listOfArrays) { //that loop , in help of other function, delete duplicate
+            /**
+             *
+            the format of $listOfArrays are:
+            array:10 [▼
+            0 => array:3 [▶]
+            1 => array:3 [▼
+                "title" => "TitleName"
+                "address" => "adress sdjasni"
+                "phone" => "0744541254"
+            ]
+            2 => array:3 [▶]
+             */
             $unique = self::unique_multi_array($listOfArrays);
             $uniqueWithData = [$date=>$unique];
             $finalArray[]=$uniqueWithData;
@@ -80,6 +85,9 @@ class ProfileController extends AbstractController
         return $finalArray;
     }
 
+    /**
+     * This Function Delete Duplicates and Add Quantity
+    */
     function unique_multi_array($array) {
         $temp_array = array();
         $i = 0;
@@ -89,7 +97,7 @@ class ProfileController extends AbstractController
             $prodTtile[]=$item['title'];
         }
         foreach($array as $key=>$val) {
-            /**ATTACH TO EACH $VAL THE QUANTITY**/
+            /**ATTACH TO EACH $val THE QUANTITY that exist in array_count_values($prodTtile)**/
             foreach (array_count_values($prodTtile) as $title=>$quantity) {
                 if($val['title'] == $title){
                     $val['quantity'] = $quantity;
@@ -99,7 +107,7 @@ class ProfileController extends AbstractController
 
             /**FILL WITH ARRAY WITHOUT DUPLICATES IN $final_array**/
             if(count($temp_array) > 0){
-                if(count(array_diff($temp_array[$i],$val)) > 0){
+                if(count(array_diff($temp_array[$i],$val)) > 0){//if the same array will be Empty []
                     $i+=1;
                     $temp_array[]=$val;
                     $final_array[]=$val;
