@@ -38,6 +38,9 @@ class Cart
     #[ORM\Column(nullable: true)]
     private ?int $phone = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $delivered_at = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Cart
     public function setPhone(?int $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getDeliveredAt(): ?\DateTimeImmutable
+    {
+        return $this->delivered_at;
+    }
+
+    public function setDeliveredAt(?\DateTimeImmutable $delivered_at): self
+    {
+        $this->delivered_at = $delivered_at;
 
         return $this;
     }

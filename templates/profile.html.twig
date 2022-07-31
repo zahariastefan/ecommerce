@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
+    <div class="row profile_row_body">
         <div class="col">
             <h2 style="padding-top:100px">Comanzi Active</h2>
             {% for orderedItem in orderedItems %}
@@ -23,8 +23,8 @@
             {% for deliveredItem in deliveredItems %}
                 {% for date, deliveredItemArray in deliveredItem %}
                     <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                    <strong> Data Livrarii Comenzii: DE FACUT!!! </strong><br><br>
                     {% for deliveredItemSingle in deliveredItemArray %}
+                        <strong> Data Livrarii Comenzii: {{ deliveredItemSingle.delivered_at }} </strong><br><br>
                         Product Title: {{ deliveredItemSingle.title }} <br>
                         Quantity: {{ deliveredItemSingle.quantity }} <br>
                         Address Delivery: {{ deliveredItemSingle.address }} <br>

@@ -58,10 +58,16 @@ return [[
 '[C]App%5CController%5CCartController' => 1,
 'App%5CController%5CCartController%23cart' => 0,
 '[C]App%5CController%5CCartController%23cart' => 1,
+'App%5CController%5CCartController%23checkout' => 0,
+'[C]App%5CController%5CCartController%23checkout' => 1,
+'App%5CController%5CCartController%23thanks' => 0,
+'[C]App%5CController%5CCartController%23thanks' => 1,
 'App%5CController%5CHomepageController' => 0,
 '[C]App%5CController%5CHomepageController' => 1,
 'App%5CController%5CHomepageController%23homepage' => 0,
 '[C]App%5CController%5CHomepageController%23homepage' => 1,
+'App%5CController%5CHomepageController%23getCart' => 0,
+'[C]App%5CController%5CHomepageController%23getCart' => 1,
 'App%5CController%5CProductPageController' => 0,
 '[C]App%5CController%5CProductPageController' => 1,
 'App%5CController%5CProductPageController%23productPage' => 0,
@@ -70,6 +76,8 @@ return [[
 '[C]App%5CController%5CProductPageController%23comment' => 1,
 'App%5CController%5CProductPageController%23addToCart' => 0,
 '[C]App%5CController%5CProductPageController%23addToCart' => 1,
+'App%5CController%5CProductPageController%23removeToCart' => 0,
+'[C]App%5CController%5CProductPageController%23removeToCart' => 1,
 'App%5CController%5CRegistrationController' => 0,
 '[C]App%5CController%5CRegistrationController' => 1,
 'App%5CController%5CRegistrationController%23register' => 2,
@@ -86,12 +94,6 @@ return [[
 '[C]App%5CController%5CSecurityController%23login' => 1,
 'App%5CController%5CSecurityController%23logout' => 0,
 '[C]App%5CController%5CSecurityController%23logout' => 1,
-'App%5CController%5CSecurityController%23enable2fa' => 5,
-'[C]App%5CController%5CSecurityController%23enable2fa' => 1,
-'App%5CController%5CSecurityController%23disable2fa' => 6,
-'[C]App%5CController%5CSecurityController%23disable2fa' => 1,
-'App%5CController%5CSecurityController%23displayGoogleAuthenticatorQrCode' => 7,
-'[C]App%5CController%5CSecurityController%23displayGoogleAuthenticatorQrCode' => 1,
 'App%5CController%5CUserController' => 0,
 '[C]App%5CController%5CUserController' => 1,
 'App%5CController%5CUserController%23index' => 0,
@@ -182,6 +184,12 @@ return [[
 '[C]App%5CEntity%5CProduct%23getSlug' => 1,
 'App%5CEntity%5CProduct%23setSlug' => 0,
 '[C]App%5CEntity%5CProduct%23setSlug' => 1,
+'App%5CEntity%5CProduct%23getCarts' => 0,
+'[C]App%5CEntity%5CProduct%23getCarts' => 1,
+'App%5CEntity%5CProduct%23addCart' => 0,
+'[C]App%5CEntity%5CProduct%23addCart' => 1,
+'App%5CEntity%5CProduct%23removeCart' => 0,
+'[C]App%5CEntity%5CProduct%23removeCart' => 1,
 'App%5CEntity%5CProduct%24id' => 0,
 '[C]App%5CEntity%5CProduct%24id' => 1,
 'App%5CEntity%5CProduct%24title' => 0,
@@ -198,6 +206,8 @@ return [[
 '[C]App%5CEntity%5CProduct%24deleted_at' => 1,
 'App%5CEntity%5CProduct%24slug' => 0,
 '[C]App%5CEntity%5CProduct%24slug' => 1,
+'App%5CEntity%5CProduct%24carts' => 0,
+'[C]App%5CEntity%5CProduct%24carts' => 1,
 'App%5CEntity%5CUser' => 0,
 '[C]App%5CEntity%5CUser' => 1,
 'App%5CEntity%5CUser%23__construct' => 0,
@@ -242,14 +252,24 @@ return [[
 '[C]App%5CEntity%5CUser%23getIsVerified' => 1,
 'App%5CEntity%5CUser%23setIsVerified' => 0,
 '[C]App%5CEntity%5CUser%23setIsVerified' => 1,
-'App%5CEntity%5CUser%23isTotpAuthenticationEnabled' => 0,
-'[C]App%5CEntity%5CUser%23isTotpAuthenticationEnabled' => 1,
-'App%5CEntity%5CUser%23getTotpAuthenticationUsername' => 0,
-'[C]App%5CEntity%5CUser%23getTotpAuthenticationUsername' => 1,
-'App%5CEntity%5CUser%23getTotpAuthenticationConfiguration' => 0,
-'[C]App%5CEntity%5CUser%23getTotpAuthenticationConfiguration' => 1,
-'App%5CEntity%5CUser%23setTotpSecret' => 0,
-'[C]App%5CEntity%5CUser%23setTotpSecret' => 1,
+'App%5CEntity%5CUser%23getAddress' => 0,
+'[C]App%5CEntity%5CUser%23getAddress' => 1,
+'App%5CEntity%5CUser%23setAddress' => 0,
+'[C]App%5CEntity%5CUser%23setAddress' => 1,
+'App%5CEntity%5CUser%23getCarts' => 0,
+'[C]App%5CEntity%5CUser%23getCarts' => 1,
+'App%5CEntity%5CUser%23addCart' => 0,
+'[C]App%5CEntity%5CUser%23addCart' => 1,
+'App%5CEntity%5CUser%23removeCart' => 0,
+'[C]App%5CEntity%5CUser%23removeCart' => 1,
+'App%5CEntity%5CUser%23getUniqueNr' => 0,
+'[C]App%5CEntity%5CUser%23getUniqueNr' => 1,
+'App%5CEntity%5CUser%23setUniqueNr' => 0,
+'[C]App%5CEntity%5CUser%23setUniqueNr' => 1,
+'App%5CEntity%5CUser%23getPhone' => 0,
+'[C]App%5CEntity%5CUser%23getPhone' => 1,
+'App%5CEntity%5CUser%23setPhone' => 0,
+'[C]App%5CEntity%5CUser%23setPhone' => 1,
 'App%5CEntity%5CUser%24id' => 0,
 '[C]App%5CEntity%5CUser%24id' => 1,
 'App%5CEntity%5CUser%24email' => 0,
@@ -266,8 +286,14 @@ return [[
 '[C]App%5CEntity%5CUser%24comments' => 1,
 'App%5CEntity%5CUser%24isVerified' => 0,
 '[C]App%5CEntity%5CUser%24isVerified' => 1,
-'App%5CEntity%5CUser%24totpSecret' => 0,
-'[C]App%5CEntity%5CUser%24totpSecret' => 1,
+'App%5CEntity%5CUser%24address' => 0,
+'[C]App%5CEntity%5CUser%24address' => 1,
+'App%5CEntity%5CUser%24carts' => 0,
+'[C]App%5CEntity%5CUser%24carts' => 1,
+'App%5CEntity%5CUser%24unique_nr' => 0,
+'[C]App%5CEntity%5CUser%24unique_nr' => 1,
+'App%5CEntity%5CUser%24phone' => 0,
+'[C]App%5CEntity%5CUser%24phone' => 1,
 'Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 0,
 '[C]Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 1,
 'Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%23__construct' => 0,
@@ -706,36 +732,6 @@ return [[
 '[C]Doctrine%5CORM%5CPersisters%5CEntity%5CSingleTablePersister%23generateFilterConditionSQL' => 1,
 'Doctrine%5CORM%5CPersisters%5CEntity%5CSingleTablePersister%23getSQLResultCasing' => 0,
 '[C]Doctrine%5CORM%5CPersisters%5CEntity%5CSingleTablePersister%23getSQLResultCasing' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23__construct' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23__construct' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23form' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23form' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTwoFactorToken' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTwoFactorToken' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23setPreferredProvider' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23setPreferredProvider' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTemplateVars' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23getTemplateVars' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23renderForm' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23renderForm' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23getLastAuthenticationException' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23getLastAuthenticationException' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%23canSetTrustedDevice' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%23canSetTrustedDevice' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%24tokenStorage' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24tokenStorage' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%24providerRegistry' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24providerRegistry' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%24twoFactorFirewallContext' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24twoFactorFirewallContext' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%24logoutUrlGenerator' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24logoutUrlGenerator' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedDeviceManager' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedDeviceManager' => 1,
-'Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedFeatureEnabled' => 0,
-'[C]Scheb%5CTwoFactorBundle%5CController%5CFormController%24trustedFeatureEnabled' => 1,
 'Symfony%5CBundle%5CFrameworkBundle%5CController%5CRedirectController' => 0,
 '[C]Symfony%5CBundle%5CFrameworkBundle%5CController%5CRedirectController' => 1,
 'Symfony%5CBundle%5CFrameworkBundle%5CController%5CRedirectController%23__construct' => 0,
@@ -848,7 +844,7 @@ return [[
 ], [
 
 0 => [],
-1 => 1659090439,
+1 => 1659286170,
 2 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -992,174 +988,6 @@ return [[
         ],
         [
             $o[0],
-        ],
-        []
-    );
-},
-5 => static function () {
-    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
-        $o = [
-            clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
-            clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted')),
-        ],
-        null,
-        [
-            'Symfony\\Component\\Routing\\Annotation\\Route' => [
-                'path' => [
-                    '/authenticate/2fa/enable',
-                ],
-                'methods' => [
-                    [],
-                ],
-                'schemes' => [
-                    [],
-                ],
-                'name' => [
-                    'app_2fa_enable',
-                ],
-                'requirements' => [
-                    [],
-                ],
-                'options' => [
-                    [],
-                ],
-                'defaults' => [
-                    [],
-                ],
-                'host' => [
-                    null,
-                ],
-                'condition' => [
-                    null,
-                ],
-                'priority' => [
-                    null,
-                ],
-                'env' => [
-                    null,
-                ],
-            ],
-            'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted' => [
-                'attributes' => [
-                    1 => 'ROLE_USER',
-                ],
-            ],
-        ],
-        [
-            $o[0],
-            $o[1],
-        ],
-        []
-    );
-},
-6 => static function () {
-    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
-        $o = [
-            clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
-            clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted')),
-        ],
-        null,
-        [
-            'Symfony\\Component\\Routing\\Annotation\\Route' => [
-                'path' => [
-                    '/authenticate/2fa/disable',
-                ],
-                'methods' => [
-                    [],
-                ],
-                'schemes' => [
-                    [],
-                ],
-                'name' => [
-                    'app_2fa_disable',
-                ],
-                'requirements' => [
-                    [],
-                ],
-                'options' => [
-                    [],
-                ],
-                'defaults' => [
-                    [],
-                ],
-                'host' => [
-                    null,
-                ],
-                'condition' => [
-                    null,
-                ],
-                'priority' => [
-                    null,
-                ],
-                'env' => [
-                    null,
-                ],
-            ],
-            'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted' => [
-                'attributes' => [
-                    1 => 'ROLE_USER',
-                ],
-            ],
-        ],
-        [
-            $o[0],
-            $o[1],
-        ],
-        []
-    );
-},
-7 => static function () {
-    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
-        $o = [
-            clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
-            clone ($p['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted')),
-        ],
-        null,
-        [
-            'Symfony\\Component\\Routing\\Annotation\\Route' => [
-                'path' => [
-                    '/authentication/2fa/qr-code',
-                ],
-                'methods' => [
-                    [],
-                ],
-                'schemes' => [
-                    [],
-                ],
-                'name' => [
-                    'app_qr_code',
-                ],
-                'requirements' => [
-                    [],
-                ],
-                'options' => [
-                    [],
-                ],
-                'defaults' => [
-                    [],
-                ],
-                'host' => [
-                    null,
-                ],
-                'condition' => [
-                    null,
-                ],
-                'priority' => [
-                    null,
-                ],
-                'env' => [
-                    null,
-                ],
-            ],
-            'Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted' => [
-                'attributes' => [
-                    1 => 'ROLE_USER',
-                ],
-            ],
-        ],
-        [
-            $o[0],
-            $o[1],
         ],
         []
     );

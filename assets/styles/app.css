@@ -184,3 +184,7 @@ footer{
     top: 60px;
     background: red;
 }
+
+.profile_row_body{
+    margin-bottom: 100px !important;
+}

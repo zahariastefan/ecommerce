@@ -16,15 +16,17 @@ class ProfileController extends AbstractController
     #[Route('/profile', name: 'app_profile')]
     public function profile(CartRepository $cartRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
     {
-        $ordersStatus1 = $cartRepository->createQueryBuilder('c')
+        $queryBuilder = $cartRepository->createQueryBuilder('c');
+//        $ordersStatus1 = $queryBuilder
+//            ->where('c.user = '.$this->getUser()->getId())
+//            ->andWhere('c.status = 1');
+        $orders = $queryBuilder
             ->where('c.user = '.$this->getUser()->getId())
-            ->andWhere('c.status = 1');
-        $ordersStatus2 = $cartRepository->createQueryBuilder('c')
-            ->where('c.user = '.$this->getUser()->getId())
-            ->andWhere('c.status = 2');
+        ;
 
-        $orderedItems = $this->deleteDuplicates($ordersStatus1);
-        $deliveredItems = $this->deleteDuplicates($ordersStatus2);
+        $orderedItems = $this->deleteDuplicates($orders, 1);
+        $deliveredItems = $this->deleteDuplicates($orders, 2);
+
         return $this->render('profile.html.twig', [
             'orderedItems' => $orderedItems,
             'deliveredItems' => $deliveredItems
@@ -32,7 +34,7 @@ class ProfileController extends AbstractController
     }
 
     /**This function return Array with all ordered Orders without repetition and By date **/
-    public function deleteDuplicates($orderObjs)
+    public function deleteDuplicates($orderObjs, $status)
     {
         $dateAddedAt = [];//list of all dates
         $orderObj = $orderObjs->getQuery()->getResult();
@@ -47,19 +49,27 @@ class ProfileController extends AbstractController
             /**getting all Cart By Date**/
             $orders = $orderObjs
                 ->where('c.added_at LIKE :date')
+                ->andWhere('c.deleted_at IS NULL')
+                ->andWhere('c.status = '.$status)
                 ->setParameter('date', $formattedDate)
                 ->orderBy('c.product', 'ASC')
                 ->getQuery()
                 ->getResult()
             ;
             foreach ($orders as $key=>$order) {
+                if($order->getDeliveredAt() != null){
+                    $deliveredDate = substr(((array) $order->getDeliveredAt())['date'],0,19);
+                }else{
+                    $deliveredDate = null;
+                }
                 $date =substr(((array) $order->getAddedAt())['date'],0,19);//this change
                 if($formattedDate == $date){
                     $arrayForTwigByDate[$formattedDate][] =
                         [
                             'title' => $order->getProduct()->getTitle(),
                             'address' => $order->getAddress(),
-                            'phone' => '0' . $order->getPhone()
+                            'phone' => '0' . $order->getPhone(),
+                            'delivered_at' => $deliveredDate
                         ];
                 }
             }
