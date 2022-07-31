@@ -18,11 +18,11 @@
                             <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
                             <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
                             <button class="refund_button">Returneaza</button><br><br>
+                            <button class="cancel_order">Anuleaza Comanda</button>
                         </div>
                     {% endfor %}
                 {% endfor %}
             {% endfor %}
-            <button class="cancel_order">Anuleaza Comanda</button>
         </div>
         <div class="col">
             <h2 style="padding-top:100px">Comanzi Livrate</h2>
@@ -103,7 +103,6 @@
             var path = '{{ path('app_refund_product') }}';
             var fullUrl = window.location.origin + path;
             var refundQ = $('#' + parentClass + ' .refund_quantity').text();
-            // alert(refundQ);
             if(confirm("Are you sure you want to refund this product?")){
                 alert('You refunded successfully!');
                 $.ajax({
@@ -114,7 +113,8 @@
                         refundQ:refundQ
                     },
                     complete: function (data) {
-                        // $('#' + parentClass).empty();
+                        if(parseInt(refundQ) === parseInt(cartItemId)){}
+                            $('#' + parentClass).parent().empty();
                     }
                 });
             }else{
