@@ -25,6 +25,7 @@ return [
         '/remove-to-cart' => [[['_route' => 'app_remove_cart', '_controller' => 'App\\Controller\\ProductPageController::removeToCart'], null, null, null, false, false, null]],
         '/profile' => [[['_route' => 'app_profile', '_controller' => 'App\\Controller\\ProfileController::profile'], null, null, null, false, false, null]],
         '/cancel-order' => [[['_route' => 'app_cancel_order', '_controller' => 'App\\Controller\\ProfileController::cancelOrder'], null, null, null, false, false, null]],
+        '/refund-product' => [[['_route' => 'app_refund_product', '_controller' => 'App\\Controller\\ProfileController::refundProduct'], null, null, null, false, false, null]],
         '/register' => [[['_route' => 'app_register', '_controller' => 'App\\Controller\\RegistrationController::register'], null, null, null, false, false, null]],
         '/verify' => [[['_route' => 'app_verify_email', '_controller' => 'App\\Controller\\RegistrationController::verifyUserEmail'], null, null, null, false, false, null]],
         '/verify/resend' => [[['_route' => 'app_verify_resend_email', '_controller' => 'App\\Controller\\RegistrationController::resendVerifyEmail'], null, null, null, false, false, null]],

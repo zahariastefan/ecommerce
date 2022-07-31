@@ -7,15 +7,14 @@
             {% for orderedItemArray in orderedItems %}
                 {% for date, orderedItemArray2 in orderedItemArray %}
                     {% for orderedItemSingle in orderedItemArray2 %}
-{#                        {{ dump(orderedItemSingle) }}#}
-                        <div class="container return_div_{{ orderedItemSingle.id }}">
+                        <div id="refund_{{ orderedItemSingle.id }}">
                             <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
                             Quantity: {{ orderedItemSingle.quantity }} <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
                             Phone: {{ orderedItemSingle.phone }} <br><br>
-                            <input type="hidden" name="retur_{{ orderedItemSingle.id }}" class="retur_{{ orderedItemSingle.id }}" value="{{ orderedItemSingle.id }}">
-                            <button>Returneaza</button><br><br>
+                            <input type="hidden" name="refund_{{ orderedItemSingle.id }}" class="refund_{{ orderedItemSingle.id }}" value="{{ orderedItemSingle.id }}">
+                            <button class="refund_button">Returneaza</button><br><br>
                         </div>
                     {% endfor %}
                 {% endfor %}
@@ -60,5 +59,28 @@
             });
 
             });
+
+        $('.refund_button').click((e) => {
+            var parentClass = $(e.target).parent().attr('id');
+            var cartItemId = $('.' + parentClass).val();
+            var path = '{{ path('app_refund_product') }}';
+            var fullUrl = window.location.origin + path;
+            if(confirm("Are you sure you want to refund this product?")){
+                alert('You refounded succesfully!');
+                $.ajax({
+                    type: "POST",
+                    url: fullUrl,
+                    data: {
+                        cartItemId :cartItemId,
+                    },
+                    complete: function (data) {
+                        $('#' + parentClass).empty();
+                    }
+                });
+            }else{
+
+            }
+
+        });
     </script>
 {% endblock %}

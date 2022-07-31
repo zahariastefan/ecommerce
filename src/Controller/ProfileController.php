@@ -191,4 +191,26 @@ class ProfileController extends AbstractController
         return new Response();
     }
 
+
+    #[Route('/refund-product', name:'app_refund_product')]
+    public function refundProduct(UserRepository $userRepository,
+                                  Request $request,
+                                  CartRepository $cartRepository,
+                                  EntityManagerInterface $entityManager
+    ): Response
+    {
+        $id = $request->request->get('cartItemId');
+        $cart = $cartRepository->createQueryBuilder('c')
+            ->where('c.user = :user')
+            ->setParameter('user', $this->getUser()->getId())
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+        $cart[0]->setStatus(3);
+        $entityManager->persist($cart[0]);
+        $entityManager->flush();
+        return new Response();
+    }
 }
