@@ -3,8 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CartRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
@@ -18,13 +17,26 @@ class Cart
     #[ORM\ManyToOne(inversedBy: 'carts')]
     private ?User $user = null;
 
-    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'carts')]
-    private Collection $product;
+    #[ORM\ManyToOne(inversedBy: 'carts')]
+    private ?Product $product = null;
 
-    public function __construct()
-    {
-        $this->product = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?\DateTimeImmutable $added_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $deleted_at = null;
+
+    #[ORM\Column]
+    private ?int $status = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $order_nr = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $address = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $phone = null;
 
     public function getId(): ?int
     {
@@ -43,26 +55,86 @@ class Cart
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProduct(): Collection
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function addProduct(Product $product): self
+    public function setProduct(?Product $product): self
     {
-        if (!$this->product->contains($product)) {
-            $this->product->add($product);
-        }
+        $this->product = $product;
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function getAddedAt(): ?\DateTimeImmutable
     {
-        $this->product->removeElement($product);
+        return $this->added_at;
+    }
+
+    public function setAddedAt(\DateTimeImmutable $added_at): self
+    {
+        $this->added_at = $added_at;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeImmutable
+    {
+        return $this->deleted_at;
+    }
+
+    public function setDeletedAt(?\DateTimeImmutable $deleted_at): self
+    {
+        $this->deleted_at = $deleted_at;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOrderNr(): ?int
+    {
+        return $this->order_nr;
+    }
+
+    public function setOrderNr(?int $order_nr): self
+    {
+        $this->order_nr = $order_nr;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?int $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }

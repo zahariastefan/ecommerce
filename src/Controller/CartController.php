@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -17,27 +18,30 @@ class CartController extends AbstractController
 {
 
     #[Route('/cart', name:'app_cart')]
-    public function cart(UserRepository $userRepository, CartRepository $cartRepository)
+    public function cart(UserRepository $userRepository, CartRepository $cartRepository, ProductRepository $productRepository)
     {
         if(!$this->getUser()) return new Response('no logged in');
         $user = $userRepository->findBy([
             'id' => $this->getUser()->getId()
         ]);
-
         $cart = $cartRepository->findBy([
             'user' => $user
         ]);
+        $cart = $cartRepository->createQueryBuilder('c')
+            ->where('c.user = '.$this->getUser()->getId())
+            ->andWhere('c.status = 0')
+            ->getQuery()
+            ->getResult()
+        ;
+//        dd($cart->getQuery()->getResult());
         $listOfTitles = [];
         foreach ($cart as $singleCart){
-//            dd(gettype($singleCart));
+            $productsFromCart = $productRepository->findBy([
+                'id' => $singleCart->getProduct()->getId()
+            ]);
+            //select only cart with status 0!!
             if(gettype($singleCart) == 'object'){
-//                dd($singleCart->getProduct()->toArray());
-                $title = $singleCart->getProduct()->toArray();
-                if(!empty($title)){
-                    $listOfTitles[] = $title[0]->getTitle();
-                }
-            }else{
-                $title = $singleCart->getProduct()->toArray()[0]->getTitle();
+                $title = $productsFromCart[0]->getTitle();
                 if(!empty($title)){
                     $listOfTitles[] = $title;
                 }
@@ -55,40 +59,44 @@ class CartController extends AbstractController
     }
 
     #[Route('/thanks', name:'app_thanks')]
-    public function thanks(Request $request, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function thanks(Request $request, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, CartRepository $cartRepository)
     {
         $user = $userRepository->findBy([
             'email' => $this->getUser()->getUserIdentifier()
         ]);
+        $date = $request->request->get('dateTime');
         $data = $request->query->all();
+//        dd($data);
         $allItems = [];
         //starting adding products to order
         foreach ($data as $key => $oneData) {
             $array = json_decode($oneData, true);
-
             if(str_contains($key, 'item') ){//if is a product
                 $product = $productRepository->findBy([
                     'title' => $array['item']
                 ]);
-//                dd($data);
+                $cart = $cartRepository
+                    ->createQueryBuilder('c')
+                    ->orderBy('c.added_at','DESC')
+                    ->where('c.user = '.$user[0]->getId())
+                    ->andWhere('c.status = 0')
+                    ->getQuery()->getResult();
                 $allItems[] = $product;
-                $order = new Order();
-                $order->setUser($user[0]);
-                $order->setProduct($product[0]);
-                $order->setQuantity($array['quantity']);
-                $order->setAddress($data['street'].' '.$data['number'].' '.$data['building']);
-                $order->setPhone($data['phone']);
-                $entityManager->persist($order);
+                foreach ($cart as $item) {
+//                    dd($data);
+                    //here I have to change status of cart product
+                    $item->setStatus(1);
+                    $item->setPhone($data['phone']);
+                    $item->setAddress($data['city'].' '.$data['street'].' '.$data['number'].' '.$data['building']);
+                    $item->setAddedAt(new \DateTimeImmutable());
+                    $entityManager->persist($item);
+                }
+
             }
-
         }
-        //products added to Order
-
-
-
+        $user[0]->setUniqueNr(rand(123456,123456789));
+        $entityManager->persist($user[0]);
         $entityManager->flush();
-
-//        dd($data);
         return $this->render('thanks.html.twig');
     }
 }

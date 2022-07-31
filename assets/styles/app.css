@@ -179,3 +179,8 @@ footer{
     width: 100%;
 }
 
+.thank_you{
+    position: relative;
+    top: 60px;
+    background: red;
+}

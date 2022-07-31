@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <p style="padding-top:100px">Comanzi Active (status 1 = ordered)</p>
+    {% for orderedItem in orderedItems %}
+        {{ dump(orderedItem) }}
+        Product Title:
+
+    {% endfor %}
+{#          /**
+         * [
+         * title
+         * quantity
+         * address
+         * phone
+         * created_at
+         * ]
+         */          #}
+    <p style="padding-top:100px">Comanzi Livrate (status 2 = ordered)</p>
+
+
+
+    <button class="cancel_order">Anuleaza Comanda</button>
+
+    <script>
+        $('.cancel_order').click(()=>{
+
+            var path = '{{ path('app_cancel_order') }}';
+            var fullUrl   = window.location.origin + path;
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    user : '{{ app.user.email }}',
+                },
+                complete: function (data) {
+
+                }
+            });
+
+            });
+    </script>
+{% endblock %}

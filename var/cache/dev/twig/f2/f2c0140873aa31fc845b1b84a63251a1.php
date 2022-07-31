@@ -77,9 +77,13 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
         <div class=\"collapse navbar-collapse\" id=\"navbar-collapsable\">
             <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">
-";
-        // line 32
-        echo "            </ul>
+                <li class=\"nav-item\">
+                    <a class=\"nav-link\" href=\"";
+        // line 30
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_profile");
+        echo "\">Profile</a>
+                </li>
+            </ul>
             <div class=\"d-inline-flex \">
                 <a href=\"";
         // line 34
@@ -334,7 +338,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     public function getDebugInfo()
     {
-        return array (  308 => 99,  294 => 11,  284 => 10,  272 => 8,  269 => 7,  259 => 6,  240 => 5,  214 => 107,  205 => 100,  203 => 99,  194 => 96,  191 => 95,  187 => 94,  178 => 91,  175 => 90,  171 => 89,  165 => 85,  160 => 83,  155 => 82,  149 => 78,  143 => 75,  137 => 72,  134 => 71,  129 => 62,  127 => 60,  124 => 59,  122 => 58,  115 => 54,  111 => 53,  96 => 40,  94 => 39,  86 => 34,  82 => 32,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  312 => 99,  298 => 11,  288 => 10,  276 => 8,  273 => 7,  263 => 6,  244 => 5,  218 => 107,  209 => 100,  207 => 99,  198 => 96,  195 => 95,  191 => 94,  182 => 91,  179 => 90,  175 => 89,  169 => 85,  164 => 83,  159 => 82,  153 => 78,  147 => 75,  141 => 72,  138 => 71,  133 => 62,  131 => 60,  128 => 59,  126 => 58,  119 => 54,  115 => 53,  100 => 40,  98 => 39,  90 => 34,  83 => 30,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -367,9 +371,9 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
         <div class=\"collapse navbar-collapse\" id=\"navbar-collapsable\">
             <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">
-{#                <li class=\"nav-item\">#}
-{#                    <a class=\"nav-link\" href=\"{{ path('app_popular_answers') }}\">Answers</a>#}
-{#                </li>#}
+                <li class=\"nav-item\">
+                    <a class=\"nav-link\" href=\"{{ path('app_profile') }}\">Profile</a>
+                </li>
             </ul>
             <div class=\"d-inline-flex \">
                 <a href=\"{{ path('app_cart') }}\" class=\"m-2\">

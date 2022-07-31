@@ -82,10 +82,14 @@ class ProductPageController extends  AbstractController
                 'id' => $userId
             ]);
 
+
             //check if logged in
             $cart = new Cart();
             $cart->setUser($user[0]);
-            $cart->addProduct($productObject[0]);
+            $cart->setProduct($productObject[0]);
+            $cart->setAddedAt(new \DateTimeImmutable());
+            $cart->setStatus(0);
+            $cart->setOrderNr($user[0]->getUniqueNr());
             $entityManager->persist($cart);
             $entityManager->flush();
         } else {//if not logged in add to cookie!

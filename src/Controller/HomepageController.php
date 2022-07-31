@@ -35,6 +35,7 @@ class HomepageController extends AbstractController
             $cart = $cartRepository->findBy([
                 'user' => $this->getUser()
             ]);
+//            dd($cart);
             if(!empty($cart)){//if yes
                 $cartNr = count($cart);
             }else{

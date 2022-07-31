@@ -58,23 +58,24 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\Column(type: 'string',length: 255, nullable: true)]
-    private $totpSecret;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     private Collection $carts;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $address = null;
+    #[ORM\Column(unique: true, nullable: true)]
+    private ?int $unique_nr;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
-    private Collection $orders;
+    #[ORM\Column(nullable: true)]
+    private ?int $phone = null;
+
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->carts = new ArrayCollection();
-        $this->orders = new ArrayCollection();
+        $this->unique_nr = rand(123456,123456789);
     }
 
     public function getId(): ?int
@@ -226,27 +227,15 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
         return $this;
     }
-    public function isTotpAuthenticationEnabled(): bool
+
+    public function getAddress(): ?string
     {
-        return $this->totpSecret ? true : false;
+        return $this->address;
     }
 
-    public function getTotpAuthenticationUsername(): string
+    public function setAddress(?string $address): self
     {
-        return $this->getUserIdentifier();
-    }
-
-    public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
-    {
-        return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
-    }
-
-    /**
-     * @param mixed $totpSecret
-     */
-    public function setTotpSecret(?string $totpSecret): self
-    {
-        $this->totpSecret = $totpSecret;
+        $this->address = $address;
 
         return $this;
     }
@@ -281,45 +270,28 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getUniqueNr(): ?int
     {
-        return $this->address;
+        return $this->unique_nr;
     }
 
-    public function setAddress(?string $address): self
+    public function setUniqueNr(?int $unique_nr): self
     {
-        $this->address = $address;
+        $this->unique_nr = $unique_nr;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Order>
-     */
-    public function getOrders(): Collection
+    public function getPhone(): ?int
     {
-        return $this->orders;
+        return $this->phone;
     }
 
-    public function addOrder(Order $order): self
+    public function setPhone(?int $phone): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders->add($order);
-            $order->setUser($this);
-        }
+        $this->phone = $phone;
 
         return $this;
     }
 
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }
