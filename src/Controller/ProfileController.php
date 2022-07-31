@@ -22,27 +22,19 @@ class ProfileController extends AbstractController
         $ordersStatus1 = $cartRepository->createQueryBuilder('c')
             ->where('c.user = '.$this->getUser()->getId())
             ->andWhere('c.status = 1');
+        $ordersStatus2 = $cartRepository->createQueryBuilder('c')
+            ->where('c.user = '.$this->getUser()->getId())
+            ->andWhere('c.status = 2');
 
-        $orderedItems = self::loopOrders($ordersStatus1, $cartRepository,$productRepository, 1);
-        $deliveredItems = self::loopOrders($ordersStatus1, $cartRepository,$productRepository, 2);
-
-
-        /**
-         * [
-         * title
-         * quantity
-         * address
-         * phone
-         * created_at
-         * ]
-         */
+        $orderedItems = $this->loopOrders($ordersStatus1);
+        $deliveredItems = $this->loopOrders($ordersStatus2);
         return $this->render('profile.html.twig', [
             'orderedItems' => $orderedItems,
             'deliveredItems' => $deliveredItems
         ]);
     }
 
-    public function loopOrders($orderObjs, $cartRepository, $productRepository,$status)
+    public function loopOrders($orderObjs)
     {
         $dateAddedAt = [];
         $orderObj = $orderObjs->getQuery()->getResult();
@@ -50,33 +42,19 @@ class ProfileController extends AbstractController
             $dateObj = (array) $order->getAddedAt();
             $dateAddedAt[] =$dateObj['date'];
         }
-
-//        dd($dateAddedAt);
         $uniqueDates = array_unique($dateAddedAt);
-
-        $cartByData = [];
-        $listProductTitle=[];
-        $address='';
-        $phone='';
-        $date='';
-
         $arrayForTwigByDate=[];
-        //to fill with data $orders->getQuery()->getResult(s
         foreach ($uniqueDates as $uniqueDate) {
             $formattedDate = substr($uniqueDate,0,19);
-//            dd($formattedDate);
             $orders = $orderObjs
                 ->where('c.added_at LIKE :date')
-                ->andWhere('c.status = '.$status)
                 ->setParameter('date', $formattedDate)
                 ->orderBy('c.product', 'ASC')
                 ->getQuery()
                 ->getResult()
             ;
-            $cartByData[] = $orders;
             $titleOrders=[];
             $dateAddedAt=[];
-            $quantity=0;
             foreach ($orders as $key=>$order) {
                 $date =substr(((array) $order->getAddedAt())['date'],0,19);//this change
                 $dateAddedAt[]=$formattedDate;//this is fixed in this loop
@@ -91,7 +69,48 @@ class ProfileController extends AbstractController
                 }
             }
         }
-        return $arrayForTwigByDate;
+
+        $finalArray = [];
+        foreach ($arrayForTwigByDate as $date=>$listOfArrays) {
+
+            $unique = self::unique_multi_array($listOfArrays);
+            $uniqueWithData = [$date=>$unique];
+            $finalArray[]=$uniqueWithData;
+        }
+        return $finalArray;
+    }
+
+    function unique_multi_array($array) {
+        $temp_array = array();
+        $i = 0;
+        $final_array = array();
+        $prodTtile = [];
+        foreach ($array as $item) {
+            $prodTtile[]=$item['title'];
+        }
+        foreach($array as $key=>$val) {
+            /**ATTACH TO EACH $VAL THE QUANTITY**/
+            foreach (array_count_values($prodTtile) as $title=>$quantity) {
+                if($val['title'] == $title){
+                    $val['quantity'] = $quantity;
+                }
+            }
+            /**END ATTACH**/
+
+            /**FILL WITH ARRAY WITHOUT DUPLICATES IN $final_array**/
+            if(count($temp_array) > 0){
+                if(count(array_diff($temp_array[$i],$val)) > 0){
+                    $i+=1;
+                    $temp_array[]=$val;
+                    $final_array[]=$val;
+                };
+            }else{
+                $temp_array[]=$val;
+                $final_array[]=$val;
+            }
+            /**END FILLING**/
+        }
+        return $final_array;
     }
 
     #[Route('/cancel-order', name:'app_cancel_order')]
@@ -99,9 +118,6 @@ class ProfileController extends AbstractController
     {
 
         $user = $request->request->get('user');
-
-        dd($user);
-
 
         return new Response();
     }

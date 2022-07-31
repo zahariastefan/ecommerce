@@ -1,26 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <p style="padding-top:100px">Comanzi Active (status 1 = ordered)</p>
-    {% for orderedItem in orderedItems %}
-        {{ dump(orderedItem) }}
-        Product Title:
+    <div class="row">
+        <div class="col">
+            <h2 style="padding-top:100px">Comanzi Active</h2>
+            {% for orderedItem in orderedItems %}
+                {% for date, orderedItemArray in orderedItem %}
+                    <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                    {% for orderedItemSingle in orderedItemArray %}
+                        Product Title: {{ orderedItemSingle.title }} <br>
+                        Quantity: {{ orderedItemSingle.quantity }} <br>
+                        Address Delivery: {{ orderedItemSingle.address }} <br>
+                        Phone: {{ orderedItemSingle.phone }} <br><br>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+            <button class="cancel_order">Anuleaza Comanda</button>
+        </div>
 
-    {% endfor %}
-{#          /**
-         * [
-         * title
-         * quantity
-         * address
-         * phone
-         * created_at
-         * ]
-         */          #}
-    <p style="padding-top:100px">Comanzi Livrate (status 2 = ordered)</p>
+        <div class="col">
+            <h2 style="padding-top:100px">Comanzi Livrate</h2>
+            {% for deliveredItem in deliveredItems %}
+                {% for date, deliveredItemArray in deliveredItem %}
+                    <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                    <strong> Data Livrarii Comenzii: DE FACUT!!! </strong><br><br>
+                    {% for deliveredItemSingle in deliveredItemArray %}
+                        Product Title: {{ deliveredItemSingle.title }} <br>
+                        Quantity: {{ deliveredItemSingle.quantity }} <br>
+                        Address Delivery: {{ deliveredItemSingle.address }} <br>
+                        Phone: {{ deliveredItemSingle.phone }} <br><br>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
 
 
 
-    <button class="cancel_order">Anuleaza Comanda</button>
 
     <script>
         $('.cancel_order').click(()=>{
