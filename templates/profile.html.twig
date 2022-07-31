@@ -10,10 +10,13 @@
                         <div id="refund_{{ orderedItemSingle.id }}">
                             <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
+                            Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
                             Phone: {{ orderedItemSingle.phone }} <br><br>
-                            <input type="hidden" name="refund_{{ orderedItemSingle.id }}" class="refund_{{ orderedItemSingle.id }}" value="{{ orderedItemSingle.id }}">
+                            <input type="hidden" name="refund_{{ orderedItemSingle.id }}" class="refund_{{ orderedItemSingle.id }}" value="{{ orderedItemSingle.product.id }}">
+                            <p class="refund_quantity">0</p>
+                            <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+                            <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
                             <button class="refund_button">Returneaza</button><br><br>
                         </div>
                     {% endfor %}
@@ -21,7 +24,6 @@
             {% endfor %}
             <button class="cancel_order">Anuleaza Comanda</button>
         </div>
-
         <div class="col">
             <h2 style="padding-top:100px">Comanzi Livrate</h2>
             {% for orderedItem in deliveredItems %}
@@ -29,7 +31,7 @@
                     {% for orderedItemSingle in orderedItemArray %}
                             <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
+                        Quantity: {{ orderedItemSingle.quantity }} <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
                             Phone: {{ orderedItemSingle.phone }} <br>
                             Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
@@ -37,6 +39,26 @@
                 {% endfor %}
             {% endfor %}
         </div>
+    </div>
+    <div class="row">
+        {% if refundedItems is empty %}
+        {% else %}
+            <div class="col">
+                <h2 style="padding-top:100px">Comanzi Returnate</h2>
+                {% for orderedItem in refundedItems %}
+                    {% for date, orderedItemArray in orderedItem %}
+                        {% for orderedItemSingle in orderedItemArray %}
+                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                            Product Title: {{ orderedItemSingle.product.title }} <br>
+                            Quantity: {{ orderedItemSingle.quantity }} <br>
+                            Address Delivery: {{ orderedItemSingle.address }} <br>
+                            Phone: {{ orderedItemSingle.phone }} <br>
+                            Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
 
@@ -59,26 +81,43 @@
             });
 
             });
-
+        $('.fa-plus').click((e) => {
+            var parentClass = $(e.target).parent().attr('id');
+            var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
+            var refundQ = $('#' + parentClass + ' .refund_quantity').text();
+            if(parseInt(refundQ) < parseInt(quantityItem)){
+                $('#' + parentClass + ' .refund_quantity').text(parseInt(refundQ) + 1);
+            }
+        });
+        $('.fa-minus').click((e) => {
+            var parentClass = $(e.target).parent().attr('id');
+            var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
+            var refundQ = $('#' + parentClass + ' .refund_quantity').text();
+            if(parseInt(refundQ) > 0){
+                $('#' + parentClass + ' .refund_quantity').text(parseInt(refundQ) - 1);
+            }
+        });
         $('.refund_button').click((e) => {
             var parentClass = $(e.target).parent().attr('id');
             var cartItemId = $('.' + parentClass).val();
             var path = '{{ path('app_refund_product') }}';
             var fullUrl = window.location.origin + path;
+            var refundQ = $('#' + parentClass + ' .refund_quantity').text();
+            // alert(refundQ);
             if(confirm("Are you sure you want to refund this product?")){
-                alert('You refounded succesfully!');
+                alert('You refunded successfully!');
                 $.ajax({
                     type: "POST",
                     url: fullUrl,
                     data: {
                         cartItemId :cartItemId,
+                        refundQ:refundQ
                     },
                     complete: function (data) {
-                        $('#' + parentClass).empty();
+                        // $('#' + parentClass).empty();
                     }
                 });
             }else{
-
             }
 
         });

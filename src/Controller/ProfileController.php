@@ -130,13 +130,16 @@ class ProfileController extends AbstractController
 //    }
 
     #[Route('/profile', name: 'app_profile')]
-    public function profile(CartRepository $cartRepository, ProductRepository $productRepository): Response
+    public function profile(CartRepository $cartRepository,
+                            ProductRepository $productRepository): Response
     {
         $status1 = $this->getResultsGroupedByDate($cartRepository,$productRepository,1);
         $status2 = $this->getResultsGroupedByDate($cartRepository,$productRepository,2);
+        $status3 = $this->getResultsGroupedByDate($cartRepository,$productRepository,3);
         return $this->render('profile.html.twig', [
             'orderedItems' => $status1,
-            'deliveredItems' => $status2
+            'deliveredItems' => $status2,
+            'refundedItems' => $status3
         ]);
     }
 
@@ -199,16 +202,19 @@ class ProfileController extends AbstractController
                                   EntityManagerInterface $entityManager
     ): Response
     {
-        $id = $request->request->get('cartItemId');
+        $productId = $request->request->get('cartItemId');
+        $refundQ = $request->request->get('refundQ');
         $cart = $cartRepository->createQueryBuilder('c')
             ->where('c.user = :user')
             ->setParameter('user', $this->getUser()->getId())
-            ->andWhere('c.id = :id')
-            ->setParameter('id', $id)
+            ->andWhere('c.product = :product')
+            ->setParameter('product', $productId)
             ->getQuery()
             ->getResult()
         ;
-        $cart[0]->setStatus(3);
+        for($x=0;$x<$refundQ;$x++){
+            $cart[$x]->setStatus(3);
+        }
         $entityManager->persist($cart[0]);
         $entityManager->flush();
         return new Response();
