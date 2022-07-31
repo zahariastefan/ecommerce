@@ -7,13 +7,16 @@
             {% for orderedItemArray in orderedItems %}
                 {% for date, orderedItemArray2 in orderedItemArray %}
                     {% for orderedItemSingle in orderedItemArray2 %}
-                        {% if orderedItemSingle.status == 1 %}
+{#                        {{ dump(orderedItemSingle) }}#}
+                        <div class="container return_div_{{ orderedItemSingle.id }}">
                             <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
                             Quantity: {{ orderedItemSingle.quantity }} <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
                             Phone: {{ orderedItemSingle.phone }} <br><br>
-                        {% endif %}
+                            <input type="hidden" name="retur_{{ orderedItemSingle.id }}" class="retur_{{ orderedItemSingle.id }}" value="{{ orderedItemSingle.id }}">
+                            <button>Returneaza</button><br><br>
+                        </div>
                     {% endfor %}
                 {% endfor %}
             {% endfor %}
@@ -25,13 +28,12 @@
             {% for orderedItem in deliveredItems %}
                 {% for date, orderedItemArray in orderedItem %}
                     {% for orderedItemSingle in orderedItemArray %}
-                        {% if orderedItemSingle.status == 2 %}
                             <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
                             Quantity: {{ orderedItemSingle.quantity }} <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: {{ orderedItemSingle.phone }} <br><br>
-                        {% endif %}
+                            Phone: {{ orderedItemSingle.phone }} <br>
+                            Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
                     {% endfor %}
                 {% endfor %}
             {% endfor %}

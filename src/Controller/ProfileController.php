@@ -171,21 +171,16 @@ class ProfileController extends AbstractController
                 ->groupBy('c.added_at')
                 ->getQuery()
                 ->getResult();
-            if(count($getOrders) > 0){
-                $getOrders[0]->quantity = $quantity;
+            if(!empty($getOrders)){
+                foreach ($getOrders as $getOrder) {
+                    $getOrder->quantity = $quantity;
+                }
                 $date = (array) ($getOrders[0]->getAddedAt());
                 $arrayGroupedByDate[] = [substr($date['date'],0,19) => $getOrders];
             }
         }
         return $arrayGroupedByDate;
     }
-
-
-
-
-
-
-
 
     #[Route('/cancel-order', name:'app_cancel_order')]
     public function cancelOrder(UserRepository $userRepository, Request $request): Response
