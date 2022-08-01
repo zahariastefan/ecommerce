@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductPageController extends  AbstractController
 {
     #[Route('/product-page/{slug}', name:'app_product_page')]
-    public function productPage($slug,ProductRepository $productRepository, EntityManagerInterface $manager, UserRepository $userRepository)
+    public function productPage($slug,ProductRepository $productRepository)
     {
         $queryBuilder = $productRepository->getProductsAndDescription($slug)->getQuery()->getResult();
         /*
@@ -60,29 +60,26 @@ class ProductPageController extends  AbstractController
     }
 
     #[Route('/add-to-cart', name:'app_add_cart')]
-    public function addToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function addToCart(Request $request, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
+        $itemId = trim($request->request->get('itemId'));
+        if (empty($itemId)) {
+            $itemId = trim($request->query->get('itemId'));
+        }
+        if ((preg_match('~[0-9]+~', $itemId))) {
+            $productObject = $productRepository->findBy([
+                'id' => $itemId
+            ]);
+        } else {
+            $productObject = $productRepository->findBy([
+                'title' => $itemId
+            ]);
+        }
         if ($this->getUser()) {//if logged in add to cart and also on DB
-            $itemId = trim($request->request->get('itemId'));
-            if (empty($itemId)) {
-                $itemId = trim($request->query->get('itemId'));
-            }
-            if ((preg_match('~[0-9]+~', $itemId))) {
-                $productObject = $productRepository->findBy([
-                    'id' => $itemId
-                ]);
-            } else {
-                $productObject = $productRepository->findBy([
-                    'title' => $itemId
-                ]);
-            }
-
             $userId = $this->getUser()->getId();
             $user = $userRepository->findBy([
                 'id' => $userId
             ]);
-
-
             //check if logged in
             $cart = new Cart();
             $cart->setUser($user[0]);
@@ -93,9 +90,35 @@ class ProductPageController extends  AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
         } else {//if not logged in add to cookie!
+            //if not exist
+            //if exist
+            $getIDFromProdObj =[];
+            if ((!preg_match('~[0-9]+~', $itemId))) {
+                $product = $productRepository->findBy([
+                    'title' =>$itemId
+                ]);
+                $getIDFromProdObj[]=$product[0]->getId();
+                $itemId=$getIDFromProdObj;
+            }
+            if(!isset($_COOKIE['product_item'])){
+                setcookie('product_item','{"productsId":["'.$itemId.'"]}');
+            }else{
+                $products = $_COOKIE['product_item'];
+                $products = json_decode($products, true);
+                $newListCookie['productsId'] = [];
+                if(gettype($products['productsId']) != 'integer'){
+                    if(count($products['productsId']) > 0){
+                        foreach ($products as $product) {
+                            $newListCookie['productsId']=$product;
+                        }
+                        $newListCookie['productsId'][]=$itemId;
+                    }
+                }
+                setcookie('product_item',json_encode($newListCookie));
+            }
+
 
         }
-
         return new JsonResponse(['hello'=>'world']);
     }
 
@@ -110,7 +133,9 @@ class ProductPageController extends  AbstractController
         $productToRemove = $productsFromCart[array_rand($productsFromCart)];
         $entityManager->remove($productToRemove);
         $entityManager->flush();
-        return new JsonResponse(['hello' => 'world']);
 
+        setcookie("product_item", "", time()-3600);
+
+        return new JsonResponse(['hello' => 'world']);
     }
 }

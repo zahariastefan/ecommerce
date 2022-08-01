@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
-use App\Entity\Product;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
@@ -12,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class CartController extends AbstractController
 {
@@ -20,33 +17,41 @@ class CartController extends AbstractController
     #[Route('/cart', name:'app_cart')]
     public function cart(UserRepository $userRepository, CartRepository $cartRepository, ProductRepository $productRepository)
     {
-        if(!$this->getUser()) return new Response('no logged in');
-        $user = $userRepository->findBy([
-            'id' => $this->getUser()->getId()
-        ]);
-        $cart = $cartRepository->findBy([
-            'user' => $user
-        ]);
-        $cart = $cartRepository->createQueryBuilder('c')
-            ->where('c.user = '.$this->getUser()->getId())
-            ->andWhere('c.status = 0')
-            ->getQuery()
-            ->getResult()
-        ;
-//        dd($cart->getQuery()->getResult());
-        $listOfTitles = [];
-        foreach ($cart as $singleCart){
-            $productsFromCart = $productRepository->findBy([
-                'id' => $singleCart->getProduct()->getId()
-            ]);
-            //select only cart with status 0!!
-            if(gettype($singleCart) == 'object'){
-                $title = $productsFromCart[0]->getTitle();
-                if(!empty($title)){
-                    $listOfTitles[] = $title;
+
+        if($this->getUser()) {
+            $listOfTitles = [];
+            $cart = $cartRepository->createQueryBuilder('c')
+                ->where('c.user = '.$this->getUser()->getId())
+                ->andWhere('c.status = 0')
+                ->getQuery()
+                ->getResult()
+            ;
+            foreach ($cart as $singleCart){
+                $productsFromCart = $productRepository->findBy([
+                    'id' => $singleCart->getProduct()->getId()
+                ]);
+                //select only cart with status 0!!
+                if(gettype($singleCart) == 'object'){
+                    $title = $productsFromCart[0]->getTitle();
+                    if(!empty($title)){
+                        $listOfTitles[] = $title;
+                    }
                 }
             }
+        }else{
+//            //get products from cart
+            $productsId = json_decode($_COOKIE['product_item'],true);
+
+            $formattedArrayProductsAndQuantities = [];
+            foreach ($productsId['productsId'] as $productId) {
+                $product = $productRepository->findBy([
+                    'id' =>$productId
+                ]);
+                $formattedArrayProductsAndQuantities[] =$product[0]->getTitle();
+            }
+            $listOfTitles = $formattedArrayProductsAndQuantities;
         }
+
         return $this->render('cart.html.twig', [
             'productsInCart' => array_count_values($listOfTitles)
         ]);
@@ -64,9 +69,7 @@ class CartController extends AbstractController
         $user = $userRepository->findBy([
             'email' => $this->getUser()->getUserIdentifier()
         ]);
-        $date = $request->request->get('dateTime');
         $data = $request->query->all();
-//        dd($data);
         $allItems = [];
         //starting adding products to order
         foreach ($data as $key => $oneData) {
