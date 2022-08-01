@@ -213,8 +213,9 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
 
 <script>
+    \$('html').hide();
     var path = '";
-        // line 107
+        // line 108
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_get_cart_data");
         echo "';
     var fullUrl   = window.location.origin + path;
@@ -224,7 +225,11 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         complete: function (data) {
             var itemNr = data.responseText;
             \$('.items_number').text(itemNr);
-            // alert(itemNr);
+            var items_number = \$('.items_number').text();
+            if(parseInt(items_number) === 0){
+                \$('.container_cart').html('<p>You don\\'t have products in cart</p>');
+                \$('html').show();
+            }
         }
     });
 </script>
@@ -338,7 +343,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
     public function getDebugInfo()
     {
-        return array (  312 => 99,  298 => 11,  288 => 10,  276 => 8,  273 => 7,  263 => 6,  244 => 5,  218 => 107,  209 => 100,  207 => 99,  198 => 96,  195 => 95,  191 => 94,  182 => 91,  179 => 90,  175 => 89,  169 => 85,  164 => 83,  159 => 82,  153 => 78,  147 => 75,  141 => 72,  138 => 71,  133 => 62,  131 => 60,  128 => 59,  126 => 58,  119 => 54,  115 => 53,  100 => 40,  98 => 39,  90 => 34,  83 => 30,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
+        return array (  317 => 99,  303 => 11,  293 => 10,  281 => 8,  278 => 7,  268 => 6,  249 => 5,  219 => 108,  209 => 100,  207 => 99,  198 => 96,  195 => 95,  191 => 94,  182 => 91,  179 => 90,  175 => 89,  169 => 85,  164 => 83,  159 => 82,  153 => 78,  147 => 75,  141 => 72,  138 => 71,  133 => 62,  131 => 60,  128 => 59,  126 => 58,  119 => 54,  115 => 53,  100 => 40,  98 => 39,  90 => 34,  83 => 30,  68 => 18,  62 => 14,  59 => 10,  57 => 6,  53 => 5,  47 => 1,);
     }
 
     public function getSourceContext()
@@ -449,6 +454,7 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
 
 
 <script>
+    \$('html').hide();
     var path = '{{ path('app_get_cart_data') }}';
     var fullUrl   = window.location.origin + path;
     \$.ajax({
@@ -457,7 +463,11 @@ class __TwigTemplate_cc968665991ccae1d97eee810bb72649 extends Template
         complete: function (data) {
             var itemNr = data.responseText;
             \$('.items_number').text(itemNr);
-            // alert(itemNr);
+            var items_number = \$('.items_number').text();
+            if(parseInt(items_number) === 0){
+                \$('.container_cart').html('<p>You don\\'t have products in cart</p>');
+                \$('html').show();
+            }
         }
     });
 </script>

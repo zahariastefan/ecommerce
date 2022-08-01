@@ -104,6 +104,7 @@
 
 
 <script>
+    $('html').hide();
     var path = '{{ path('app_get_cart_data') }}';
     var fullUrl   = window.location.origin + path;
     $.ajax({
@@ -112,7 +113,11 @@
         complete: function (data) {
             var itemNr = data.responseText;
             $('.items_number').text(itemNr);
-            // alert(itemNr);
+            var items_number = $('.items_number').text();
+            if(parseInt(items_number) === 0){
+                $('.container_cart').html('<p>You don\'t have products in cart</p>');
+                $('html').show();
+            }
         }
     });
 </script>

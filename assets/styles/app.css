@@ -7,11 +7,11 @@ body {
     color: #444;
 }
 
-.navbar{
-    position: fixed;
-    width: 100%;
-    z-index: 2;
-}
+/*.navbar{*/
+/*    position: fixed;*/
+/*    width: 100%;*/
+/*    z-index: 2;*/
+/*}*/
 
 .jumbotron-img {
     background: rgb(237,116,88);
