@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '338c965e5027adc6f582f67b3bc9f91c0c21391b',
+        'reference' => 'ffc14b4a29e4af7bc2b974c10d23231432a7b30c',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '338c965e5027adc6f582f67b3bc9f91c0c21391b',
+            'reference' => 'ffc14b4a29e4af7bc2b974c10d23231432a7b30c',
             'dev_requirement' => false,
         ),
         'beberlei/assert' => array(
@@ -484,8 +484,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache-implementation' => array(
@@ -762,13 +762,13 @@
             'dev_requirement' => true,
         ),
         'symfony/debug-bundle' => array(
-            'pretty_version' => 'v6.1.0',
-            'version' => '6.1.0.0',
+            'pretty_version' => 'v6.1.3',
+            'version' => '6.1.3.0',
             'type' => 'symfony-bundle',
             'install_path' => __DIR__ . '/../symfony/debug-bundle',
             'aliases' => array(),
-            'reference' => '46c6fea401634b4bcdf9bd46a29065e7ea83a62c',
-            'dev_requirement' => true,
+            'reference' => '4084f86639bf0270d6dd2225fc8d7c317780dd6b',
+            'dev_requirement' => false,
         ),
         'symfony/dependency-injection' => array(
             'pretty_version' => 'v6.1.2',
@@ -1383,7 +1383,7 @@
             'install_path' => __DIR__ . '/../symfony/web-profiler-bundle',
             'aliases' => array(),
             'reference' => '6589c2ee4b94d7df2f8ca160ec41265fee3f33eb',
-            'dev_requirement' => true,
+            'dev_requirement' => false,
         ),
         'symfony/webpack-encore-bundle' => array(
             'pretty_version' => 'v1.15.1',

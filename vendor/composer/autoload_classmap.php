@@ -6,13 +6,16 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controller\\BaseController' => $baseDir . '/src/Controller/BaseController.php',
     'App\\Controller\\CartController' => $baseDir . '/src/Controller/CartController.php',
     'App\\Controller\\HomepageController' => $baseDir . '/src/Controller/HomepageController.php',
     'App\\Controller\\ProductPageController' => $baseDir . '/src/Controller/ProductPageController.php',
+    'App\\Controller\\ProfileController' => $baseDir . '/src/Controller/ProfileController.php',
     'App\\Controller\\RegistrationController' => $baseDir . '/src/Controller/RegistrationController.php',
     'App\\Controller\\SecurityController' => $baseDir . '/src/Controller/SecurityController.php',
     'App\\Controller\\UserController' => $baseDir . '/src/Controller/UserController.php',
     'App\\DataFixtures\\AppFixtures' => $baseDir . '/src/DataFixtures/AppFixtures.php',
+    'App\\Entity\\Cart' => $baseDir . '/src/Entity/Cart.php',
     'App\\Entity\\Comment' => $baseDir . '/src/Entity/Comment.php',
     'App\\Entity\\Product' => $baseDir . '/src/Entity/Product.php',
     'App\\Entity\\User' => $baseDir . '/src/Entity/User.php',
@@ -22,6 +25,7 @@ return array(
     'App\\Factory\\UserFactory' => $baseDir . '/src/Factory/UserFactory.php',
     'App\\Form\\RegistrationFormType' => $baseDir . '/src/Form/RegistrationFormType.php',
     'App\\Kernel' => $baseDir . '/src/Kernel.php',
+    'App\\Repository\\CartRepository' => $baseDir . '/src/Repository/CartRepository.php',
     'App\\Repository\\CommentRepository' => $baseDir . '/src/Repository/CommentRepository.php',
     'App\\Repository\\ProductRepository' => $baseDir . '/src/Repository/ProductRepository.php',
     'App\\Repository\\UserRepository' => $baseDir . '/src/Repository/UserRepository.php',

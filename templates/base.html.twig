@@ -104,7 +104,10 @@
 
 
 <script>
-    $('html').hide();
+    if((window.location.href).includes('/cart')){
+        $('html').hide();
+    }
+
     var path = '{{ path('app_get_cart_data') }}';
     var fullUrl   = window.location.origin + path;
     $.ajax({
