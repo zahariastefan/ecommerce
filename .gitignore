@@ -1,1 +1,4 @@
 /var/
+/var/cache/
+/var/cache/dev/
+/var/log/
