@@ -50,7 +50,13 @@ class HomepageController extends AbstractController
                 $cartNr = 0;
             }
         }else{//if not logged in check for cookies if exist
-            $cartNr = 0;//temporary
+            if(isset($_COOKIE['product_item'])){
+                $productsId = json_decode($_COOKIE['product_item'],true);
+                $cartNr = count($productsId['productsId']);//temporary
+            }else{
+                $cartNr=0;
+            }
+
         }
 
         return new Response($cartNr);

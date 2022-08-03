@@ -105,7 +105,7 @@
 
 <script>
     if((window.location.href).includes('/cart')){
-        // $('html').hide();
+        $('html').hide();
     }
 
     var path = '{{ path('app_get_cart_data') }}';
@@ -115,11 +115,14 @@
         url: fullUrl,
         complete: function (data) {
             var itemNr = data.responseText;
+            console.log(itemNr);
             $('.items_number').text(itemNr);
             var items_number = $('.items_number').text();
             if(parseInt(items_number) === 0){
-                // $('.container_cart').html('<p>You don\'t have products in cart</p>');
-                // $('html').show();
+                $('.container_cart').html('<p>You don\'t have products in cart</p>');
+                $('html').show();
+            }else{
+                $('html').show();
             }
         }
     });

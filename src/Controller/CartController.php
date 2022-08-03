@@ -40,16 +40,28 @@ class CartController extends AbstractController
             }
         }else{
 //            //get products from cart
-            $productsId = json_decode($_COOKIE['product_item'],true);
 
-            $formattedArrayProductsAndQuantities = [];
-            foreach ($productsId['productsId'] as $productId) {
-                $product = $productRepository->findBy([
-                    'id' =>$productId
+            if(isset($_COOKIE['product_item'])){
+                $productsId = json_decode($_COOKIE['product_item'],true);
+
+                $formattedArrayProductsAndQuantities = [];
+//            $productsIdUnique = array_unique($productsId['productsId']);
+                foreach ($productsId['productsId'] as $productId) {
+                    $product = $productRepository->findBy([
+                        'id' =>$productId
+                    ]);
+                    $formattedArrayProductsAndQuantities[] =$product[0]->getTitle();
+                }
+                $listOfTitles = $formattedArrayProductsAndQuantities;
+                return $this->render('cart.html.twig', [
+                    'productsInCart' => array_count_values($listOfTitles)
                 ]);
-                $formattedArrayProductsAndQuantities[] =$product[0]->getTitle();
+            }else{
+                return $this->render('cart.html.twig', [
+                    'productsInCart' => [0=>'No product']
+                ]);
             }
-            $listOfTitles = $formattedArrayProductsAndQuantities;
+
         }
 
         return $this->render('cart.html.twig', [

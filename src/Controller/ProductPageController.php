@@ -90,8 +90,6 @@ class ProductPageController extends  AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
         } else {//if not logged in add to cookie!
-            //if not exist
-            //if exist
             $getIDFromProdObj =[];
             if ((!preg_match('~[0-9]+~', $itemId))) {
                 $product = $productRepository->findBy([
@@ -116,8 +114,6 @@ class ProductPageController extends  AbstractController
                 }
                 setcookie('product_item',json_encode($newListCookie));
             }
-
-
         }
         return new JsonResponse(['hello'=>'world']);
     }
@@ -126,15 +122,50 @@ class ProductPageController extends  AbstractController
     public function removeToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
         $itemId = trim($request->request->get('itemId'));
-        $productObject = $productRepository->findBy([
-            'title' => $itemId
-        ]);
-        $productsFromCart = $productObject[0]->getCarts()->toArray();
-        $productToRemove = $productsFromCart[array_rand($productsFromCart)];
-        $entityManager->remove($productToRemove);
-        $entityManager->flush();
+        if ((preg_match('~[0-9]+~', $itemId))) {
+            $productObject = $productRepository->findBy([
+                'id' => $itemId
+            ]);
+        } else {
+            $productObject = $productRepository->findBy([
+                'title' => $itemId
+            ]);
+        }
+        if ($this->getUser()) {
+            $productObject = $productRepository->findBy([
+                'title' => $itemId
+            ]);
+            $productsFromCart = $productObject[0]->getCarts()->toArray();
+            $productToRemove = $productsFromCart[array_rand($productsFromCart)];
+            $entityManager->remove($productToRemove);
+            $entityManager->flush();
+        }else{
+            $productsId = json_decode($_COOKIE['product_item'],true);
+            $idFromGET = $productObject[0]->getId();
 
-        setcookie("product_item", "", time()-3600);
+            $allIdWithoutItemId = [];
+            $selectedId=[];
+            foreach ($productsId['productsId'] as $idCookie) {
+                if($idFromGET == $idCookie){
+                    $selectedId[] = $idCookie;
+                }else{
+                    $allIdWithoutItemId[]=$idCookie;
+                }
+            }
+
+            if(count($selectedId) > 0){
+                unset($selectedId[array_rand($selectedId)]);
+            }else{
+                unset($selectedId[0]);
+            }
+
+            foreach ($selectedId as $item) {
+                $allIdWithoutItemId[] = $item;
+            }
+            $productsId['productsId']= $allIdWithoutItemId;
+
+            setcookie('product_item', json_encode($productsId));
+        }
 
         return new JsonResponse(['hello' => 'world']);
     }

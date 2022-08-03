@@ -67,20 +67,22 @@
     <script>
         $('.cancel_order').click(()=>{
 
-            var path = '{{ path('app_cancel_order') }}';
-            var fullUrl   = window.location.origin + path;
-            $.ajax({
-                type: "POST",
-                url: fullUrl,
-                data: {
-                    user : '{{ app.user.email }}',
-                },
-                complete: function (data) {
+            {#var path = '{{ path('app_cancel_order') }}';#}
+            {#var fullUrl   = window.location.origin + path;#}
+            {#$.ajax({#}
+            {#    type: "POST",#}
+            {#    url: fullUrl,#}
+            {#    data: {#}
+            {#        user : '{{ app.user.email }}',#}
+            {#    },#}
+            {#    complete: function (data) {#}
 
-                }
+            {#    }#}
+            {#});#}
+
             });
 
-            });
+
         $('.fa-plus').click((e) => {
             var parentClass = $(e.target).parent().attr('id');
             var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
