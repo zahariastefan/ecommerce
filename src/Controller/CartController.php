@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\GuestOrders;
 use App\Repository\CartRepository;
+use App\Repository\GuestOrdersRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,7 +17,7 @@ class CartController extends AbstractController
 {
 
     #[Route('/cart', name:'app_cart')]
-    public function cart(UserRepository $userRepository, CartRepository $cartRepository, ProductRepository $productRepository)
+    public function cart(UserRepository $userRepository,GuestOrdersRepository $guestOrdersRepository, CartRepository $cartRepository, ProductRepository $productRepository)
     {
 
         if($this->getUser()) {
@@ -78,40 +80,82 @@ class CartController extends AbstractController
     #[Route('/thanks', name:'app_thanks')]
     public function thanks(Request $request, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, CartRepository $cartRepository)
     {
-        $user = $userRepository->findBy([
-            'email' => $this->getUser()->getUserIdentifier()
-        ]);
-        $data = $request->query->all();
-        $allItems = [];
-        //starting adding products to order
-        foreach ($data as $key => $oneData) {
-            $array = json_decode($oneData, true);
-            if(str_contains($key, 'item') ){//if is a product
-                $product = $productRepository->findBy([
-                    'title' => $array['item']
-                ]);
-                $cart = $cartRepository
-                    ->createQueryBuilder('c')
-                    ->orderBy('c.added_at','DESC')
-                    ->where('c.user = '.$user[0]->getId())
-                    ->andWhere('c.status = 0')
-                    ->getQuery()->getResult();
-                $allItems[] = $product;
-                foreach ($cart as $item) {
-//                    dd($data);
-                    //here I have to change status of cart product
-                    $item->setStatus(1);
-                    $item->setPhone($data['phone']);
-                    $item->setAddress($data['city'].' '.$data['street'].' '.$data['number'].' '.$data['building']);
-                    $item->setAddedAt(new \DateTimeImmutable());
-                    $entityManager->persist($item);
-                }
 
+        $data = $request->query->all();
+        if($this->getUser()){
+            $user = $userRepository->findBy([
+                'email' => $this->getUser()->getUserIdentifier()
+            ]);
+            $allItems = [];
+            //starting adding products to order
+            foreach ($data as $key => $oneData) {
+                $array = json_decode($oneData, true);
+                if(str_contains($key, 'item') ){//if is a product
+                    $product = $productRepository->findBy([
+                        'title' => $array['item']
+                    ]);
+                    $cart = $cartRepository
+                        ->createQueryBuilder('c')
+                        ->orderBy('c.added_at','DESC')
+                        ->where('c.user = '.$user[0]->getId())
+                        ->andWhere('c.status = 0')
+                        ->getQuery()->getResult();
+                    $allItems[] = $product;
+                    foreach ($cart as $item) {
+//                    dd($data);
+                        //here I have to change status of cart product
+                        $item->setStatus(1);
+                        $item->setPhone($data['phone']);
+                        $item->setAddress($data['city'].' '.$data['street'].' '.$data['number'].' '.$data['building']);
+                        $item->setAddedAt(new \DateTimeImmutable());
+                        $entityManager->persist($item);
+                    }
+
+                }
             }
+            $user[0]->setUniqueNr(rand(123456,123456789));
+            $entityManager->persist($user[0]);
+            //if not logged in , take all the products and send directly order on email without save any more on DB
+            $entityManager->flush();
+        }else{
+            $items = [];
+            foreach ($data as $key => $oneData) {
+                $array = json_decode($oneData, true);
+                if (str_contains($key, 'item')) {//if is a product
+                    $items[] = $array;
+                }
+            }
+
+            if(isset($_COOKIE['thanks'])){
+                if($_COOKIE['thanks'] == 0){
+                    foreach ($items as $item) {
+                        $product = $productRepository->findBy([
+                            'title' => $item['item']
+                        ]);
+                        for ($x=0;$x<$item['quantity'];$x++){
+                            $guestOrder = new GuestOrders();
+                            $guestOrder->setName($data['name']);
+                            $guestOrder->setSurname($data['surname']);
+                            $guestOrder->setEmail($data['email']);
+                            $guestOrder->setStatus(1);
+                            $guestOrder->setProduct($product[0]);
+                            $guestOrder->setPhone($data['phone']);
+                            $guestOrder->setAddress($data['city'] . ' ' . $data['street'] . ' ' . $data['number'] . ' ' . $data['building']);
+                            $guestOrder->setAddedAt(new \DateTimeImmutable());
+                            $entityManager->persist($guestOrder);
+                        }
+
+                    }
+                }
+            }
+
+            $entityManager->flush();
+            setcookie('thanks', 1);
         }
-        $user[0]->setUniqueNr(rand(123456,123456789));
-        $entityManager->persist($user[0]);
-        $entityManager->flush();
+
+
+
+
         return $this->render('thanks.html.twig');
     }
 }

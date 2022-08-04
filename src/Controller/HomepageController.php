@@ -58,6 +58,7 @@ class HomepageController extends AbstractController
             }
 
         }
+        setcookie('thanks', 0);
 
         return new Response($cartNr);
     }
