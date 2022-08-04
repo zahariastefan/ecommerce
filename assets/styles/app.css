@@ -188,3 +188,16 @@ footer{
 .profile_row_body{
     margin-bottom: 100px !important;
 }
+
+
+.cookie_accept{
+    position:fixed;
+    bottom: 0;
+    height: 50%;
+    border: 1px solid black;
+    background: white;
+    padding: 50px;
+    width:100%;
+    text-align: center;
+
+}
