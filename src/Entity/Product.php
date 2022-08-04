@@ -41,6 +41,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: GuestOrders::class)]
     private Collection $guestOrders;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?UrlImage $url_image = null;
+
     public function __construct()
     {
         $this->comment = new ArrayCollection();
@@ -205,6 +208,18 @@ class Product
                 $guestOrder->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUrlImage(): ?UrlImage
+    {
+        return $this->url_image;
+    }
+
+    public function setUrlImage(?UrlImage $url_image): self
+    {
+        $this->url_image = $url_image;
 
         return $this;
     }

@@ -16,8 +16,13 @@
                 <button class="btn btn-question">Ask a Question</button>
             </div>
         </div>
+
+
+
             {% for product in products %}
                 <strong>Product Title:</strong> <a href="{{ path('app_product_page', { slug: product.slug } ) }}">{{ product.title }} </a> <br>
+                <img src="{{ asset(product.urlImage.url) }}" width="200" height="200">
+                <br>
                 <strong>Product Description:</strong>  {{ product.description }} <br>
                 <br><br><br><br>
             {% endfor %}

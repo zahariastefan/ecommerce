@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Comment;
 use App\Entity\Product;
+use App\Entity\UrlImage;
 use App\Entity\User;
 use App\Factory\CommentFactory;
 use App\Factory\ProductFactory;
@@ -18,6 +19,7 @@ class AppFixtures extends Fixture
     {
         // $product = new Product();
 //        // $manager->persist($product);
+
         UserFactory::createOne([
             'email' => 'abraca_admin@example.com',
             'roles'=>['ROLE_ADMIN', 'ROLE_USER'],
@@ -82,13 +84,17 @@ class AppFixtures extends Fixture
 //            $user->setRoles(['ROLE_USER']);
 
             $user = UserFactory::createOne();
+            $urlImage = new UrlImage();
+            $urlImage->setUrl('/tablou.jpg');
 
             $product = new Product();
             $product->setDescription(ProductFactory::faker()->text(100));
             $product->setTitle(ProductFactory::faker()->firstName());
             $product->setSlug(ProductFactory::faker()->slug(6));
+            $product->setUrlImage($urlImage);
             $product->setAddedAt(\DateTimeImmutable::createFromMutable(ProductFactory::faker()->dateTimeBetween('-1 year')));
             $product->setUpdatedAt(\DateTimeImmutable::createFromMutable(ProductFactory::faker()->dateTimeBetween('-1 year')));
+            $urlImage->setProduct($product);
 
 
             $comment = new Comment();
@@ -99,7 +105,9 @@ class AppFixtures extends Fixture
             $comment->addProduct($product);
 
 
+
             $manager->persist($user->object());
+            $manager->persist($urlImage);
             $manager->persist($product);
             $manager->persist($comment);
         }
