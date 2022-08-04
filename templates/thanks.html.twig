@@ -4,20 +4,12 @@
     <p class="thank_you">thank you for your order!</p>
     <script>
         $('.items_number').text(0);
-
-        //get cookie, if 1 so empty parameters!
-        // alert($.cookie('thanks'));
-
         if(typeof $.cookie('thanks') !== 'undefined'){
             if(parseInt($.cookie('thanks')) === 1){
                 window.history.replaceState({}, document.title, "/");
                 $.removeCookie('product_item');
-            }else if($.cookie('thanks') === 0){
-
             }
         }
-
-
 
     </script>
 {% endblock %}
