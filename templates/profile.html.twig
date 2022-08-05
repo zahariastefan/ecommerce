@@ -4,53 +4,63 @@
 
     <div>
         <form action="{{ path('app_update_user_data') }}" class="d-grid">
-            <label for="name">  name
-            <input type="text" name="name" id="name" placeholder="name" class="form-control">
+            <label for="name">
+                <input type="text" name="name" id="name" placeholder="name" class="form-control">
             </label>
 
-            <label for="surname">  surname
-            <input type="text" name="surname" id="surname" placeholder="surname" class="form-control"> <br><br>
+            <label for="surname">
+                <input type="text" name="surname" id="surname" placeholder="surname" class="form-control"> <br><br>
             </label>
 
-            <label for="city">  city
-            <input type="text" name="city" id="city" placeholder="City" class="form-control">
+            <label for="city">
+                <input type="text" name="city" id="city" placeholder="City" class="form-control">
             </label>
 
-            <label for="street">  street
-            <input type="text" name="street" id="street" placeholder="Street" class="form-control">
+            <label for="street">
+                <input type="text" name="street" id="street" placeholder="Street" class="form-control">
             </label>
 
-            <label for="number">  number
-            <input type="number" name="number" id="number" placeholder="Number" class="form-control">
+            <label for="number">
+                <input type="number" name="number" id="number" placeholder="Number" class="form-control">
             </label>
 
-            <label for="building">  building
-            <input type="number" name="building" id="building" placeholder="Building" class="form-control"> <br><br>
+            <label for="building">
+                <input type="number" name="building" id="building" placeholder="Building" class="form-control"> <br><br>
             </label>
 
-            <label for="phone">  phone
-            <input type="number" name="phone" id="phone" placeholder="phone" class="form-control"><br><br>
+            <label for="phone">
+                <input type="number" name="phone" id="phone" placeholder="phone" class="form-control"><br><br>
             </label>
 
-            <label for="email">  Email
-            <input type="email" name="email" id="email" placeholder="Email" class="form-control"><br><br>
+            <label for="email">
+                <input type="email" name="email" id="email" placeholder="Email" class="form-control"><br><br>
             </label>
 
-            <label for="pass">Password
-            <input type="password" id="txtNewPassword" placeholder="Enter password" name="pass" class="form-control form-control-psw validate">
+            <label for="pass">
+                <input type="password" id="txtNewPassword" placeholder="Enter password" name="pass"
+                       class="form-control form-control-psw validate">
             </label>
 
-            <label for="confpass">Confirm Password
-            <input type="password" id="txtConfirmPassword" placeholder="Confirm password" name="confpass" class="form-control">
+            <label for="confpass">
+                <input type="password" id="txtConfirmPassword" placeholder="Confirm password" name="confpass"
+                       class="form-control">
             </label>
             <div class="registrationFormAlert" id="CheckPasswordMatch"></div>
 
             <div class="alert alert-warning password-alert" role="alert">
                 <ul>
-                    <li class="requirements leng"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 8 chars.</li>
-                    <li class="requirements big-letter"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 big letter.</li>
-                    <li class="requirements num"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 number.</li>
-                    <li class="requirements special-char"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 special char.</li>
+                    <li class="requirements leng"><i class="fas fa-check green-text"></i><i
+                                class="fas fa-times red-text"></i> Your password must have at least 8 chars.
+                    </li>
+                    <li class="requirements big-letter"><i class="fas fa-check green-text"></i><i
+                                class="fas fa-times red-text"></i> Your password must have at least 1 big letter.
+                    </li>
+                    <li class="requirements num"><i class="fas fa-check green-text"></i><i
+                                class="fas fa-times red-text"></i> Your password must have at least 1 number.
+                    </li>
+                    <li class="requirements special-char"><i class="fas fa-check green-text"></i><i
+                                class="fas fa-times red-text"></i> Your password must have at least 1 special char.
+                    </li>
                 </ul>
             </div>
 
@@ -61,46 +71,49 @@
     <div class="row profile_row_body">
         {% if orderedItems is empty %}
         {% else %}
-        <div class="col ordered_orders">
-            <h2 style="padding-top:100px">Comanzi Active</h2>
-            {% for orderedItemArray in orderedItems %}
-                {% for date, orderedItemArray2 in orderedItemArray %}
-                    {% for orderedItemSingle in orderedItemArray2 %}
-                        <div id="refund_{{ orderedItemSingle.id }}">
-                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                            Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
-                            Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: {{ orderedItemSingle.phone }} <br><br>
-                            <input type="hidden" name="refund_{{ orderedItemSingle.id }}" class="refund_{{ orderedItemSingle.id }}" value="{{ orderedItemSingle.product.id }}">
-                            <p class="refund_quantity">0</p>
-                            <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-                            <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
-                            <button class="refund_button">Returneaza</button><br><br>
-                            <button class="cancel_order">Anuleaza Comanda</button>
-                        </div>
+            <div class="col ordered_orders">
+                <h2 style="padding-top:100px">Comanzi Active</h2>
+                {% for orderedItemArray in orderedItems %}
+                    {% for date, orderedItemArray2 in orderedItemArray %}
+                        {% for orderedItemSingle in orderedItemArray2 %}
+                            <div id="refund_{{ orderedItemSingle.id }}">
+                                <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                                Product Title: {{ orderedItemSingle.product.title }} <br>
+                                Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
+                                Address Delivery: {{ orderedItemSingle.address }} <br>
+                                Phone: {{ orderedItemSingle.phone }} <br><br>
+                                <input type="hidden" name="refund_{{ orderedItemSingle.id }}"
+                                       class="refund_{{ orderedItemSingle.id }}"
+                                       value="{{ orderedItemSingle.product.id }}">
+                                <p class="refund_quantity">0</p>
+                                <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+                                <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
+                                <button class="refund_button">Returneaza</button>
+                                <br><br>
+                                <button class="cancel_order">Anuleaza Comanda</button>
+                            </div>
+                        {% endfor %}
                     {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </div>
+            </div>
         {% endif %}
         {% if deliveredItems is empty %}
         {% else %}
-        <div class="col delivered_orders">
-            <h2 style="padding-top:100px">Comanzi Livrate</h2>
-            {% for orderedItem in deliveredItems %}
-                {% for date, orderedItemArray in orderedItem %}
-                    {% for orderedItemSingle in orderedItemArray %}
+            <div class="col delivered_orders">
+                <h2 style="padding-top:100px">Comanzi Livrate</h2>
+                {% for orderedItem in deliveredItems %}
+                    {% for date, orderedItemArray in orderedItem %}
+                        {% for orderedItemSingle in orderedItemArray %}
                             <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
-                        Quantity: {{ orderedItemSingle.quantity }} <br>
+                            Quantity: {{ orderedItemSingle.quantity }} <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
                             Phone: {{ orderedItemSingle.phone }} <br>
                             Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
+                        {% endfor %}
                     {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </div>
+            </div>
         {% endif %}
     </div>
     <div class="row">
@@ -194,9 +207,10 @@
                 $('#number').attr("required", "true");
                 $('#building').attr("required", "true");
             }
-            if ($('#password').val() != '' || $('#password2').val() != '') {
-                $('#password').attr("required", "true");
-                $('#password2').attr("required", "true");
+            if ($('#txtNewPassword').val() != '') {
+                var pswOk = !$(".password-alert").is(':visible');
+                $('#txtConfirmPassword').attr('required', 'true');
+                $('#txtNewPassword').attr('required', 'true');
             }
         });
 
@@ -226,7 +240,9 @@
             var numbers = "0123456789";
 
             $requirements.addClass("wrong");
-            $password.on("focus", function(){$passwordAlert.show();});
+            $password.on("focus", function () {
+                $passwordAlert.show();
+            });
             $password.on("input blur", function (e) {
                 var el = $(this);
                 var val = el.val();
@@ -234,64 +250,82 @@
 
                 if (val.length < 8) {
                     leng = false;
-                }
-                else if (val.length > 7) {
-                    leng=true;
+                } else if (val.length > 7) {
+                    leng = true;
                 }
 
 
-                if(val.toLowerCase()==val){
+                if (val.toLowerCase() == val) {
                     bigLetter = false;
+                } else {
+                    bigLetter = true;
                 }
-                else{bigLetter=true;}
 
                 num = false;
-                for(var i=0; i<val.length;i++){
-                    for(var j=0; j<numbers.length; j++){
-                        if(val[i]==numbers[j]){
+                for (var i = 0; i < val.length; i++) {
+                    for (var j = 0; j < numbers.length; j++) {
+                        if (val[i] == numbers[j]) {
                             num = true;
                         }
                     }
                 }
 
-                specialChar=false;
-                for(var i=0; i<val.length;i++){
-                    for(var j=0; j<specialChars.length; j++){
-                        if(val[i]==specialChars[j]){
+                specialChar = false;
+                for (var i = 0; i < val.length; i++) {
+                    for (var j = 0; j < specialChars.length; j++) {
+                        if (val[i] == specialChars[j]) {
                             specialChar = true;
                         }
                     }
                 }
 
-                console.log(leng, bigLetter, num, specialChar);
+                // console.log(leng, bigLetter, num, specialChar);
 
-                if(leng==true&&bigLetter==true&&num==true&&specialChar==true){
+                if (leng == true && bigLetter == true && num == true && specialChar == true) {
                     $(this).addClass("valid").removeClass("invalid");
                     $requirements.removeClass("wrong").addClass("good");
                     $passwordAlert.removeClass("alert-warning").addClass("alert-success");
                     $passwordAlert.hide();
 
                 }
-                else
-                {
+                else {
                     $(this).addClass("invalid").removeClass("valid");
                     $passwordAlert.removeClass("alert-success").addClass("alert-warning");
 
-                    if(leng==false){$leng.addClass("wrong").removeClass("good");}
-                    else{$leng.addClass("good").removeClass("wrong");}
+                    if (leng == false) {
+                        $leng.addClass("wrong").removeClass("good");
+                    } else {
+                        $leng.addClass("good").removeClass("wrong");
+                    }
 
-                    if(bigLetter==false){$bigLetter.addClass("wrong").removeClass("good");}
-                    else{$bigLetter.addClass("good").removeClass("wrong");}
+                    if (bigLetter == false) {
+                        $bigLetter.addClass("wrong").removeClass("good");
+                    } else {
+                        $bigLetter.addClass("good").removeClass("wrong");
+                    }
 
-                    if(num==false){$num.addClass("wrong").removeClass("good");}
-                    else{$num.addClass("good").removeClass("wrong");}
+                    if (num == false) {
+                        $num.addClass("wrong").removeClass("good");
+                    } else {
+                        $num.addClass("good").removeClass("wrong");
+                    }
 
-                    if(specialChar==false){$specialChar.addClass("wrong").removeClass("good");}
-                    else{$specialChar.addClass("good").removeClass("wrong");}
+                    if (specialChar == false) {
+                        $specialChar.addClass("wrong").removeClass("good");
+                    } else {
+                        $specialChar.addClass("good").removeClass("wrong");
+                    }
 
                 }
+
+                $(e.target).blur(()=>{
+                    if ($('#txtNewPassword').val() === '') {
+                        $passwordAlert.hide();
+                    };
+                });
             });
         });
         //end from web
+
     </script>
 {% endblock %}
