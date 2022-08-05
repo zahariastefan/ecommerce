@@ -201,17 +201,29 @@
                 $('#name').attr("required", "true");
                 $('#surname').attr("required", "true");
             }
+            if ($('#name').val() == '' && $('#surname').val() == '') {
+                $('#name').removeAttr("required");
+                $('#surname').removeAttr("required");
+            }
             if ($('#city').val() != '' || $('#street').val() != '' || $('#number').val() != '' || $('#building').val() != '') {
                 $('#city').attr("required", "true");
                 $('#street').attr("required", "true");
                 $('#number').attr("required", "true");
                 $('#building').attr("required", "true");
             }
-            if ($('#txtNewPassword').val() != '') {
-                var pswOk = !$(".password-alert").is(':visible');
+            if ($('#city').val() == '' && $('#street').val() == '' && $('#number').val() == '' && $('#building').val() == '') {
+                $('#city').removeAttr("required");
+                $('#street').removeAttr("required");
+                $('#number').removeAttr("required");
+                $('#building').removeAttr("required");
+            }
+                if ($('#txtNewPassword').val() != '') {
+                // var pswOk = !$(".password-alert").is(':visible');
                 $('#txtConfirmPassword').attr('required', 'true');
                 $('#txtNewPassword').attr('required', 'true');
             }
+
+            $('.save_button').trigger('click');
         });
 
         //from web
@@ -321,11 +333,19 @@
                 $(e.target).blur(()=>{
                     if ($('#txtNewPassword').val() === '') {
                         $passwordAlert.hide();
-                    };
+                    }
                 });
             });
         });
         //end from web
 
+
+        $(function (e){
+            $(e.target).blur(()=>{
+                alert('bnasdn');
+                $('#name').attr('required','false');
+                $('#surname').attr('required','false');
+            });
+        });
     </script>
 {% endblock %}
