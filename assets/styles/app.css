@@ -203,5 +203,30 @@ footer{
 }
 
 #CheckPasswordMatch{
-    font-size: 12px;
+    font-size: 15px;
+}
+
+label
+{
+    text-transform: capitalize;
+}
+
+.alert
+{
+    display: none;
+}
+
+.requirements
+{
+    list-style-type: none;
+}
+
+.wrong .fa-check
+{
+    display: none;
+}
+
+.good .fa-times
+{
+    display: none;
 }

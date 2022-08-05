@@ -4,33 +4,55 @@
 
     <div>
         <form action="{{ path('app_update_user_data') }}" class="d-grid">
-            <label for="name">  name</label>
-            <input type="text" name="name" id="name" placeholder="name">
+            <label for="name">  name
+            <input type="text" name="name" id="name" placeholder="name" class="form-control">
+            </label>
 
-            <label for="surname">  surname</label>
-            <input type="text" name="surname" id="surname" placeholder="surname"> <br><br>
+            <label for="surname">  surname
+            <input type="text" name="surname" id="surname" placeholder="surname" class="form-control"> <br><br>
+            </label>
 
-            <label for="city">  city</label>
-            <input type="text" name="city" id="city" placeholder="City" >
+            <label for="city">  city
+            <input type="text" name="city" id="city" placeholder="City" class="form-control">
+            </label>
 
-            <label for="street">  street</label>
-            <input type="text" name="street" id="street" placeholder="Street" >
+            <label for="street">  street
+            <input type="text" name="street" id="street" placeholder="Street" class="form-control">
+            </label>
 
-            <label for="number">  number</label>
-            <input type="number" name="number" id="number" placeholder="Number" >
+            <label for="number">  number
+            <input type="number" name="number" id="number" placeholder="Number" class="form-control">
+            </label>
 
-            <label for="building">  building</label>
-            <input type="number" name="building" id="building" placeholder="Building" > <br><br>
+            <label for="building">  building
+            <input type="number" name="building" id="building" placeholder="Building" class="form-control"> <br><br>
+            </label>
 
-            <label for="phone">  phone</label>
-            <input type="number" name="phone" id="phone" placeholder="phone" ><br><br>
+            <label for="phone">  phone
+            <input type="number" name="phone" id="phone" placeholder="phone" class="form-control"><br><br>
+            </label>
 
-            <label for="email">  Email</label>
-            <input type="email" name="email" id="email" placeholder="Email"><br><br>
+            <label for="email">  Email
+            <input type="email" name="email" id="email" placeholder="Email" class="form-control"><br><br>
+            </label>
 
-            <input type="password" id="txtNewPassword" placeholder="Enter password" name="pass">
-            <input type="password" id="txtConfirmPassword" placeholder="Confirm password" name="confpass">
+            <label for="pass">Password
+            <input type="password" id="txtNewPassword" placeholder="Enter password" name="pass" class="form-control form-control-psw validate">
+            </label>
+
+            <label for="confpass">Confirm Password
+            <input type="password" id="txtConfirmPassword" placeholder="Confirm password" name="confpass" class="form-control">
+            </label>
             <div class="registrationFormAlert" id="CheckPasswordMatch"></div>
+
+            <div class="alert alert-warning password-alert" role="alert">
+                <ul>
+                    <li class="requirements leng"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 8 chars.</li>
+                    <li class="requirements big-letter"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 big letter.</li>
+                    <li class="requirements num"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 number.</li>
+                    <li class="requirements special-char"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 special char.</li>
+                </ul>
+            </div>
 
             <button type="button" class="check_button">Save</button>
             <button type="submit" class="save_button" style="display: none"></button>
@@ -161,7 +183,6 @@
             }
 
         });
-
         $('.check_button').click(() => {
             if ($('#name').val() != '' || $('#surname').val() != '') {
                 $('#name').attr("required", "true");
@@ -179,6 +200,7 @@
             }
         });
 
+        //from web
         function checkPasswordMatch() {
             var password = $("#txtNewPassword").val();
             var confirmPassword = $("#txtConfirmPassword").val();
@@ -190,7 +212,86 @@
                 $("#CheckPasswordMatch").css('color', 'green');
             }
         };
-
         $("#txtConfirmPassword").keyup(checkPasswordMatch); //when key up from keyboard
+        $(function () {
+            var $password = $(".form-control-psw[type='password']");
+            var $passwordAlert = $(".password-alert");
+            var $requirements = $(".requirements");
+            var leng, bigLetter, num, specialChar;
+            var $leng = $(".leng");
+            var $bigLetter = $(".big-letter");
+            var $num = $(".num");
+            var $specialChar = $(".special-char");
+            var specialChars = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?`~";
+            var numbers = "0123456789";
+
+            $requirements.addClass("wrong");
+            $password.on("focus", function(){$passwordAlert.show();});
+            $password.on("input blur", function (e) {
+                var el = $(this);
+                var val = el.val();
+                $passwordAlert.show();
+
+                if (val.length < 8) {
+                    leng = false;
+                }
+                else if (val.length > 7) {
+                    leng=true;
+                }
+
+
+                if(val.toLowerCase()==val){
+                    bigLetter = false;
+                }
+                else{bigLetter=true;}
+
+                num = false;
+                for(var i=0; i<val.length;i++){
+                    for(var j=0; j<numbers.length; j++){
+                        if(val[i]==numbers[j]){
+                            num = true;
+                        }
+                    }
+                }
+
+                specialChar=false;
+                for(var i=0; i<val.length;i++){
+                    for(var j=0; j<specialChars.length; j++){
+                        if(val[i]==specialChars[j]){
+                            specialChar = true;
+                        }
+                    }
+                }
+
+                console.log(leng, bigLetter, num, specialChar);
+
+                if(leng==true&&bigLetter==true&&num==true&&specialChar==true){
+                    $(this).addClass("valid").removeClass("invalid");
+                    $requirements.removeClass("wrong").addClass("good");
+                    $passwordAlert.removeClass("alert-warning").addClass("alert-success");
+                    $passwordAlert.hide();
+
+                }
+                else
+                {
+                    $(this).addClass("invalid").removeClass("valid");
+                    $passwordAlert.removeClass("alert-success").addClass("alert-warning");
+
+                    if(leng==false){$leng.addClass("wrong").removeClass("good");}
+                    else{$leng.addClass("good").removeClass("wrong");}
+
+                    if(bigLetter==false){$bigLetter.addClass("wrong").removeClass("good");}
+                    else{$bigLetter.addClass("good").removeClass("wrong");}
+
+                    if(num==false){$num.addClass("wrong").removeClass("good");}
+                    else{$num.addClass("good").removeClass("wrong");}
+
+                    if(specialChar==false){$specialChar.addClass("wrong").removeClass("good");}
+                    else{$specialChar.addClass("good").removeClass("wrong");}
+
+                }
+            });
+        });
+        //end from web
     </script>
 {% endblock %}
