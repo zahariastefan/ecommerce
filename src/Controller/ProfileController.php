@@ -241,6 +241,10 @@ class ProfileController extends AbstractController
                     //if city
                     if($key == 'city'){
                         $user->setAddress($data['city'] . ' ' . $data['street'] . ' ' . $data['number'] . ' ' . $data['building']);
+                        $user->setCity($data['city']);
+                        $user->setStreet($data['street']);
+                        $user->setStreetNumber($data['number']);
+                        $user->setBuilding($data['building']);
                     }
                     //if phone
                     if($key == 'phone'){

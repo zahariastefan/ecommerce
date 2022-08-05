@@ -25,7 +25,7 @@
             {% for user in comment.user %}
 
                 <strong>Product Comment:</strong> {{ comment.content }} <br>
-                <strong>User That Commented:</strong>  {{ user.firstName }} <br><br><br><br>
+                <strong>User That Commented:</strong>  {{ user.name }} {{ user.surname }}<br><br><br><br>
             {% endfor %}
         {% endfor %}
 

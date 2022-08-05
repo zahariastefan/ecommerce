@@ -107,6 +107,10 @@ class CartController extends AbstractController
                         $item->setStatus(1);
                         $item->setPhone($data['phone']);
                         $item->setAddress($data['city'].' '.$data['street'].' '.$data['number'].' '.$data['building']);
+                        $item->setCity($data['city']);
+                        $item->setStreet($data['street']);
+                        $item->setStreetNumber($data['number']);
+                        $item->setBuilding($data['building']);
                         $item->setAddedAt(new \DateTimeImmutable());
                         $entityManager->persist($item);
                     }
@@ -158,4 +162,6 @@ class CartController extends AbstractController
 
         return $this->render('thanks.html.twig');
     }
+
+
 }

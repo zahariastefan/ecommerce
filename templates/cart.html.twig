@@ -33,16 +33,20 @@
 
                 </div>
                 <div class="col-sm second_column_cart">
-                    <p>Formular</p>
-                    <input type="text" name="name" placeholder="Name" required>
-                    <input type="text" name="surname" placeholder="Surname" required>
-                    <input type="text" name="city" placeholder="City" required>
-                    <input type="text" name="street" placeholder="Street" required>
-                    <input type="text" name="number" placeholder="Number" required>
-                    <input type="text" name="building" placeholder="Building" required>
-                    <input type="text" name="phone" placeholder="phone" required>
+                    <p>Detalii Plata</p>
+                    <label for="user_data"> Foloseste Datele Mele
+                        <input type="checkbox" name="user_data" id="user_data">
+                    </label><br>
+
+                    <input type="text" name="name" placeholder="Name" id="name" required>
+                    <input type="text" name="surname" placeholder="Surname" id="surname" required>
+                    <input type="text" name="city" placeholder="City" id="city" required>
+                    <input type="text" name="street" placeholder="Street" id="street" required>
+                    <input type="text" name="number" placeholder="Number" id="number" required>
+                    <input type="text" name="building" placeholder="Building" id="building" required>
+                    <input type="text" name="phone" placeholder="phone" id="phone" required>
                     if logged in not see this
-                    <input type="text" name="email" placeholder="Email">
+                    <input type="text" name="email" placeholder="Email" id="email">
                     <button type="button" class="testbutton">test button</button>
                     <p>Alege modalitatea de livrare</p>
                     <div class="d-inline-flex">
@@ -114,5 +118,32 @@
                 }
             });
         });
+
+        {% if app.user %}
+        $('#user_data').click(()=>{
+            if($('#user_data').is(':checked')){
+                $('#name').attr('value', '{{ app.user.name }}');
+                $('#surname').attr('value', '{{ app.user.surname }}');
+                $('#city').attr('value', '{{ app.user.city }}');
+                $('#street').attr('value', '{{ app.user.street }}');
+                $('#number').attr('value', '{{ app.user.streetNumber }}');
+                $('#building').attr('value', '{{ app.user.building }}');
+                $('#phone').attr('value', '{{ app.user.phone }}');
+                $('#email').attr('value', '{{ app.user.email }}');
+            }
+            if(!$('#user_data').is(':checked')){
+                $('#name').removeAttr('value');
+                $('#surname').removeAttr('value');
+                $('#city').removeAttr('value');
+                $('#street').removeAttr('value');
+                $('#number').removeAttr('value');
+                $('#building').removeAttr('value');
+                $('#phone').removeAttr('value');
+                $('#email').removeAttr('value');
+
+            }
+
+        });
+        {% endif %}
     </script>
 {% endblock %}

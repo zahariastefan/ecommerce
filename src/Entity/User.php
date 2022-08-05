@@ -75,6 +75,18 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[Assert\NotBlank()]
     private ?string $surname = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $street = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $street_number = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $building = null;
+
 
     public function __construct()
     {
@@ -313,6 +325,54 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     public function setSurname(?string $surname): self
     {
         $this->surname = $surname;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(?string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getStreetNumber(): ?string
+    {
+        return $this->street_number;
+    }
+
+    public function setStreetNumber(?string $street_number): self
+    {
+        $this->street_number = $street_number;
+
+        return $this;
+    }
+
+    public function getBuilding(): ?int
+    {
+        return $this->building;
+    }
+
+    public function setBuilding(?int $building): self
+    {
+        $this->building = $building;
 
         return $this;
     }
