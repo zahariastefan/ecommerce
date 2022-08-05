@@ -42,9 +42,6 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[Groups([
         "user:read",
     ])]
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank()]
-    private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
@@ -69,6 +66,14 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     #[ORM\Column(nullable: true)]
     private ?int $phone = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+    private ?string $surname = null;
 
 
     public function __construct()
@@ -144,21 +149,15 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $url;
     }
 
+
     public function getDisplayName(): string
     {
-        return $this->getFirstName() ?: $this->getEmail();
+        return $this->getFullName() ?: $this->getEmail();
     }
 
-    public function getFirstName(): ?string
+    public function getFullName(): ?string
     {
-        return $this->firstName;
-    }
-
-    public function setFirstName(?string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
+        return $this->name. ' ' . $this->surname;
     }
 
     public function getPassword(): ?string
@@ -290,6 +289,30 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     public function setPhone(?int $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(?string $surname): self
+    {
+        $this->surname = $surname;
 
         return $this;
     }

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
@@ -221,8 +222,46 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/update-data', name:'app_update_user_data')]
-    public function updateUserData()
+    public function updateUserData(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
     {
+        $data = $request->query->all();
+        $user = $this->getUser();
+        $user = $userRepository->findBy([
+            'email' => $user->getUserIdentifier()
+        ])[0];
 
+        if($user){
+            foreach ($data as $key => $datum) {
+                if(!empty($datum)){
+                    //if name
+                    if($key == 'name'){
+                        $user->setName($data['name']);
+                        $user->setSurname($data['surname']);
+                    }
+                    //if city
+                    if($key == 'city'){
+                        $user->setAddress($data['city'] . ' ' . $data['street'] . ' ' . $data['number'] . ' ' . $data['building']);
+                    }
+                    //if phone
+                    if($key == 'phone'){
+                        $user->setPhone($data['phone']);
+                    }
+                    //if email
+                    if($key == 'email'){
+                        $user->setEmail($data['email']);
+                    }
+                    //if pass
+                    if($key == 'pass'){
+                        $user->setPlainPassword($data['pass']);
+                        $user->setPassword(
+                            $passwordHasher->hashPassword($user, $user->getPlainPassword())
+                        );
+                    }
+                    $entityManager->persist($user);
+                }
+            }
+            $entityManager->flush();
+        }
+        return new Response();
     }
 }
