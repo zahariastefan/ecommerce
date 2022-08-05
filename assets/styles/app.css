@@ -201,3 +201,7 @@ footer{
     text-align: center;
 
 }
+
+#CheckPasswordMatch{
+    font-size: 12px;
+}

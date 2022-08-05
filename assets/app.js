@@ -13,3 +13,6 @@ import './bootstrap';
 
 // activates collapse functionality
 import { Collapse } from 'bootstrap';
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});

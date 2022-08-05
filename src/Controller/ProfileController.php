@@ -219,4 +219,10 @@ class ProfileController extends AbstractController
         $entityManager->flush();
         return new Response();
     }
+
+    #[Route('/update-data', name:'app_update_user_data')]
+    public function updateUserData()
+    {
+
+    }
 }

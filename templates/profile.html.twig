@@ -1,8 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    <div>
+        <form action="{{ path('app_update_user_data') }}" class="d-grid">
+            <label for="name">  name</label>
+            <input type="text" name="name" id="name" placeholder="name">
+
+            <label for="surname">  surname</label>
+            <input type="text" name="surname" id="surname" placeholder="surname"> <br><br>
+
+            <label for="city">  city</label>
+            <input type="text" name="city" id="city" placeholder="City" >
+
+            <label for="street">  street</label>
+            <input type="text" name="street" id="street" placeholder="Street" >
+
+            <label for="number">  number</label>
+            <input type="number" name="number" id="number" placeholder="Number" >
+
+            <label for="building">  building</label>
+            <input type="number" name="building" id="building" placeholder="Building" > <br><br>
+
+            <label for="phone">  phone</label>
+            <input type="number" name="phone" id="phone" placeholder="phone" ><br><br>
+
+            <label for="email">  Email</label>
+            <input type="email" name="email" id="email" placeholder="Email"><br><br>
+
+            <input type="password" id="txtNewPassword" placeholder="Enter password" name="pass">
+            <input type="password" id="txtConfirmPassword" placeholder="Confirm password" name="confpass">
+            <div class="registrationFormAlert" id="CheckPasswordMatch"></div>
+
+            <button type="button" class="check_button">Save</button>
+            <button type="submit" class="save_button" style="display: none"></button>
+        </form>
+    </div>
     <div class="row profile_row_body">
-        <div class="col">
+        {% if orderedItems is empty %}
+        {% else %}
+        <div class="col ordered_orders">
             <h2 style="padding-top:100px">Comanzi Active</h2>
             {% for orderedItemArray in orderedItems %}
                 {% for date, orderedItemArray2 in orderedItemArray %}
@@ -24,7 +61,10 @@
                 {% endfor %}
             {% endfor %}
         </div>
-        <div class="col">
+        {% endif %}
+        {% if deliveredItems is empty %}
+        {% else %}
+        <div class="col delivered_orders">
             <h2 style="padding-top:100px">Comanzi Livrate</h2>
             {% for orderedItem in deliveredItems %}
                 {% for date, orderedItemArray in orderedItem %}
@@ -39,12 +79,13 @@
                 {% endfor %}
             {% endfor %}
         </div>
+        {% endif %}
     </div>
     <div class="row">
         {% if refundedItems is empty %}
         {% else %}
-            <div class="col">
-                <h2 style="padding-top:100px">Comanzi Returnate</h2>
+            <div class="col refunded_orders">
+                <h2 style="padding-top:100px">Comenzi Returnate</h2>
                 {% for orderedItem in refundedItems %}
                     {% for date, orderedItemArray in orderedItem %}
                         {% for orderedItemSingle in orderedItemArray %}
@@ -61,33 +102,29 @@
         {% endif %}
     </div>
 
-
-
-
     <script>
-        $('.cancel_order').click(()=>{
 
-            {#var path = '{{ path('app_cancel_order') }}';#}
-            {#var fullUrl   = window.location.origin + path;#}
-            {#$.ajax({#}
-            {#    type: "POST",#}
-            {#    url: fullUrl,#}
-            {#    data: {#}
-            {#        user : '{{ app.user.email }}',#}
-            {#    },#}
-            {#    complete: function (data) {#}
+        $('.cancel_order').click(() => {
 
-            {#    }#}
-            {#});#}
+            {# var path = '{{ path('app_cancel_order') }}'; #}
+            {# var fullUrl   = window.location.origin + path; #}
+            {# $.ajax({ #}
+            {#    type: "POST", #}
+            {#    url: fullUrl, #}
+            {#    data: { #}
+            {#        user : '{{ app.user.email }}', #}
+            {#    }, #}
+            {#    complete: function (data) { #}
 
-            });
+            {#    } #}
+            {# }); #}
 
-
+        });
         $('.fa-plus').click((e) => {
             var parentClass = $(e.target).parent().attr('id');
             var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
             var refundQ = $('#' + parentClass + ' .refund_quantity').text();
-            if(parseInt(refundQ) < parseInt(quantityItem)){
+            if (parseInt(refundQ) < parseInt(quantityItem)) {
                 $('#' + parentClass + ' .refund_quantity').text(parseInt(refundQ) + 1);
             }
         });
@@ -95,7 +132,7 @@
             var parentClass = $(e.target).parent().attr('id');
             var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
             var refundQ = $('#' + parentClass + ' .refund_quantity').text();
-            if(parseInt(refundQ) > 0){
+            if (parseInt(refundQ) > 0) {
                 $('#' + parentClass + ' .refund_quantity').text(parseInt(refundQ) - 1);
             }
         });
@@ -105,23 +142,55 @@
             var path = '{{ path('app_refund_product') }}';
             var fullUrl = window.location.origin + path;
             var refundQ = $('#' + parentClass + ' .refund_quantity').text();
-            if(confirm("Are you sure you want to refund this product?")){
+            if (confirm("Are you sure you want to refund this product?")) {
                 alert('You refunded successfully!');
                 $.ajax({
                     type: "POST",
                     url: fullUrl,
                     data: {
-                        cartItemId :cartItemId,
-                        refundQ:refundQ
+                        cartItemId: cartItemId,
+                        refundQ: refundQ
                     },
                     complete: function (data) {
-                        if(parseInt(refundQ) === parseInt(cartItemId)){}
-                            $('#' + parentClass).parent().empty();
+                        if (parseInt(refundQ) === parseInt(cartItemId)) {
+                        }
+                        $('#' + parentClass).parent().empty();
                     }
                 });
-            }else{
+            } else {
             }
 
         });
+
+        $('.check_button').click(() => {
+            if ($('#name').val() != '' || $('#surname').val() != '') {
+                $('#name').attr("required", "true");
+                $('#surname').attr("required", "true");
+            }
+            if ($('#city').val() != '' || $('#street').val() != '' || $('#number').val() != '' || $('#building').val() != '') {
+                $('#city').attr("required", "true");
+                $('#street').attr("required", "true");
+                $('#number').attr("required", "true");
+                $('#building').attr("required", "true");
+            }
+            if ($('#password').val() != '' || $('#password2').val() != '') {
+                $('#password').attr("required", "true");
+                $('#password2').attr("required", "true");
+            }
+        });
+
+        function checkPasswordMatch() {
+            var password = $("#txtNewPassword").val();
+            var confirmPassword = $("#txtConfirmPassword").val();
+            if (password !== confirmPassword) {
+                $("#CheckPasswordMatch").html("Passwords does not match!");
+                $("#CheckPasswordMatch").css('color', 'red');
+            } else {
+                $("#CheckPasswordMatch").html("Passwords match.");
+                $("#CheckPasswordMatch").css('color', 'green');
+            }
+        };
+
+        $("#txtConfirmPassword").keyup(checkPasswordMatch); //when key up from keyboard
     </script>
 {% endblock %}
