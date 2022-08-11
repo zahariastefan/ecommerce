@@ -94,6 +94,7 @@ class AppFixtures extends Fixture
             $product->setUrlImage($urlImage);
             $product->setAddedAt(\DateTimeImmutable::createFromMutable(ProductFactory::faker()->dateTimeBetween('-1 year')));
             $product->setUpdatedAt(\DateTimeImmutable::createFromMutable(ProductFactory::faker()->dateTimeBetween('-1 year')));
+            $product->setPrice(ProductFactory::faker()->numberBetween(20,500));
             $urlImage->setProduct($product);
 
 

@@ -18,7 +18,9 @@ class HomepageController extends AbstractController
     #[Route('/{page<\d+>}', name:'app_homepage')]
     public function homepage(ProductRepository $productRepository, Request $request, int $page = 1)
     {
-        $queryBuilder = $productRepository->getProductsAndDescription();
+        $orderBy = $request->query->get('orderBy');
+
+        $queryBuilder = $productRepository->getProductsAndDescription($search = null,  $orderBy);
         $alertDisabled2fa = $request->query->get('alertDisabled2fa');
         if(!isset($alertDisabled2fa)) $alertDisabled2fa =  false;
 
@@ -26,7 +28,7 @@ class HomepageController extends AbstractController
             new QueryAdapter($queryBuilder)
         );
 
-        $pagerfanta->setMaxPerPage(5);
+        $pagerfanta->setMaxPerPage(8);
         $pagerfanta->setCurrentPage($page);
 
 

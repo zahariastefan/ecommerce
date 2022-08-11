@@ -240,3 +240,61 @@ label
 html, body, .container_cart {
     height: 100%;
 }
+
+body{
+    background: #E3E2E1;
+}
+
+.col_design{
+    text-align: center;
+    max-width: 260px;
+    min-width: 260px;
+    max-height: 390px;
+    min-height: 390px;
+    background: white;
+    padding: 10px;
+    margin: 12px;
+}
+.descriptionHomePage{
+    height: 72px;
+}
+
+.col_design:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    cursor: pointer;
+}
+
+.img_product {
+    width:inherit;
+    height: 200px;
+}
+
+.title_product{
+    font-size: 22px;
+}
+
+.pagination{
+    margin-top: 40px;
+    justify-content: center;
+}
+
+
+.img_product_page{
+    height: 400px;
+    width: 500px;
+    border-radius: 10px;
+}
+
+.div_product_page {
+    padding: 50px;
+}
+.div_product_page .row div:nth-child(3){
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.title_product_page{
+    font-size: 20px;
+}

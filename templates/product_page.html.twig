@@ -1,26 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {%  block body  %}
+    <div class="container div_product_page">
+        <p class="title_product_page">
+            <strong>Product Title:</strong> {{ product.title }}
+        </p>
 
-        <strong>Product Title:</strong> {{ product.title }}  <br>
-        <strong>Product Description:</strong>  {{ product.description }} <br><br>
+        <div class="row">
+            <div class="col">
+                <img src="{{ asset(product.urlImage.url) }}" class="img_product_page">
+            </div>
 
-    <div class="d-inline-flex">
-        <button type="button" class="add_to_cart_button">Add To Cart</button>
-        <form action="{{  path('app_cart') }}">
-            <button type="submit">Buy</button>
-        </form>
+            <div class="col">
+                <strong>Product Description:</strong>  {{ product.description }}
+            </div>
+
+            <div class="col">
+                <p class="product_price_page"> {{ product.price }} $</p>
+                <div class="d-inline-flex">
+                    <button type="button" class="add_to_cart_button">Add To Cart</button>
+                    <form action="{{  path('app_cart') }}">
+                        <button type="submit">Buy</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-    <br>
+
+
+
+
+{#
     <form action="{{ path('app_comment') }}">
         <label for="comment"></label>
         <textarea name="comment" id="comment" cols="40" rows="3"></textarea><br>
         <button type="submit">Comment</button>
     </form>
-
-
-    <br><br><br><br>
-
         {% for comment in product.comment %}
             {% for user in comment.user %}
 
@@ -29,7 +46,7 @@
             {% endfor %}
         {% endfor %}
 
-
+#}
     <script>
         $('.add_to_cart_button').click(()=>{
             var items_number = $('.items_number').text();

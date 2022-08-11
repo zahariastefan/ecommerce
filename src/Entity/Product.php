@@ -44,6 +44,9 @@ class Product
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?UrlImage $url_image = null;
 
+    #[ORM\Column]
+    private ?int $price = null;
+
     public function __construct()
     {
         $this->comment = new ArrayCollection();
@@ -220,6 +223,18 @@ class Product
     public function setUrlImage(?UrlImage $url_image): self
     {
         $this->url_image = $url_image;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

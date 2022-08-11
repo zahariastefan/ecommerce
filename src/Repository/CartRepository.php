@@ -39,6 +39,17 @@ class CartRepository extends ServiceEntityRepository
         }
     }
 
+    public function getDataFiltered(string $search = null){
+
+        $queryBuilding = $this->createQueryBuilder('c')
+        ->innerJoin('c.product', 'product');
+        if($search){
+            $queryBuilding->andWhere('product.title LIKE :searchTerm OR product.description LIKE :searchTerm')
+                ->setParameter('searchTerm',  '%'.$search.'%');
+        }
+        return $queryBuilding;
+    }
+
 //    /**
 //     * @return Cart[] Returns an array of Cart objects
 //     */

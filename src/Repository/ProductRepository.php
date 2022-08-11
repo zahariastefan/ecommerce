@@ -40,16 +40,35 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-    public function getProductsAndDescription(string $search = null)
+    public function getProductsAndDescription(string $search = null, string $orderBy = null)
     {
         $queryBuilder =$this->addIsAskedQueryBuilder()
-            ->orderBy('p.added_at', 'DESC')
+            ->orderBy('p.added_at', 'ASC')
         ;
 
 
         if($search != null){
             $queryBuilder->andWhere('p.slug LIKE :searchTerm')
                 ->setParameter('searchTerm', '%'.$search.'%');
+        }
+
+
+        if($orderBy != null){
+            switch ($orderBy){
+                case 'newest':
+                    $orderBy = 'p.added_at';
+                    $secParam = 'DESC';
+                    break;
+                case 'price_low':
+                    $orderBy = 'p.price';
+                    $secParam = 'ASC';
+                    break;
+                case 'price_high':
+                    $orderBy = 'p.price';
+                    $secParam = 'DESC';
+                    break;
+            }
+            $queryBuilder->orderBy($orderBy, $secParam);
         }
 
         $queryBuilder->leftJoin('p.comment', 'comment')
