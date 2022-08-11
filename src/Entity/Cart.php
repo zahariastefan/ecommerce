@@ -41,6 +41,18 @@ class Cart
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $delivered_at = null;
 
+    #[ORM\Column(length: 255,nullable: true)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255,nullable: true)]
+    private ?string $street = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $street_number = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $building = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,6 +162,54 @@ class Cart
     public function setDeliveredAt(?\DateTimeImmutable $delivered_at): self
     {
         $this->delivered_at = $delivered_at;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getStreetNumber(): ?int
+    {
+        return $this->street_number;
+    }
+
+    public function setStreetNumber(int $street_number): self
+    {
+        $this->street_number = $street_number;
+
+        return $this;
+    }
+
+    public function getBuilding(): ?int
+    {
+        return $this->building;
+    }
+
+    public function setBuilding(?int $building): self
+    {
+        $this->building = $building;
 
         return $this;
     }

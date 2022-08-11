@@ -12,7 +12,7 @@
             [
                 {
                     nrPresence : nrOfPresence,
-            title : nameOfProduct
+                    title : nameOfProduct
                 }
             ]
         ) %}
@@ -33,8 +33,8 @@
 
                 </div>
                 <div class="col-sm second_column_cart">
-                    <p>Detalii Plata</p>
-                    <label for="user_data"> Foloseste Datele Mele
+                    <p>Payment Details</p>
+                    <label for="user_data"> Use My Own Data
                         <input type="checkbox" name="user_data" id="user_data">
                     </label><br>
 
@@ -45,13 +45,11 @@
                     <input type="text" name="number" placeholder="Number" id="number" required>
                     <input type="text" name="building" placeholder="Building" id="building" required>
                     <input type="text" name="phone" placeholder="phone" id="phone" required>
-                    if logged in not see this
-                    <input type="text" name="email" placeholder="Email" id="email">
-                    <button type="button" class="testbutton">test button</button>
-                    <p>Alege modalitatea de livrare</p>
+                    <input type="text" name="email" placeholder="Email" id="email"><br><br>
+                    <p>Choose payment type</p>
                     <div class="d-inline-flex">
                         <input type="checkbox" name="ramburs" required>
-                        <label for="ramburs">Plata la Ramburs</label>
+                        <label for="ramburs">Offline Pay</label>
                     </div>
                     <br>
                     <button type="submit">Send Order</button>
@@ -62,62 +60,126 @@
 
 
     <script>
-        $('.add_to_cart_button').click((e)=>{
-            var items_number = $('.items_number').text();
-            $('.items_number').text(parseInt(items_number) + 1);
-            var classNameOfParent = $(e.target).parent().attr('class');
-            var oneItemName = $('.'+classNameOfParent + '  p.oneItemTitle').text();
-            var nrOfPresence = $('.'+classNameOfParent + '  p.nr_total_presence').text();
-            $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
+        {#$('.add_to_cart_button').click((e)=>{#}
+        {#    var items_number = $('.items_number').text();#}
+        {#    $('.items_number').text(parseInt(items_number) + 1);#}
+        {#    var classNameOfParent = $(e.target).parent().attr('class');#}
+        {#    var oneItemName = $('.'+classNameOfParent + '  p.oneItemTitle').text();#}
+        {#    var nrOfPresence = $('.'+classNameOfParent + '  p.nr_total_presence').text();#}
+        {#    $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);#}
 
-            $('.'+classNameOfParent+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) + 1) +'}');
-            // alert(classNameOfParent);
+        {#    $('.'+classNameOfParent+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) + 1) +'}');#}
+        {#    // alert(classNameOfParent);#}
 
-            var path = '{{ path('app_add_cart') }}';
-            var fullUrl   = window.location.origin + path;
-            $.ajax({
-                type: "POST",
-                url: fullUrl,
-                data: {
-                    itemId :oneItemName,
-                    cartPage : 1,
-                },
-                complete: function (data) {
+        {#    var path = '{{ path('app_add_cart') }}';#}
+        {#    var fullUrl   = window.location.origin + path;#}
+        {#    $.ajax({#}
+        {#        type: "POST",#}
+        {#        url: fullUrl,#}
+        {#        data: {#}
+        {#            itemId :oneItemName,#}
+        {#            cartPage : 1,#}
+        {#        },#}
+        {#        complete: function (data) {#}
 
-                }
+        {#        }#}
+        {#    });#}
+        {#});#}
+        {#$('.remove_to_cart_button').click((e)=>{#}
+        {#    var items_number = $('.items_number').text();#}
+        {#    $('.items_number').text(parseInt(items_number) - 1);#}
+        {#    var classNameOfParent2 = $(e.target).parent().attr('class');#}
+
+        {#    var oneItemName = $('.'+classNameOfParent2 + '  p.oneItemTitle').text();#}
+        {#    var nrOfPresence = $('.'+classNameOfParent2 + '  p.nr_total_presence').text();#}
+        {#    $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);#}
+
+        {#    $('.'+classNameOfParent2+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) - 1) +'}');#}
+
+
+        {#    if(parseInt(nrOfPresence) === 1){#}
+        {#        $(e.target).parent().remove();#}
+        {#    }#}
+
+
+        {#    var path = '{{ path('app_remove_cart') }}';#}
+        {#    var fullUrl   = window.location.origin + path;#}
+        {#    $.ajax({#}
+        {#        type: "POST",#}
+        {#        url: fullUrl,#}
+        {#        data: {#}
+        {#            itemId :oneItemName,#}
+        {#            cartPage : 1,#}
+        {#        },#}
+        {#        complete: function (data) {#}
+
+        {#        }#}
+        {#    });#}
+        {#});#}
+
+        var path = '{{ path('app_add_cart') }}';
+        var fullUrl   = window.location.origin + path;
+        addToCart(fullUrl);
+        var path2 = '{{ path('app_remove_cart') }}';
+        var fullUrl2   = window.location.origin + path2;
+        removeToCart(fullUrl2);
+        function addToCart(fullUrl){
+            $('.add_to_cart_button').click((e)=>{
+                var items_number = $('.items_number').text();
+                $('.items_number').text(parseInt(items_number) + 1);
+                var classNameOfParent = $(e.target).parent().attr('class');
+                var oneItemName = $('.'+classNameOfParent + '  p.oneItemTitle').text();
+                var nrOfPresence = $('.'+classNameOfParent + '  p.nr_total_presence').text();
+                $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
+
+                $('.'+classNameOfParent+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) + 1) +'}');
+                // alert(classNameOfParent);
+
+
+                $.ajax({
+                    type: "POST",
+                    url: fullUrl,
+                    data: {
+                        itemId :oneItemName,
+                        cartPage : 1,
+                    },
+                    complete: function (data) {
+
+                    }
+                });
             });
-        });
-        $('.remove_to_cart_button').click((e)=>{
-            var items_number = $('.items_number').text();
-            $('.items_number').text(parseInt(items_number) - 1);
-            var classNameOfParent2 = $(e.target).parent().attr('class');
+        }
 
-            var oneItemName = $('.'+classNameOfParent2 + '  p.oneItemTitle').text();
-            var nrOfPresence = $('.'+classNameOfParent2 + '  p.nr_total_presence').text();
-            $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);
+        function removeToCart(fullUrl){
+            $('.remove_to_cart_button').click((e)=>{
+                var items_number = $('.items_number').text();
+                $('.items_number').text(parseInt(items_number) - 1);
+                var classNameOfParent2 = $(e.target).parent().attr('class');
 
-            $('.'+classNameOfParent2+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) - 1) +'}');
+                var oneItemName = $('.'+classNameOfParent2 + '  p.oneItemTitle').text();
+                var nrOfPresence = $('.'+classNameOfParent2 + '  p.nr_total_presence').text();
+                $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);
 
-
-            if(parseInt(nrOfPresence) === 1){
-                $(e.target).parent().remove();
-            }
+                $('.'+classNameOfParent2+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) - 1) +'}');
 
 
-            var path = '{{ path('app_remove_cart') }}';
-            var fullUrl   = window.location.origin + path;
-            $.ajax({
-                type: "POST",
-                url: fullUrl,
-                data: {
-                    itemId :oneItemName,
-                    cartPage : 1,
-                },
-                complete: function (data) {
-
+                if(parseInt(nrOfPresence) === 1){
+                    $(e.target).parent().remove();
                 }
+
+                $.ajax({
+                    type: "POST",
+                    url: fullUrl,
+                    data: {
+                        itemId :oneItemName,
+                        cartPage : 1,
+                    },
+                    complete: function (data) {
+
+                    }
+                });
             });
-        });
+        }
 
         {% if app.user %}
         $('#user_data').click(()=>{
