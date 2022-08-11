@@ -127,7 +127,7 @@
             $('.items_number').text(itemNr);
             var items_number = $('.items_number').text();
             if(parseInt(items_number) === 0){
-                $('.container_cart').html('<p>You don\'t have products in cart</p>');
+                $('.container_cart').html('<p class="no_products">You don\'t have products in cart</p>');
                 $('html').show();
             }else{
                 $('html').show();

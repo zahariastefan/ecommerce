@@ -236,3 +236,7 @@ label
     padding-left: 50px;
     padding-bottom: 50px;
 }
+
+html, body, .container_cart {
+    height: 100%;
+}
