@@ -3,6 +3,11 @@
 {% block body %}
 
     <div>
+{#        {% for message in app.flashes('success') %}#}
+{#            <div class="alert alert-success">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
         <form action="{{ path('app_update_user_data') }}" class="d-grid">
             <label for="name">
                 <input type="text" name="name" id="name" placeholder="name" class="form-control">
@@ -68,134 +73,8 @@
             <button type="submit" class="save_button" style="display: none"></button>
         </form>
     </div>
-    <div class="row profile_row_body">
-        {% if orderedItems is empty %}
-        {% else %}
-            <div class="col ordered_orders">
-                <h2 style="padding-top:100px">Comanzi Active</h2>
-                {% for orderedItemArray in orderedItems %}
-                    {% for date, orderedItemArray2 in orderedItemArray %}
-                        {% for orderedItemSingle in orderedItemArray2 %}
-                            <div id="refund_{{ orderedItemSingle.id }}">
-                                <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                                Product Title: {{ orderedItemSingle.product.title }} <br>
-                                Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
-                                Address Delivery: {{ orderedItemSingle.address }} <br>
-                                Phone: {{ orderedItemSingle.phone }} <br><br>
-                                <input type="hidden" name="refund_{{ orderedItemSingle.id }}"
-                                       class="refund_{{ orderedItemSingle.id }}"
-                                       value="{{ orderedItemSingle.product.id }}">
-                                <p class="refund_quantity">0</p>
-                                <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-                                <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
-                                <button class="refund_button">Returneaza</button>
-                                <br><br>
-                                <button class="cancel_order">Anuleaza Comanda</button>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% if deliveredItems is empty %}
-        {% else %}
-            <div class="col delivered_orders">
-                <h2 style="padding-top:100px">Comanzi Livrate</h2>
-                {% for orderedItem in deliveredItems %}
-                    {% for date, orderedItemArray in orderedItem %}
-                        {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                            Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
-                            Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: {{ orderedItemSingle.phone }} <br>
-                            Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
-                        {% endfor %}
-                    {% endfor %}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
-    <div class="row">
-        {% if refundedItems is empty %}
-        {% else %}
-            <div class="col refunded_orders">
-                <h2 style="padding-top:100px">Comenzi Returnate</h2>
-                {% for orderedItem in refundedItems %}
-                    {% for date, orderedItemArray in orderedItem %}
-                        {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                            Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
-                            Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: {{ orderedItemSingle.phone }} <br>
-                            Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
-                        {% endfor %}
-                    {% endfor %}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
 
     <script>
-
-        $('.cancel_order').click(() => {
-
-            {# var path = '{{ path('app_cancel_order') }}'; #}
-            {# var fullUrl   = window.location.origin + path; #}
-            {# $.ajax({ #}
-            {#    type: "POST", #}
-            {#    url: fullUrl, #}
-            {#    data: { #}
-            {#        user : '{{ app.user.email }}', #}
-            {#    }, #}
-            {#    complete: function (data) { #}
-
-            {#    } #}
-            {# }); #}
-
-        });
-        $('.fa-plus').click((e) => {
-            var parentClass = $(e.target).parent().attr('id');
-            var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
-            var refundQ = $('#' + parentClass + ' .refund_quantity').text();
-            if (parseInt(refundQ) < parseInt(quantityItem)) {
-                $('#' + parentClass + ' .refund_quantity').text(parseInt(refundQ) + 1);
-            }
-        });
-        $('.fa-minus').click((e) => {
-            var parentClass = $(e.target).parent().attr('id');
-            var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
-            var refundQ = $('#' + parentClass + ' .refund_quantity').text();
-            if (parseInt(refundQ) > 0) {
-                $('#' + parentClass + ' .refund_quantity').text(parseInt(refundQ) - 1);
-            }
-        });
-        $('.refund_button').click((e) => {
-            var parentClass = $(e.target).parent().attr('id');
-            var cartItemId = $('.' + parentClass).val();
-            var path = '{{ path('app_refund_product') }}';
-            var fullUrl = window.location.origin + path;
-            var refundQ = $('#' + parentClass + ' .refund_quantity').text();
-            if (confirm("Are you sure you want to refund this product?")) {
-                alert('You refunded successfully!');
-                $.ajax({
-                    type: "POST",
-                    url: fullUrl,
-                    data: {
-                        cartItemId: cartItemId,
-                        refundQ: refundQ
-                    },
-                    complete: function (data) {
-                        if (parseInt(refundQ) === parseInt(cartItemId)) {
-                        }
-                        $('#' + parentClass).parent().empty();
-                    }
-                });
-            } else {
-            }
-
-        });
         $('.check_button').click(() => {
             if ($('#name').val() != '' || $('#surname').val() != '') {
                 $('#name').attr("required", "true");
@@ -217,15 +96,14 @@
                 $('#number').removeAttr("required");
                 $('#building').removeAttr("required");
             }
-                if ($('#txtNewPassword').val() != '') {
+            if ($('#txtNewPassword').val() != '') {
                 // var pswOk = !$(".password-alert").is(':visible');
                 $('#txtConfirmPassword').attr('required', 'true');
                 $('#txtNewPassword').attr('required', 'true');
             }
-
+            alert('Data changed! Page will refresh');
             $('.save_button').trigger('click');
         });
-
         //from web
         function checkPasswordMatch() {
             var password = $("#txtNewPassword").val();
@@ -338,8 +216,6 @@
             });
         });
         //end from web
-
-
         $(function (e){
             $(e.target).blur(()=>{
                 $('#name').attr('required','false');
@@ -347,4 +223,5 @@
             });
         });
     </script>
+
 {% endblock %}

@@ -174,9 +174,9 @@ footer {
 }
 
 footer{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
 }
 
 .thank_you{
@@ -229,4 +229,10 @@ label
 .good .fa-times
 {
     display: none;
+}
+
+.profile_row_body{
+    border: 1px solid black;
+    padding-left: 50px;
+    padding-bottom: 50px;
 }

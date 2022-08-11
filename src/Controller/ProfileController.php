@@ -7,6 +7,7 @@ use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -14,135 +15,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
-//    #[Route('/profile', name: 'app_profile')]
-//    public function profile(CartRepository $cartRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
-//    {
-//        $queryBuilder = $cartRepository->createQueryBuilder('c');
-//        $orders = $queryBuilder
-//            ->where('c.user = '.$this->getUser()->getId())
-//        ;
-//
-//        $orderedItems = $this->deleteDuplicates($orders, 1);
-////        $deliveredItems = $this->deleteDuplicates($orders, 2);
-//
-////        dd($orderedItems);
-//        return $this->render('profile.html.twig', [
-//            'orderedItems' => $orderedItems,
-////            'deliveredItems' => $deliveredItems
-//        ]);
-//    }
-//
-//    /**This function return Array with all ordered Orders without repetition and By date **/
-//    public function deleteDuplicates($orderObjs)
-//    {
-//        $dateAddedAt = [];//list of all dates
-//        $orderObj = $orderObjs->getQuery()->getResult();
-//        foreach ($orderObj as $order) {
-//            $dateObj = (array) $order->getAddedAt();
-//            $dateAddedAt[] =$dateObj['date'];
-//        }
-//        $uniqueDates = array_unique($dateAddedAt);
-//        $arrayForTwigByDate=[];//date => products (with duplicates)
-//        foreach ($uniqueDates as $uniqueDate) {
-//            $formattedDate = substr($uniqueDate,0,19);
-//            /**getting all Cart By Date**/
-//            $orders = $orderObjs
-//                ->where('c.added_at LIKE :date')
-//                ->andWhere('c.deleted_at IS NULL')
-//                ->setParameter('date', $formattedDate)
-//                ->orderBy('c.product', 'ASC')
-//                ->getQuery()
-//                ->getResult()
-//            ;
-//            foreach ($orders as $key=>$order) {
-//                if($order->getDeliveredAt() != null){
-//                    $deliveredDate = substr(((array) $order->getDeliveredAt())['date'],0,19);
-//                }else{
-//                    $deliveredDate = null;
-//                }
-//                $date =substr(((array) $order->getAddedAt())['date'],0,19);//this change
-//                if($formattedDate == $date){
-//                    $arrayForTwigByDate[$formattedDate][] =
-//                        [
-//                            'title' => $order->getProduct()->getTitle(),
-//                            'address' => $order->getAddress(),
-//                            'phone' => '0' . $order->getPhone(),
-//                            'delivered_at' => $deliveredDate,
-//                            'status' => $order->getStatus()
-//                        ];
-//                }
-//            }
-//        }
-//        $finalArray = [];
-//        foreach ($arrayForTwigByDate as $date=>$listOfArrays) { //that loop , in help of other function, delete duplicate
-//            /**
-//             *
-//            the format of $listOfArrays are:
-//            array:10 [▼
-//            0 => array:3 [▶]
-//            1 => array:3 [▼
-//                "title" => "TitleName"
-//                "address" => "adress sdjasni"
-//                "phone" => "0744541254"
-//            ]
-//            2 => array:3 [▶]
-//             */
-//            $unique = self::unique_multi_array($listOfArrays);
-//            $uniqueWithData = [$date=>$unique];
-//            $finalArray[]=$uniqueWithData;
-//        }
-//        return $finalArray;
-//    }
-//
-//    /**
-//     * This Function Delete Duplicates and Add Quantity
-//    */
-//    public function unique_multi_array($array) {
-//        $temp_array = array();
-//        $i = 0;
-//        $final_array = array();
-//        $prodTtile = [];
-//        foreach ($array as $item) {
-//            $prodTtile[]=$item['title'];
-//        }
-//        foreach($array as $key=>$val) {
-//            /**ATTACH TO EACH $val THE QUANTITY that exist in array_count_values($prodTtile)**/
-//            foreach (array_count_values($prodTtile) as $title=>$quantity) {
-//                if($val['title'] == $title){
-//                    $val['quantity'] = $quantity;
-//                }
-//            }
-//            /**END ATTACH**/
-//
-//            /**FILL WITH ARRAY WITHOUT DUPLICATES IN $final_array**/
-//            if(count($temp_array) > 0){
-//                if(count(array_diff($temp_array[$i],$val)) > 0){//if the same array will be Empty []
-//                    $i+=1;
-//                    $temp_array[]=$val;
-//                    $final_array[]=$val;
-//                };
-//            }else{
-//                $temp_array[]=$val;
-//                $final_array[]=$val;
-//            }
-//            /**END FILLING**/
-//        }
-//        return $final_array;
-//    }
-
     #[Route('/profile', name: 'app_profile')]
-    public function profile(CartRepository $cartRepository,
+    public function profile(): Response
+    {
+        return $this->render('profile.html.twig');
+    }
+
+    #[Route('/orders', name: 'app_orders')]
+    public function orders(CartRepository $cartRepository,
                             ProductRepository $productRepository): Response
     {
         $status1 = $this->getResultsGroupedByDate($cartRepository,$productRepository,1);
         $status2 = $this->getResultsGroupedByDate($cartRepository,$productRepository,2);
         $status3 = $this->getResultsGroupedByDate($cartRepository,$productRepository,3);
-        return $this->render('profile.html.twig', [
+        return $this->render('orders.html.twig', [
             'orderedItems' => $status1,
             'deliveredItems' => $status2,
             'refundedItems' => $status3
         ]);
     }
+
 
     public function getResultsGroupedByDate($cartRepository,$productRepository,$status)
     {
@@ -187,11 +79,30 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/cancel-order', name:'app_cancel_order')]
-    public function cancelOrder(UserRepository $userRepository, Request $request): Response
+    public function cancelOrder(UserRepository $userRepository, Request $request, CartRepository $cartRepository, EntityManagerInterface $entityManager): Response
     {
 
         $user = $request->request->get('user');
 
+        $user = $userRepository->findBy([
+            'email' => $user
+        ])[0];
+        //search in Cart For user_id and status 1  and change status to 4 and add deleted_at
+
+        $carts = $cartRepository->createQueryBuilder('c')
+            ->where('c.user = :user')
+            ->andWhere('c.status = 1')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($carts as $cart) {
+            $cart->setStatus('4');
+            $cart->setDeletedAt(new \DateTimeImmutable());
+            $entityManager->persist($cart);
+        }
+
+        $entityManager->flush();
         return new Response();
     }
 
@@ -266,6 +177,7 @@ class ProfileController extends AbstractController
             }
             $entityManager->flush();
         }
-        return new Response();
+
+        return  $this->redirectToRoute('app_profile');
     }
 }

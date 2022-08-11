@@ -15,6 +15,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
 {
+    /**
+     * @param UserRepository $userRepository
+     * @param GuestOrdersRepository $guestOrdersRepository
+     * @param CartRepository $cartRepository
+     * @param ProductRepository $productRepository
+     * @return Response
+     */
+
+    /**
+     * status
+     * 0 = in cart
+     * 1 = ordered
+     * 2 = delivered
+     * 3 = refound
+     * 4 = canceled
+     */
 
     #[Route('/cart', name:'app_cart')]
     public function cart(UserRepository $userRepository,GuestOrdersRepository $guestOrdersRepository, CartRepository $cartRepository, ProductRepository $productRepository)
