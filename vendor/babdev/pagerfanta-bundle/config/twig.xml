@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Twig Extension -->
+        <service id="pagerfanta.twig_extension" class="Pagerfanta\Twig\Extension\PagerfantaExtension" public="false">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- Twig Runtime -->
+        <service id="pagerfanta.twig_runtime" class="Pagerfanta\Twig\Extension\PagerfantaRuntime" public="false">
+            <argument>%babdev_pagerfanta.default_view%</argument>
+            <argument type="service" id="pagerfanta.view_factory" />
+            <argument type="service" id="pagerfanta.route_generator_factory" />
+            <tag name="twig.runtime" />
+        </service>
+
+        <!-- Twig Undefined Callable Handler -->
+        <service id="pagerfanta.undefined_callable_handler" class="BabDev\PagerfantaBundle\Twig\UndefinedCallableHandler" public="false" />
+
+        <!-- Pagerfanta View -->
+        <service id="pagerfanta.view.twig" class="Pagerfanta\Twig\View\TwigView" public="false">
+            <argument type="service" id="twig" />
+            <argument>%babdev_pagerfanta.default_twig_template%</argument>
+            <tag name="pagerfanta.view" alias="twig" />
+        </service>
+    </services>
+
+</container>

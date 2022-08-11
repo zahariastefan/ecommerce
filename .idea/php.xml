@@ -152,6 +152,10 @@
       <path value="$PROJECT_DIR$/vendor/symfony/redis-messenger" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
       <path value="$PROJECT_DIR$/vendor/symfony/profiler-pack" />
+      <path value="$PROJECT_DIR$/vendor/babdev/pagerfanta-bundle" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/core" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/doctrine-orm-adapter" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/twig" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

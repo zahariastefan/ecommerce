@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Route Generator Factory -->
+        <service id="pagerfanta.route_generator_factory" class="BabDev\PagerfantaBundle\RouteGenerator\RequestAwareRouteGeneratorFactory" public="true">
+            <argument type="service" id="router" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="property_accessor" on-invalid="ignore" />
+            <tag name="container.private" package="babdev/pagerfanta-bundle" version="3.5" />
+        </service>
+        <service id="Pagerfanta\RouteGenerator\RouteGeneratorFactoryInterface" alias="pagerfanta.route_generator_factory" />
+
+        <!-- Pagerfanta Views -->
+        <service id="pagerfanta.view.default" class="Pagerfanta\View\DefaultView" public="false">
+            <tag name="pagerfanta.view" alias="default" />
+        </service>
+
+        <service id="pagerfanta.view.foundation6" class="Pagerfanta\View\Foundation6View" public="false">
+            <tag name="pagerfanta.view" alias="foundation6" />
+        </service>
+
+        <service id="pagerfanta.view.semantic_ui" class="Pagerfanta\View\SemanticUiView" public="false">
+            <tag name="pagerfanta.view" alias="semantic_ui" />
+        </service>
+
+        <service id="pagerfanta.view.twitter_bootstrap" class="Pagerfanta\View\TwitterBootstrapView" public="false">
+            <tag name="pagerfanta.view" alias="twitter_bootstrap" />
+        </service>
+
+        <service id="pagerfanta.view.twitter_bootstrap3" class="Pagerfanta\View\TwitterBootstrap3View" public="false">
+            <tag name="pagerfanta.view" alias="twitter_bootstrap3" />
+        </service>
+
+        <service id="pagerfanta.view.twitter_bootstrap4" class="Pagerfanta\View\TwitterBootstrap4View" public="false">
+            <tag name="pagerfanta.view" alias="twitter_bootstrap4" />
+        </service>
+
+        <service id="pagerfanta.view.twitter_bootstrap5" class="Pagerfanta\View\TwitterBootstrap5View" public="false">
+            <tag name="pagerfanta.view" alias="twitter_bootstrap5" />
+        </service>
+
+        <!-- View Factory -->
+        <service id="pagerfanta.view_factory" class="Pagerfanta\View\ViewFactory" public="true">
+            <tag name="container.private" package="babdev/pagerfanta-bundle" version="3.5" />
+        </service>
+        <service id="Pagerfanta\View\ViewFactory" alias="pagerfanta.view_factory" />
+        <service id="Pagerfanta\View\ViewFactoryInterface" alias="pagerfanta.view_factory" />
+    </services>
+
+</container>

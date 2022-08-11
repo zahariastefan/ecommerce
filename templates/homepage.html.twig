@@ -19,7 +19,7 @@
 
 
 
-            {% for product in products %}
+            {% for product in pager %}
                 <strong>Product Title:</strong> <a href="{{ path('app_product_page', { slug: product.slug } ) }}">{{ product.title }} </a> <br>
                 <img src="{{ asset(product.urlImage.url) }}" width="200" height="200">
                 <br>
@@ -60,8 +60,10 @@
 {#                </div>#}
 {#            {% endfor %}#}
 
-{#            {{ pagerfanta(pager) }}#}
+            {{ pagerfanta(pager) }}
 {#        </div>#}
     </div>
+
+
 {% endblock %}
 
