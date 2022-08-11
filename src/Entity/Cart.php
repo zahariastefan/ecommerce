@@ -21,12 +21,6 @@ class Cart
     private ?Product $product = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $added_at = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $deleted_at = null;
-
-    #[ORM\Column]
     private ?int $status = null;
 
     #[ORM\Column(nullable: true)]
@@ -37,9 +31,6 @@ class Cart
 
     #[ORM\Column(nullable: true)]
     private ?int $phone = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $delivered_at = null;
 
     #[ORM\Column(length: 255,nullable: true)]
     private ?string $city = null;
@@ -52,6 +43,15 @@ class Cart
 
     #[ORM\Column(nullable: true)]
     private ?int $building = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $delivered_at = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $added_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $deleted_at = null;
 
     public function getId(): ?int
     {
