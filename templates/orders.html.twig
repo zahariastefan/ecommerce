@@ -6,12 +6,12 @@
         {% if orderedItems is empty %}
         {% else %}
             <div class="col ordered_orders profile_row_body">
-                <h2 style="padding-top:100px">Comanzi Active</h2>
+                <h2 style="padding-top:100px">Active Orders</h2>
                 {% for orderedItemArray in orderedItems %}
                     {% for date, orderedItemArray2 in orderedItemArray %}
                         {% for orderedItemSingle in orderedItemArray2 %}
                             <div id="refund_{{ orderedItemSingle.id }}">
-                                <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                                <strong> Date of order: {{ date }} </strong><br><br>
                                 Product Title: {{ orderedItemSingle.product.title }} <br>
                                 Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
                                 Address Delivery: {{ orderedItemSingle.address }} <br>
@@ -22,29 +22,29 @@
                                 <p class="refund_quantity">0</p>
                                 <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
                                 <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
-                                <button class="refund_button">Returneaza</button>
+                                <button class="refund_button">Refund</button>
                                 <br><br>
                             </div>
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
-                <button class="cancel_order">Anuleaza Comanda</button>
+                <button class="cancel_order">Cancel Order</button>
 
             </div>
         {% endif %}
         {% if deliveredItems is empty %}
         {% else %}
             <div class="col delivered_orders profile_row_body">
-                <h2 style="padding-top:100px">Comanzi Livrate</h2>
+                <h2 style="padding-top:100px">Orders delivered</h2>
                 {% for orderedItem in deliveredItems %}
                     {% for date, orderedItemArray in orderedItem %}
                         {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                            <strong> Date of order: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
                             Quantity: {{ orderedItemSingle.quantity }} <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
                             Phone: +40{{ orderedItemSingle.phone }} <br>
-                            Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
+                            Delivered on: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
@@ -55,16 +55,16 @@
         {% if refundedItems is empty %}
         {% else %}
             <div class="col refunded_orders">
-                <h2 style="padding-top:100px">Comenzi Returnate</h2>
+                <h2 style="padding-top:100px">Refunded Orders</h2>
                 {% for orderedItem in refundedItems %}
                     {% for date, orderedItemArray in orderedItem %}
                         {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
+                            <strong> Date of order: {{ date }} </strong><br><br>
                             Product Title: {{ orderedItemSingle.product.title }} <br>
                             Quantity: {{ orderedItemSingle.quantity }} <br>
                             Address Delivery: {{ orderedItemSingle.address }} <br>
                             Phone: +40{{ orderedItemSingle.phone }} <br>
-                            Livrat pe: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
+                            Delivered On: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}

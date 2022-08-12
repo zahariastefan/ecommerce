@@ -39,39 +39,31 @@ class CartRepository extends ServiceEntityRepository
         }
     }
 
-    public function getDataFiltered(string $search = null){
-
+    public function getDataFiltered(string $search = null, string $category = null, string $orderedBy = null)
+    {
         $queryBuilding = $this->createQueryBuilder('c')
         ->innerJoin('c.product', 'product');
         if($search){
             $queryBuilding->andWhere('product.title LIKE :searchTerm OR product.description LIKE :searchTerm')
                 ->setParameter('searchTerm',  '%'.$search.'%');
         }
+
+
+        if($category && $orderedBy){
+            $queryBuilding->andWhere('c.status = :status')
+                ->setParameter('status',  $category)
+                ->orderBy('c.added_at', $orderedBy)
+            ;
+        }
+        if($category){
+            $queryBuilding->andWhere('c.status = :status')
+                ->setParameter('status',  $category)
+            ;
+        }
+
+        if($orderedBy){
+            $queryBuilding->orderBy('c.added_at', $orderedBy);
+        }
         return $queryBuilding;
     }
-
-//    /**
-//     * @return Cart[] Returns an array of Cart objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Cart
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

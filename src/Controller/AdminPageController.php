@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,25 +16,16 @@ class AdminPageController extends AbstractController
     public function index(CartRepository $cartRepository, Request $request, ProductRepository $productRepository): Response
     {
         $searchTerm = $request->query->get('searchTerm');
-
-        $cart = $cartRepository->getDataFiltered($searchTerm)->getQuery()->getResult();
-
-        $status1 = $this->getResultsGroupedByDate($cartRepository,$productRepository,1);
-        $status2 = $this->getResultsGroupedByDate($cartRepository,$productRepository,2);
-        $status3 = $this->getResultsGroupedByDate($cartRepository,$productRepository,3);
+        $category = $request->query->get('category');
+        $orderedBy = $request->query->get('orderBy');
+        $status1 = $this->getResultsGroupedByDate($cartRepository,$productRepository,1,$searchTerm, $category, $orderedBy);
         return $this->render('admin_page/index.html.twig', [
-            'all_carts' => $cart,
             'orderedItems' => $status1,
-            'deliveredItems' => $status2,
-            'refundedItems' => $status3
         ]);
     }
-    public function getResultsGroupedByDate($cartRepository,$productRepository,$status)
+    public function getResultsGroupedByDate($cartRepository,$productRepository,$status, $searchTerm, $category, $orderedBy)
     {
-        $queryBuilder = $cartRepository->createQueryBuilder('c')
-            ->where('c.deleted_at IS NULL')
-            ->andWhere('c.status = :status')
-            ->setParameter('status', $status);
+        $queryBuilder = $cartRepository->getDataFiltered($searchTerm, $category, $orderedBy);
         $ordered = $queryBuilder
             ->getQuery()
             ->getResult();
@@ -70,4 +62,20 @@ class AdminPageController extends AbstractController
         return $arrayGroupedByDate;
     }
 
+
+    #[Route('/deliver-order', name:'app_change_status')]
+    public function changeStatus(CartRepository $cartRepository, Request $request, EntityManagerInterface $entityManager)
+    {
+        $idProduct = $request->request->get('idProduct');
+        $status = $request->request->get('status');
+        $cart = $cartRepository->createQueryBuilder('c')
+            ->where('c.id = :id')
+            ->setParameter('id', $idProduct)
+        ->getQuery()
+        ->getResult();
+        $cart[0]->setStatus($status);
+        $entityManager->persist($cart[0]);
+        $entityManager->flush();
+        return new Response();
+    }
 }

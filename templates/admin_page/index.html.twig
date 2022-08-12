@@ -15,22 +15,49 @@
                value="{{ app.request.query.get('searchTerm') }}"
         >
     </form>
+    <div class="d-inline-flex">
+        <div class="dropdown m-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Category
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item dropdown-item_newest" href="{{ path('admin_dashboard', { category : 1 ,orderBy : app.request.query.get('orderBy')}) }}">To Delivery</a>
+                <a class="dropdown-item dropdown-item_low_price" href="{{ path('admin_dashboard', { category : 2 ,orderBy : app.request.query.get('orderBy')}) }}">Delivered</a>
+                <a class="dropdown-item dropdown-item_high_price" href="{{ path('admin_dashboard', { category : 3 ,orderBy : app.request.query.get('orderBy')}) }}">Refunded</a>
+                <a class="dropdown-item dropdown-item_high_price" href="{{ path('admin_dashboard', { category : 4 ,orderBy : app.request.query.get('orderBy')}) }}">Canceled</a>
+            </div>
+        </div>
+        <div class="dropdown m-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item dropdown-item_newest" href="{{ path('admin_dashboard', { orderBy : 'DESC', category : app.request.query.get('category') }) }}">Newest</a>
+                <a class="dropdown-item dropdown-item_newest" href="{{ path('admin_dashboard', { orderBy : 'ASC', category : app.request.query.get('category') }) }}">Oldest</a>
+            </div>
+        </div>
+    </div>
+
     <div class="row profile_row_body">
+
         {% if orderedItems is empty %}
         {% else %}
             <div class="col refunded_orders">
-                <h2 style="padding-top:100px">Comenzi De Livrat</h2>
-                {% for orderedItem in orderedItems %}
+                <h2 style="padding-top:100px">Orders</h2>
+                {% for index,orderedItem in orderedItems %}
                     {% for date, orderedItemArray in orderedItem %}
-                        {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Data Plasarii Comenzii: {{ date }} </strong><br><br>
-                            Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
-                            Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: +40{{ orderedItemSingle.phone }} <br>
-                            <button>Livrata</button>
-                            <button>Anuleaza</button>
-                            <button>Returneaza</button> <br><br><br>
+                        {% for  orderedItemSingle in orderedItemArray %}
+                            <div id="orders{{ index }}">
+                                <strong> Date of order: {{ date }} </strong><br><br>
+                                Product Title: {{ orderedItemSingle.product.title }} <br>
+                                Quantity: {{ orderedItemSingle.quantity }} <br>
+                                Address Delivery: {{ orderedItemSingle.address }} <br>
+                                Phone: +40{{ orderedItemSingle.phone }} <br>
+                                <input type="hidden" class="orders{{ index }}" value="{{ orderedItemSingle.id }}">
+                                <button class="deliver_order">Delivered</button>
+                                <button class="refund_order">Refund</button>
+                                <button class="cancel_order">Cancel</button><br><br><br>
+                            </div>
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
@@ -39,4 +66,63 @@
     </div>
 
 </div>
+
+    <script>
+        $('.deliver_order').click((e)=>{
+            var path = '{{ path('app_change_status') }}';
+            var fullUrl   = window.location.origin + path;
+            var id = $(e.target).parent().attr('id');
+            var idProduct = $('.'+id).val();
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    idProduct:idProduct,
+                    status: 2
+                },
+                complete: function (data) {
+
+                }
+            });
+            location.reload();
+        });
+        $('.refund_order').click((e)=>{
+            var path = '{{ path('app_change_status') }}';
+            var fullUrl   = window.location.origin + path;
+            var id = $(e.target).parent().attr('id');
+            var idProduct = $('.'+id).val();
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    idProduct:idProduct,
+                    status: 3
+                },
+                complete: function (data) {
+
+                }
+            });
+            location.reload();
+
+        });
+        $('.cancel_order').click((e)=>{
+            var path = '{{ path('app_change_status') }}';
+            var fullUrl   = window.location.origin + path;
+            var id = $(e.target).parent().attr('id');
+            var idProduct = $('.'+id).val();
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    idProduct:idProduct,
+                    status: 4
+                },
+                complete: function (data) {
+
+                }
+            });
+            location.reload();
+
+        });
+    </script>
 {% endblock %}
