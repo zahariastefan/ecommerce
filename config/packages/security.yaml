@@ -27,6 +27,9 @@ security:
             lazy: true
             provider: app_user_provider
             entry_point: form_login
+#            custom_authenticator:
+#                - App\Security\LoginFormAuthenticator
+            #                - App\Security\DummyAuthenticator
             form_login:
                 login_path: app_login
                 check_path: app_login
