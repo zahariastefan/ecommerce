@@ -66,4 +66,5 @@ class CartRepository extends ServiceEntityRepository
         }
         return $queryBuilding;
     }
+
 }

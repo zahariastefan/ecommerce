@@ -28,7 +28,7 @@ class CartController extends AbstractController
      * 0 = in cart
      * 1 = ordered
      * 2 = delivered
-     * 3 = refound
+     * 3 = refund
      * 4 = canceled
      */
 

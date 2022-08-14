@@ -124,10 +124,9 @@ class ProfileController extends AbstractController
             ->getQuery()
             ->getResult()
         ;
-        for($x=0;$x<$refundQ;$x++){
-            $cart[$x]->setStatus(3);
-        }
-        $entityManager->persist($cart[0]);
+        $cartRandom = $cart[array_rand($cart)];
+        $cartRandom->setStatus(3);
+        $entityManager->persist($cartRandom);
         $entityManager->flush();
         return new Response();
     }

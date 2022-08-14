@@ -123,8 +123,10 @@
                     },
                     complete: function (data) {
                         if (parseInt(refundQ) === parseInt(cartItemId)) {
+                            $('#' + parentClass).parent().empty();
+                        }else{
+                            // location.reload();
                         }
-                        $('#' + parentClass).parent().empty();
                     }
                 });
             } else {
