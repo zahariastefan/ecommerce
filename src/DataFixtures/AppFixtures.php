@@ -17,57 +17,11 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-//        // $manager->persist($product);
-
         UserFactory::createOne([
             'email' => 'abraca_admin@example.com',
             'roles'=>['ROLE_ADMIN', 'ROLE_USER'],
             'is_verified' => 1
         ]);
-//        $users = UserFactory::createMany(10);
-//
-//        $description = DescriptionContentFactory::createMany(100);
-//
-//        ProductsFactory::createMany(20, function() use ($description){
-//            return [
-//                'descriptionContent' => $description
-//            ];
-//        });
-//
-//       $userComments = UserCommentsFactory::createMany(20, function() use ($users){
-//            return [
-//                'product' => ProductsFactory::random(),
-////                'user' => UserFactory::random()->addUserComment(UserCommentsFactory::random()->object())
-//                'user' => $users
-//            ];
-//        });
-//
-//        $userComments = UserCommentsFactory::createMany(20, function() use ($users){
-//            return [
-//                'product' => ProductsFactory::random(),
-////                'user' => UserFactory::createOne()
-////                'user' => UserFactory::random()->addUserComment(UserCommentsFactory::random()->object())
-////                'user' => UserCommentsFactory::random()->addUser(UserFactory::random()->object())
-//            ];
-//        });
-//
-////        $manager->persist($userComments)
-
-//        $user = new User();
-//        $user->setEmail(UserFactory::faker()->email());
-//        $user->setFirstName(UserFactory::faker()->firstName);
-//        $user->setPassword('tada');
-//        $user->setRoles(['ROLE_USER']);
-//
-//        $product = new Product();
-//        $product->setDescription(ProductFactory::faker()->text(100));
-//
-//
-//        $comment = new Comment();
-//        $comment->setContent(CommentFactory::faker()->text(30));
-//        $comment->addUser($user);
-//        $comment->addProduct($product);
 
         self::factoryUserProductComment($manager, 20);
 
@@ -77,12 +31,6 @@ class AppFixtures extends Fixture
     public function factoryUserProductComment($manager, $length)
     {
         for($x=0;$x<$length;$x++){
-//            $user = new User();
-//            $user->setEmail(UserFactory::faker()->email());
-//            $user->setFirstName(UserFactory::faker()->firstName);
-//            $user->setPassword('tada');
-//            $user->setRoles(['ROLE_USER']);
-
             $user = UserFactory::createOne();
             $urlImage = new UrlImage();
             $urlImage->setUrl('/tablou.jpg');
