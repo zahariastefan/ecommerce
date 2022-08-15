@@ -52,15 +52,15 @@ class AdminPageController extends AbstractController
                     ->setParameter('date', $date);
 
                 if(!empty($category)){
-                    $cartByUserAndByDate=$cartByUserAndByDate->andWhere('c.status = :status')
-                        ->setParameter('status', $category)
-                    ;
+                        $cartByUserAndByDate=$cartByUserAndByDate->andWhere('c.status = :status')
+                            ->setParameter('status', $category)
+                        ;
                 }
 
                 if(!empty($searchTerm)){
                     $cartByUserAndByDate = $cartByUserAndByDate
                         ->innerJoin('c.user','user')
-                        ->andWhere('user.email LIKE :searchTerm OR c.address LIKE :searchTerm')
+                        ->andWhere('user.email LIKE :searchTerm OR c.address LIKE :searchTerm OR c.order_nr LIKE :searchTerm ')
                         ->setParameter('searchTerm', '%'.$searchTerm.'%');
                 }
 
@@ -84,6 +84,7 @@ class AdminPageController extends AbstractController
                 $counts = array_count_values($groupByProducts[$itemByDateAndUser->getUser()->getId()]);
             }
             foreach ($counts as $productId => $quantity) {
+//                dd($quantity);
                 $productObj = $productRepository->findBy([
                     'id' => $productId
                 ])[0];
@@ -93,7 +94,8 @@ class AdminPageController extends AbstractController
                     'productTitle'=>$productObj->getTitle(),
                     'address' => $itemByDateAndUser->getAddress(),
                     'phone' => $itemByDateAndUser->getPhone(),
-                    'status' => $itemByDateAndUser->getStatus()
+                    'status' => $itemByDateAndUser->getStatus(),
+                    'orderNr' => $itemByDateAndUser->getOrderNr()
                 ];
             }
             $finalArray[$date]=$arrayCount;
@@ -159,9 +161,10 @@ class AdminPageController extends AbstractController
         $idProduct = $request->request->get('idProduct');
         $status = $request->request->get('status');
         $email = $request->request->get('email');
+        $category = $request->request->get('category');
 
         $user = $userRepository->findBy(['email' => $email])[0];
-
+//        dd($category);
         $cart = $cartRepository->createQueryBuilder('c')
             ->where('c.product = :prodId')
             ->setParameter('prodId', $idProduct)
@@ -169,16 +172,22 @@ class AdminPageController extends AbstractController
             ->setParameter('userId', $user->getId() )
             ->andWhere('c.status != :status')
             ->setParameter('status', $status )
+            ->andWhere('c.status = :category')
+            ->setParameter('category', $category )
             ->getQuery()
             ->getResult();
 
-//        dd($cart);
         $cart[0]->setStatus($status);
+        $cart[0]->setUpdatedAt(new \DateTimeImmutable());
         if($status == 2){
-            $cart[0]->setDeliveredAt(new \DateTimeImmutable());
+            if(!empty($cart[0]->getDeliveredAt())){
+                $cart[0]->setDeliveredAt(new \DateTimeImmutable());
+            }
         }
         if($status == 4){
-            $cart[0]->setDeletedAt(new \DateTimeImmutable());
+            if(!empty($cart[0]->getDeletedAt())) {
+                $cart[0]->setDeletedAt(new \DateTimeImmutable());
+            }
         }
         $entityManager->persist($cart[0]);
         $entityManager->flush();

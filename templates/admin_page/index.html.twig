@@ -70,12 +70,12 @@
 
                             <div class="{{ email }}" style="border: 1px solid black">
                             <strong> Email User: <br><br><p class="email_user">{{ email }}</p> </strong><br><br>
+                                Address Delivery: {{ orderedItemSingle.0.address }} <br>
 
                             {% for  orderedItem in orderedItemSingle %}
                                 <div id="orders{{ index }}">
                                     Product Title: {{ orderedItem.productTitle }} <br>
                                     Quantity: {{ orderedItem.quantity }} <br>
-                                    Address Delivery: {{ orderedItem.address }} <br>
                                     Phone: +40{{ orderedItem.phone }} <br>
                                     Status: {% if orderedItem.status == 1 %}
                                         Not Delivered
@@ -83,11 +83,12 @@
                                         Delivered
                                     {% elseif orderedItem.status == 3 %}
                                         Refunded
-                                    {% elseif orderedItem.status == 2 %}
+                                    {% elseif orderedItem.status == 4 %}
                                         Canceled
                                     {% endif %}
                                     <br>
-
+                                    Order Number : {{ orderedItem.orderNr }}
+                                    <br>
                                     <input type="hidden" class="orders{{ index }}" value="{{ orderedItem.productId }}">
 
                                     {% if app.request.query.get('category') != 2 %}
@@ -125,7 +126,8 @@
                 data: {
                     idProduct: idProduct,
                     status: 2,
-                    email:email
+                    email:email,
+                    category: {{ app.request.query.get('category') }},
                 },
                 success: function (data) {
                     location.reload();
@@ -144,7 +146,8 @@
                 data: {
                     idProduct: idProduct,
                     status: 3,
-                    email:email
+                    email:email,
+                    category: {{ app.request.query.get('category') }},
                 },
                 complete: function (data) {
                     location.reload();
@@ -164,6 +167,7 @@
                 data: {
                     idProduct: idProduct,
                     status: 4,
+                    category: {{ app.request.query.get('category') }},
                     email:email
                 },
                 complete: function (data) {

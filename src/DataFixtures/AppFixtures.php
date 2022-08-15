@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
             'is_verified' => 1
         ]);
 
-        self::factoryUserProductComment($manager, 20);
+        self::factoryUserProductComment($manager, 9);
 
         $manager->flush();
     }
@@ -35,9 +35,11 @@ class AppFixtures extends Fixture
             $urlImage = new UrlImage();
             $urlImage->setUrl('/tablou.jpg');
 
+            $arrayProductName = ['Leonardo da Vinci', 'Michelangelo', 'Rembrandt', 'Vermeer', 'Jean-Antoine Watteau', 'Eugene Delacroix', 'Claude Monet', 'Georges Seurat', 'Vincent van Gogh'];
+
             $product = new Product();
             $product->setDescription(ProductFactory::faker()->text(100));
-            $product->setTitle(ProductFactory::faker()->firstName());
+            $product->setTitle($arrayProductName[$x]);
             $product->setSlug(ProductFactory::faker()->slug(6));
             $product->setUrlImage($urlImage);
             $product->setAddedAt(\DateTimeImmutable::createFromMutable(ProductFactory::faker()->dateTimeBetween('-1 year')));
