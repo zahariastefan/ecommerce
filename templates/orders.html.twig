@@ -122,7 +122,6 @@
             var parentClass = $(e.target).parent().attr('id');
             var cartItemId = $('.' + parentClass).val();
 
-            alert(cartItemId);
             var path = '{{ path('app_change_status') }}';
             var fullUrl = window.location.origin + path;
             // var refundQ = $('#' + parentClass + ' .refund_quantity').text();
@@ -139,7 +138,7 @@
                         all: 'all'
                     },
                     complete: function (data) {
-                            // location.reload();
+                            location.reload();
                     }
                 });
             }
@@ -184,10 +183,10 @@
                     complete: function (data) {
                         if ((parseInt(refundQ) - parseInt(cartQuantity)) === 0) {
                             // $('#' + parentClassID).parent().empty();
-                            // location.reload();
+                            location.reload();
 
                         }else{
-                            // location.reload();
+                            location.reload();
                         }
                     }
                 });
