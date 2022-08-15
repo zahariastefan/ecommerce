@@ -215,6 +215,7 @@ class AdminPageController extends AbstractController
             foreach ($cart as $item) {
                 $item->setStatus($status);
                 $item->setUpdatedAt(new \DateTimeImmutable());
+                /**TODO implement good delivered At and Deleted At because if I use it give me some error when adding to cancelled and then readded to delivered**/
 //                if($status == 2){
 //                    if(!empty($item->getDeliveredAt())){
 ////                        $item->setDeliveredAt(new \DateTimeImmutable());

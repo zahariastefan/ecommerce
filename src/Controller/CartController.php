@@ -41,6 +41,7 @@ class CartController extends AbstractController
             if(isset($_COOKIE['product_item'])){
                 $productsId = json_decode($_COOKIE['product_item'],true);
                 $formattedArrayProductsAndQuantities = [];
+//                dd($_COOKIE['product_item']);
                 foreach ($productsId['productsId'] as $productId) {
                     $product = $productRepository->findBy([
                         'id' =>$productId
