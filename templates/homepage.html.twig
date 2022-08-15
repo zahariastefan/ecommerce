@@ -47,11 +47,15 @@
 
 
     <script>
-        $('.col_design').click((e)=>{
+        $('.img_product').click((e)=>{
             var id = $(e.target).parent().attr('id');
-
             var newUrl = (window.location.origin + $('#'+id+' .title_product').attr('href'));
             window.location.href = newUrl;
+        });
+
+        $('.descriptionHomePage').click((e)=>{
+            var id = $(e.target).parent().parent().attr('id');
+            $('#'+id+'    .img_product').trigger('click');
         });
 
     </script>

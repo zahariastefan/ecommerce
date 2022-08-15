@@ -5,47 +5,36 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spartan&display=swap">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+              integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>        {{ encore_entry_link_tags('app') }}
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" integrity="sha512-aUhL2xOCrpLEuGD5f6tgHbLYEXRpYZ8G5yD+WlFrXrPy2IrWBlu6bih5C9H6qGsgqnU6mgx6KtU8TreHpASprw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+                integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"
+                integrity="sha512-aUhL2xOCrpLEuGD5f6tgHbLYEXRpYZ8G5yD+WlFrXrPy2IrWBlu6bih5C9H6qGsgqnU6mgx6KtU8TreHpASprw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
 
 
     {% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-1">
-    <div class="container-fluid">
+    <div class="container-fluid justify-content-center">
         <a class="navbar-brand" href="{{ path('app_homepage') }}">
             <p class="pl-2 d-inline font-weight-bold" style="color: #444;">
                 Painting Arts</p>
         </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapsable" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbar-collapsable">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_profile') }}">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_orders') }}">Orders</a>
-                </li>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('admin_dashboard' , {'category':1}) }}">Admin</a>
-                        </li>
-                    {% endif %}
-                {% endif %}
-            </ul>
+        <div class="collapse navbar-collapse " id="navbar-collapsable">
             <div class="d-inline-flex ">
                 <a href="{{ path('app_cart') }}" class="m-2">
                     <i class="fa-solid fa-cart-shopping"></i>
@@ -53,54 +42,58 @@
                 <p class="items_number m-2"></p>
             </div>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div class="dropdown">
+                    <button
+                            class="dropdown-toggle btn"
+                            type="button"
+                            id="user-dropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                    >
+                        <img
+                                src="{{ app.user.avatarUri }}"
+                                alt="{{ app.user.displayName }} Avatar">
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
 
-
-
-
-            <div class="dropdown">
-                <button
-                        class="dropdown-toggle btn"
-                        type="button"
-                        id="user-dropdown"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                >
-                    <img
-                            src="{{ app.user.avatarUri }}"
-                            alt="{{ app.user.displayName }} Avatar">
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
-
-                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                        <li>
-                            <a class="dropdown-item" href="{{ path('app_homepage' , {
-                                '_switch_user':'_exit'
-                            }) }}">Exit Impersonation</a>
-                        </li>
-                    {% else %}
-{#                        <li>#}
-{#                            <a class="dropdown-item" href="{{ path('app_2fa_enable') }}">Enable 2fa</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a class="dropdown-item" href="{{ path('app_2fa_disable') }}">Disable 2fa</a>#}
-{#                        </li>#}
-                        <li>
-                            <a class="dropdown-item logout_button" href="{{ path('app_logout') }}">Log Out</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-black-50 m-2" href="{{ path('app_cart') }}">Cart </a>
-                        </li>
-                    {% endif %}
-
-                </ul>
-            </div>
+                        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_homepage' , {
+                                    '_switch_user':'_exit'
+                                }) }}">Exit Impersonation</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="dropdown-item logout_button" href="{{ path('app_logout') }}">Log Out</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
             {% else %}
-            <a class="nav-link text-black-50 m-2" href="{{ path('app_login') }}">Log In </a>
-            <a href="{{ path('app_register') }}" class="btn btn-dark m-2">Sign up</a>
+                <a class="nav-link text-black-50 m-2" href="{{ path('app_login') }}">Log In </a>
+                <a href="{{ path('app_register') }}" class="btn btn-dark m-2">Sign up</a>
             {% endif %}
         </div>
     </div>
 </nav>
+<nav class="navbar navbar2 navbar-expand-lg navbar-light px-1">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_profile') }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_orders') }}">Orders</a>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_dashboard' , {'category':1}) }}">Admin</a>
+                </li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</nav>
+
 
 {% for flash in app.flashes('success') %}
     <div class="alert alert-success">
@@ -120,32 +113,32 @@
 
 
 <script>
-    if((window.location.href).includes('/cart')){
+    if ((window.location.href).includes('/cart')) {
         $('html').hide();
     }
 
     var path = '{{ path('app_get_cart_data') }}';
-    var fullUrl   = window.location.origin + path;
+    var fullUrl = window.location.origin + path;
     $.ajax({
         type: "POST",
         url: fullUrl,
         complete: function (data) {
             var itemNr = parseInt(data.responseText);
-                $('.items_number').text(itemNr);
+            $('.items_number').text(itemNr);
             var items_number = $('.items_number').text();
-            if(parseInt(items_number) === 0){
+            if (parseInt(items_number) === 0) {
                 $('.container_cart').html('<p class="no_products">You don\'t have products in cart</p>');
                 $('html').show();
-            }else{
+            } else {
                 $('html').show();
             }
         }
     });
 
-    function cookieAccept(){
+    function cookieAccept() {
 
-        if(typeof $.cookie('cookie') !== 'undefined'){
-            if(parseInt($.cookie('cookie')) === 0) {
+        if (typeof $.cookie('cookie') !== 'undefined') {
+            if (parseInt($.cookie('cookie')) === 0) {
                 $('body').append('<div class="cookie_accept d-grid">' +
                     'do you accept cookie?' +
                     '<div class="d-inline-flex justify-content-center">' +
@@ -155,36 +148,37 @@
                     '</div>');
             }
 
-            $('.cookie_accept button.refuse').click(()=>{
-                if(parseInt($.cookie('cookie')) === 0){
+            $('.cookie_accept button.refuse').click(() => {
+                if (parseInt($.cookie('cookie')) === 0) {
                     window.location.replace(window.location.origin);
                     // $.removeCookie('product_item');
                 }
             });
-            $('.cookie_accept button.accept').click(()=>{
-                if(parseInt($.cookie('cookie')) === 0){
-                    $.cookie('cookie',1);
+            $('.cookie_accept button.accept').click(() => {
+                if (parseInt($.cookie('cookie')) === 0) {
+                    $.cookie('cookie', 1);
                     window.location.replace(window.location.origin);
                 }
             });
 
-        }else{
-            $.cookie('cookie',0);
+        } else {
+            $.cookie('cookie', 0);
             cookieAccept();
         }
     }
+
     cookieAccept();
     var path = '{{ path('app_base') }}';
-    var fullUrl   = window.location.origin + path;
+    var fullUrl = window.location.origin + path;
     $.ajax({
         type: "POST",
         url: fullUrl,
         complete: function (data) {
             var timePassed = data.responseJSON;
             var path = '{{ path('app_logout') }}';
-            var fullUrl   = window.location.origin + path;
+            var fullUrl = window.location.origin + path;
             console.log(timePassed)
-            if(typeof timePassed != 'undefined') {
+            if (typeof timePassed != 'undefined') {
                 if (typeof timePassed['timePassed'] != 'undefined' && timePassed['timePassed'] === true) {
                     $.ajax({
                         type: "POST",

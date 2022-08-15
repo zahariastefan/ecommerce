@@ -2,126 +2,192 @@
 
 {% block body %}
 
-    <div class="row ">
-        {% if orderedItems is empty %}
-        {% else %}
-            <div class="col ordered_orders profile_row_body">
-                <h2 style="padding-top:100px">Active Orders</h2>
-                {% for orderedItemArray in orderedItems %}
-                    {% for date, orderedItemArray2 in orderedItemArray %}
-                        <p>
-                            <strong> Date of order: {{ date }} </strong><br>
-                        </p>
-                        <p>
-                            Order Number :{{ orderedItemArray2.0.orderNr }}<br>
-                        </p>
-                        <p>
-                            Address Delivery: {{ orderedItemArray2.0.address }} <br><br><br>
-                        </p>
-                        {% for orderedItemSingle in orderedItemArray2 %}
-                            <div id="refundO_{{ orderedItemSingle.id }}">
-                                Product Title: {{ orderedItemSingle.product.title }} <br>
-                                Quantity: {{ orderedItemSingle.quantity }} <br>
-                                Phone: +40{{ orderedItemSingle.phone }} <br><br>
-                                <input type="hidden" name="refundO_{{ orderedItemSingle.id }}"
-                                       class="refundO_{{ orderedItemSingle.id }}"
-                                       value="{{ orderedItemSingle.product.id }}">
-{#                                <div class="refund_div_{{ orderedItemSingle.id }}" style="border: 1px solid black; width: 200px">#}
-{#                                    <p class="refund_quantity">0</p>#}
-{#                                    <i class="fa-solid fa-plus add_to_cart_button m-3"></i>#}
-{#                                    <i class="fas fa-minus remove_to_cart_button m-3"></i><br>#}
-{#                                    <button class="refund_button">Refund</button>#}
-                                    <button class="cancel_order">Cancel All Order </button> <br><br>
-{#                                </div>#}
-                                <br><br>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-{#                    <button class="cancel_order">Cancel Entire Order </button> <br><br>#}
-
-                {% endfor %}
-
-            </div>
-        {% endif %}
-        {% if deliveredItems is empty %}
-        {% else %}
-            <div class="col delivered_orders profile_row_body">
-                <h2 style="padding-top:100px">Orders delivered</h2>
-                {% for orderedItem in deliveredItems %}
-                    {% for date, orderedItemArray in orderedItem %}
-                        {% for orderedItemSingle in orderedItemArray %}
-                            <div id="refund_{{ orderedItemSingle.id }}">
-                                <strong> Date of order: {{ date }} </strong><br><br>
-                                Product Title: {{ orderedItemSingle.product.title }} <br>
-                                Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
-                                Address Delivery: {{ orderedItemSingle.address }} <br>
-                                Phone: +40{{ orderedItemSingle.phone }} <br>
-                                Delivered on: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
-                                <input type="hidden" name="refund_{{ orderedItemSingle.id }}"
-                                       class="refund_{{ orderedItemSingle.id }}"
-                                       value="{{ orderedItemSingle.product.id }}">
-                                <div class="refund_div_{{ orderedItemSingle.id }}" style="border: 1px solid black; width: 200px">
-                                    <p class="refund_quantity">0</p>
-                                    <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-                                    <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
-                                    <button class="refund_button">Refund</button>
-{#                                    <button class="cancel_order">Cancel This Items </button> <br><br>#}
+    <div class="container">
+        <div class="col ordered_orders profile_row_body">
+            <select class="form-select form_select_orders" aria-label="Default select example">
+                <option selected>all orders</option>
+                <option class="active_order_option" value="1">active orders</option>
+                <option value="2">delivered orders</option>
+                <option value="3">refunded orders</option>
+                <option value="3">canceled orders</option>
+            </select>
+            <div class="active_orders_div">
+                {% if orderedItems is empty %}
+                {% else %}
+                    <p class="type_of_orders">Active Orders</p>
+                    {% for orderedItemArray in orderedItems %}
+                        <div class="order_card">
+                            {% for date, orderedItemArray2 in orderedItemArray %}
+                                <div class="order_head">
+                                    <p class="order_number">Order nr. :{{ orderedItemArray2.0.orderNr }}</p>
+                                    <p class="date_orders">Date of order: {{ date }}</p>
+                                    <p class="address_order">Address Delivery: {{ orderedItemArray2.0.address }}</p>
                                 </div>
-                            </div>
+                                <div class="order_body">
+                                    {% for orderedItemSingle in orderedItemArray2 %}
+                                        <div id="refundO_{{ orderedItemSingle.id }}">
+                                            <p class="product_title">Product Title: {{ orderedItemSingle.product.title }}</p>
+                                            <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
+                                            <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
+                                            <p class="status_order">
+                                                Status: {% if orderedItemSingle.status == 1 %}
+                                                    Not Delivered
+                                                {% elseif orderedItemSingle.status == 2 %}
+                                                    Delivered
+                                                {% elseif orderedItemSingle.status == 3 %}
+                                                    Refunded
+                                                {% elseif orderedItemSingle.status == 4 %}
+                                                    Canceled
+                                                {% endif %}
+                                            </p>
+                                            <input type="hidden" name="refundO_{{ orderedItemSingle.id }}"
+                                                   class="refundO_{{ orderedItemSingle.id }}"
+                                                   value="{{ orderedItemSingle.product.id }}">
+                                            <button class="cancel_order">Cancel All Order</button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="delivered_items_div">
+                {% if deliveredItems is empty %}
+                {% else %}
+                    <p class="type_of_orders">Orders delivered</p>
+                    {% for orderedItem in deliveredItems %}
+                        <div class="order_card">
+                            {% for date, orderedItemArray in orderedItem %}
+                                <div class="order_head">
+                                    <p class="order_number">Order nr. : {{ orderedItemArray.0.product.title }}</p>
+                                    <p class="date_orders">Date of order: {{ date }}</p>
+                                    <p class="address_order">Address Delivery: {{ orderedItemArray.0.address }}</p>
+                                </div>
+                                <div class="order_body">
+                                    {% for orderedItemSingle in orderedItemArray %}
+                                        <div id="refund_{{ orderedItemSingle.id }}">
+                                            <p class="product_title">Product
+                                                Title: {{ orderedItemSingle.product.title }}</p>
+                                            <p>Quantity:<span class="quantity_items"> {{ orderedItemSingle.quantity }}</span></p>
+                                            <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
+                                            <p class="delivered_at_order">Delivered
+                                                on: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }}</p>
+                                            <p class="status_order">
+                                                Status: {% if orderedItemSingle.status == 1 %}
+                                                    Not Delivered
+                                                {% elseif orderedItemSingle.status == 2 %}
+                                                    Delivered
+                                                {% elseif orderedItemSingle.status == 3 %}
+                                                    Refunded
+                                                {% elseif orderedItemSingle.status == 4 %}
+                                                    Canceled
+                                                {% endif %}
+                                            </p>
+                                            <input type="hidden" name="refund_{{ orderedItemSingle.id }}" class="refund_{{ orderedItemSingle.id }}" value="{{ orderedItemSingle.product.id }}">
+                                            <div class="refund_div_{{ orderedItemSingle.id }}">
+                                                <p class="refund_quantity">0</p>
+                                                <i class="fa-solid fa-plus add_to_cart_button"></i>
+                                                <i class="fas fa-minus remove_to_cart_button"></i>
+                                                <button class="refund_button">Refund</button>
+                                            </div>
+                                        </div>
 
-                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
                     {% endfor %}
-                {% endfor %}
+                {% endif %}
             </div>
-        {% endif %}
-    </div>
-    <div class="row profile_row_body">
-        {% if refundedItems is empty %}
-        {% else %}
-            <div class="col refunded_orders">
-                <h2 style="padding-top:100px">Refunded Orders</h2>
-                {% for orderedItem in refundedItems %}
+            <div class="refunded_orders_div">
+                {% if refundedItems is empty %}
+                {% else %}
+                    <div class="col refunded_orders">
+                        <p class="type_of_orders">Refunded Orders</p>
+                        {% for orderedItem in refundedItems %}
+                            <div class="order_card">
+                                {% for date, orderedItemArray in orderedItem %}
+                                    <div class="order_head">
+                                        <p class="order_number">Order nr. : {{ orderedItemArray.0.product.title }}</p>
+                                        <p class="date_orders">Date of order: {{ date }} </p>
+                                        <p class="address_order"> Address Delivery: {{ orderedItemArray.0.address }}</p>
+                                    </div>
+
+                                    <div class="order_body">
+                                        {% for orderedItemSingle in orderedItemArray %}
+                                            <p class="product_title">Product
+                                                Title: {{ orderedItemArray.0.product.title }}</p>
+                                            <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
+                                            <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
+                                            <p class="delivered_at_order">Delivered
+                                                On: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }}</p>
+                                            <p class="status_order">
+                                                Status: {% if orderedItemSingle.status == 1 %}
+                                                    Not Delivered
+                                                {% elseif orderedItemSingle.status == 2 %}
+                                                    Delivered
+                                                {% elseif orderedItemSingle.status == 3 %}
+                                                    Refunded
+                                                {% elseif orderedItemSingle.status == 4 %}
+                                                    Canceled
+                                                {% endif %}
+                                            </p>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="canceled_orders_item">
+                {% if canceledItems is empty %}
+                {% else %}
+                        <p class="type_of_orders">Canceled Orders</p>
+                        {% for orderedItem in canceledItems %}
+                <div class="order_card">
                     {% for date, orderedItemArray in orderedItem %}
-                        {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Date of order: {{ date }} </strong><br><br>
-                            Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
-                            Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: +40{{ orderedItemSingle.phone }} <br>
-                            Delivered On: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
+                        <div class="order_head">
+                            <p class="order_number">Order nr. :{{ orderedItemArray.0.orderNr }}</p>
+                            <p class="date_orders">Date of order: {{ date }}</p>
+                            <p class="address_order">Address Delivery: {{ orderedItemArray.0.address }}</p>
+                        </div>
+                    <div class="order_body">
+                    {% for orderedItemSingle in orderedItemArray %}
+                        <p class="product_title">Product Title: {{ orderedItemSingle.product.title }}</p>
+                        <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
+                        <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
+                        <p class="canceled_order_at">Canceled On: {{ orderedItemSingle.deletedAt|date('Y-m-d H:m:s') }}</p>
+                        <p class="status_order">
+                            Status: {% if orderedItemSingle.status == 1 %}
+                                Not Delivered
+                            {% elseif orderedItemSingle.status == 2 %}
+                                Delivered
+                            {% elseif orderedItemSingle.status == 3 %}
+                                Refunded
+                            {% elseif orderedItemSingle.status == 4 %}
+                                Canceled
+                            {% endif %}
+                        </p>
                         {% endfor %}
+                    </div>
                     {% endfor %}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
-    <div class="row profile_row_body">
-        {% if canceledItems is empty %}
-        {% else %}
-            <div class="col refunded_orders">
-                <h2 style="padding-top:100px">Canceled Orders</h2>
-                {% for orderedItem in canceledItems %}
-                    {% for date, orderedItemArray in orderedItem %}
-                        {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Date of order: {{ date }} </strong><br><br>
-                            Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
-                            Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: +40{{ orderedItemSingle.phone }} <br>
-                            Canceled On: {{ orderedItemSingle.deletedAt|date('Y-m-d H:m:s') }} <br><br>
+                </div>
                         {% endfor %}
-                    {% endfor %}
-                {% endfor %}
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
     </div>
+
 
     <script>
 
         $('.cancel_order').click((e) => {
+            // var parentClass = $(e.target).parent().attr('id');
             var parentClass = $(e.target).parent().attr('id');
             var cartItemId = $('.' + parentClass).val();
-
+            // var cartItemId = $('.' + parentClassID).val();
             var path = '{{ path('app_change_status') }}';
             var fullUrl = window.location.origin + path;
             // var refundQ = $('#' + parentClass + ' .refund_quantity').text();
@@ -133,29 +199,28 @@
                     data: {
                         cartItemId: cartItemId,
                         // refundQ: refundQ,
-                        status : 4,
+                        status: 4,
                         fromStatus: 1,
                         all: 'all'
                     },
                     complete: function (data) {
-                            location.reload();
+                        location.reload();
                     }
                 });
             }
         });
         $('.fa-plus').click((e) => {
             var parentClass = $(e.target).parent().attr('class');
-            var parentClassID = $('.'+parentClass).parent().attr('id');
-            var quantityItem = $('#' + parentClassID + ' .quantity_item_cart').text();
-            var refundQ = $('#' + parentClassID + ' .refund_quantity').text();
+            var classParent = $('.' + parentClass).parent().attr('id');
+            var quantityItem = $('#' + classParent+' .quantity_items').text();
+            var refundQ = $('.' + parentClass + ' .refund_quantity').text();
             if (parseInt(refundQ) < parseInt(quantityItem)) {
-                $('#' + parentClassID + ' .refund_quantity').text(parseInt(refundQ) + 1);
+                $('.' + parentClass + ' .refund_quantity').text(parseInt(refundQ) + 1);
             }
         });
         $('.fa-minus').click((e) => {
             var parentClass = $(e.target).parent().attr('class');
-            var parentClassID = $('.'+parentClass).parent().attr('id');
-            // var quantityItem = $('#' + parentClass + ' .quantity_item_cart').text();
+            var parentClassID = $('.' + parentClass).parent().attr('id');
             var refundQ = $('#' + parentClassID + ' .refund_quantity').text();
             if (parseInt(refundQ) > 0) {
                 $('#' + parentClassID + ' .refund_quantity').text(parseInt(refundQ) - 1);
@@ -163,8 +228,8 @@
         });
         $('.refund_button').click((e) => {
             var parentClass = $(e.target).parent().attr('class');
-            var parentClassID = $('.'+parentClass).parent().attr('id');
-            var cartQuantity = $('#' + parentClassID+' .quantity_item_cart').text();
+            var parentClassID = $('.' + parentClass).parent().attr('id');
+            var cartQuantity = $('#' + parentClassID + ' .quantity_items').text();
             var cartItemId = $('.' + parentClassID).val();
             var path = '{{ path('app_change_status') }}';
             var fullUrl = window.location.origin + path;
@@ -177,21 +242,57 @@
                     data: {
                         cartItemId: cartItemId,
                         refundQ: refundQ,
-                        status : 3,
+                        status: 3,
                         fromStatus: 2
                     },
                     complete: function (data) {
                         if ((parseInt(refundQ) - parseInt(cartQuantity)) === 0) {
-                            // $('#' + parentClassID).parent().empty();
                             location.reload();
-
-                        }else{
+                        } else {
                             location.reload();
                         }
                     }
                 });
             }
         });
+
+        $('.form_select_orders').on('change',()=>{
+            var optionSelected = $(".form_select_orders option:selected").text();
+            switch(optionSelected){
+                case 'all orders':
+                    $('.active_orders_div').show();
+                    $('.delivered_items_div').show();
+                    $('.refunded_orders_div').show();
+                    $('.canceled_orders_item').show();
+                    break;
+                case 'active orders':
+                    $('.active_orders_div').show();
+                    $('.delivered_items_div').hide();
+                    $('.refunded_orders_div').hide();
+                    $('.canceled_orders_item').hide();
+                    break;
+                case 'delivered orders':
+                    $('.active_orders_div').hide();
+                    $('.delivered_items_div').show();
+                    $('.refunded_orders_div').hide();
+                    $('.canceled_orders_item').hide();
+                    break;
+                case 'refunded orders':
+                    $('.active_orders_div').hide();
+                    $('.delivered_items_div').hide();
+                    $('.refunded_orders_div').show();
+                    $('.canceled_orders_item').hide();
+                    break;
+                case 'canceled orders':
+                    $('.active_orders_div').hide();
+                    $('.delivered_items_div').hide();
+                    $('.refunded_orders_div').hide();
+                    $('.canceled_orders_item').show();
+                    break;
+            }
+
+        });
+
 
     </script>
 {% endblock %}
