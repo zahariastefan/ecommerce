@@ -9,34 +9,36 @@
                 <h2 style="padding-top:100px">Active Orders</h2>
                 {% for orderedItemArray in orderedItems %}
                     {% for date, orderedItemArray2 in orderedItemArray %}
-                        <h3>
+                        <p>
                             <strong> Date of order: {{ date }} </strong><br>
-                        </h3>
-                        <h3>
+                        </p>
+                        <p>
                             Order Number :{{ orderedItemArray2.0.orderNr }}<br>
-                        </h3>
-                        <h3>
+                        </p>
+                        <p>
                             Address Delivery: {{ orderedItemArray2.0.address }} <br><br><br>
-                        </h3>
+                        </p>
                         {% for orderedItemSingle in orderedItemArray2 %}
-                            <div id="refund_{{ orderedItemSingle.id }}">
+                            <div id="refundO_{{ orderedItemSingle.id }}">
                                 Product Title: {{ orderedItemSingle.product.title }} <br>
-                                Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
+                                Quantity: {{ orderedItemSingle.quantity }} <br>
                                 Phone: +40{{ orderedItemSingle.phone }} <br><br>
-                                <input type="hidden" name="refund_{{ orderedItemSingle.id }}"
-                                       class="refund_{{ orderedItemSingle.id }}"
+                                <input type="hidden" name="refundO_{{ orderedItemSingle.id }}"
+                                       class="refundO_{{ orderedItemSingle.id }}"
                                        value="{{ orderedItemSingle.product.id }}">
-                                <div class="refund_div_{{ orderedItemSingle.id }}" style="border: 1px solid black; width: 200px">
-                                    <p class="refund_quantity">0</p>
-                                    <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-                                    <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
-                                    <button class="refund_button">Refund</button>
-                                    <button class="cancel_order">Cancel This Items </button> <br><br>
-                                </div>
+{#                                <div class="refund_div_{{ orderedItemSingle.id }}" style="border: 1px solid black; width: 200px">#}
+{#                                    <p class="refund_quantity">0</p>#}
+{#                                    <i class="fa-solid fa-plus add_to_cart_button m-3"></i>#}
+{#                                    <i class="fas fa-minus remove_to_cart_button m-3"></i><br>#}
+{#                                    <button class="refund_button">Refund</button>#}
+                                    <button class="cancel_order">Cancel All Order </button> <br><br>
+{#                                </div>#}
                                 <br><br>
                             </div>
                         {% endfor %}
                     {% endfor %}
+{#                    <button class="cancel_order">Cancel Entire Order </button> <br><br>#}
+
                 {% endfor %}
 
             </div>
@@ -48,12 +50,25 @@
                 {% for orderedItem in deliveredItems %}
                     {% for date, orderedItemArray in orderedItem %}
                         {% for orderedItemSingle in orderedItemArray %}
-                            <strong> Date of order: {{ date }} </strong><br><br>
-                            Product Title: {{ orderedItemSingle.product.title }} <br>
-                            Quantity: {{ orderedItemSingle.quantity }} <br>
-                            Address Delivery: {{ orderedItemSingle.address }} <br>
-                            Phone: +40{{ orderedItemSingle.phone }} <br>
-                            Delivered on: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
+                            <div id="refund_{{ orderedItemSingle.id }}">
+                                <strong> Date of order: {{ date }} </strong><br><br>
+                                Product Title: {{ orderedItemSingle.product.title }} <br>
+                                Quantity: <p class="quantity_item_cart">{{ orderedItemSingle.quantity }}</p> <br>
+                                Address Delivery: {{ orderedItemSingle.address }} <br>
+                                Phone: +40{{ orderedItemSingle.phone }} <br>
+                                Delivered on: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }} <br><br>
+                                <input type="hidden" name="refund_{{ orderedItemSingle.id }}"
+                                       class="refund_{{ orderedItemSingle.id }}"
+                                       value="{{ orderedItemSingle.product.id }}">
+                                <div class="refund_div_{{ orderedItemSingle.id }}" style="border: 1px solid black; width: 200px">
+                                    <p class="refund_quantity">0</p>
+                                    <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+                                    <i class="fas fa-minus remove_to_cart_button m-3"></i><br>
+                                    <button class="refund_button">Refund</button>
+{#                                    <button class="cancel_order">Cancel This Items </button> <br><br>#}
+                                </div>
+                            </div>
+
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
@@ -104,12 +119,13 @@
     <script>
 
         $('.cancel_order').click((e) => {
-            var parentClass = $(e.target).parent().attr('class');
-            var parentClassID = $('.'+parentClass).parent().attr('id');
-            var cartItemId = $('.' + parentClassID).val();
+            var parentClass = $(e.target).parent().attr('id');
+            var cartItemId = $('.' + parentClass).val();
+
+            alert(cartItemId);
             var path = '{{ path('app_change_status') }}';
             var fullUrl = window.location.origin + path;
-            var refundQ = $('#' + parentClassID + ' .refund_quantity').text();
+            // var refundQ = $('#' + parentClass + ' .refund_quantity').text();
             if (confirm("Are you sure you want to refund this product?")) {
                 alert('You canceled successfully!');
                 $.ajax({
@@ -117,11 +133,13 @@
                     url: fullUrl,
                     data: {
                         cartItemId: cartItemId,
-                        refundQ: refundQ,
-                        status : 4
+                        // refundQ: refundQ,
+                        status : 4,
+                        fromStatus: 1,
+                        all: 'all'
                     },
                     complete: function (data) {
-                            location.reload();
+                            // location.reload();
                     }
                 });
             }
@@ -131,7 +149,6 @@
             var parentClassID = $('.'+parentClass).parent().attr('id');
             var quantityItem = $('#' + parentClassID + ' .quantity_item_cart').text();
             var refundQ = $('#' + parentClassID + ' .refund_quantity').text();
-
             if (parseInt(refundQ) < parseInt(quantityItem)) {
                 $('#' + parentClassID + ' .refund_quantity').text(parseInt(refundQ) + 1);
             }
@@ -161,13 +178,16 @@
                     data: {
                         cartItemId: cartItemId,
                         refundQ: refundQ,
-                        status : 3
+                        status : 3,
+                        fromStatus: 2
                     },
                     complete: function (data) {
                         if ((parseInt(refundQ) - parseInt(cartQuantity)) === 0) {
-                            $('#' + parentClassID).parent().empty();
+                            // $('#' + parentClassID).parent().empty();
+                            // location.reload();
+
                         }else{
-                            location.reload();
+                            // location.reload();
                         }
                     }
                 });

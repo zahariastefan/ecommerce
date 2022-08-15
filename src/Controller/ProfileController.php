@@ -44,10 +44,14 @@ class ProfileController extends AbstractController
         $queryBuilder = $cartRepository->createQueryBuilder('c')
             ->where('c.deleted_at IS NULL')
             ->andWhere('c.status = :status')
-            ->setParameter('status', $status);
+            ->setParameter('status', $status)
+            ->andWhere('c.user = :user')
+            ->setParameter('user', $this->getUser()->getId())
+        ;
         $ordered = $queryBuilder
             ->getQuery()
             ->getResult();
+//        dd($ordered);
         //array with all product name
         $allTitles=[];
         foreach ($ordered as $singleOrder) {
@@ -112,7 +116,7 @@ class ProfileController extends AbstractController
     }
 
 
-    #[Route('/refund-product', name:'app_change_status')]
+    #[Route('/refund-product', name:'app_refund_product')]
     public function refundProduct(UserRepository $userRepository,
                                   Request $request,
                                   CartRepository $cartRepository,

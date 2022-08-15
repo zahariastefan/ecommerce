@@ -159,56 +159,98 @@ class AdminPageController extends AbstractController
     public function changeStatus(CartRepository $cartRepository, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository)
     {
         $idProduct = $request->request->get('idProduct');
+        $cartItemId = $request->request->get('cartItemId');
         $status = $request->request->get('status');
         $email = $request->request->get('email');
         $category = $request->request->get('category');
         $all = $request->request->get('all');
+        $fromStatus = $request->request->get('fromStatus');
+        $refundQ = $request->request->get('refundQ');
 
-        $user = $userRepository->findBy(['email' => $email])[0];
+//        dd($from);
+        if(!empty($email)){
+            $user = $userRepository->findBy(['email' => $email])[0];
+        }else{
+            $user = $userRepository->findBy(['email' => $this->getUser()->getUserIdentifier()])[0];
+        }
+//        dd($user);
         $cart = $cartRepository->createQueryBuilder('c')
-            ->where('c.product = :prodId')
-            ->setParameter('prodId', $idProduct)
             ->andWhere('c.user = :userId')
-            ->setParameter('userId', $user->getId() )
-            ->andWhere('c.status != :status')
-            ->setParameter('status', $status )
-            ->andWhere('c.status = :category')
-            ->setParameter('category', $category )
-            ->getQuery()
+            ->setParameter('userId', $user->getId());
+
+
+        $cart=$cart ->andWhere('c.status != :status')
+            ->setParameter('status', $status );
+
+        if(!empty($fromStatus)){
+            $cart=$cart ->andWhere('c.status = :fromStatus')
+                ->setParameter('fromStatus', $fromStatus );
+        }
+
+        if(!empty($category)){
+            $cart = $cart
+                ->andWhere('c.status = :category')
+                ->setParameter('category', $category );
+        }
+
+        if(!empty($idProduct)){
+            $cart = $cart
+                ->andWhere('c.product = :prodId')
+                ->setParameter('prodId', $idProduct);
+        }
+        if(!empty($cartItemId)){
+            $cart = $cart
+                ->andWhere('c.product = :cartItemId')
+                ->setParameter('cartItemId', $cartItemId);
+        }
+
+
+        $cart = $cart->getQuery()
             ->getResult();
+//        dd($cart);
 
+//        dd($cart[0]->getProduct()->getTitle());
         if(!empty($all)){
-
+//            $cart = $cart->andWhere('')
             foreach ($cart as $item) {
                 $item->setStatus($status);
                 $item->setUpdatedAt(new \DateTimeImmutable());
-                if($status == 2){
-                    if(!empty($item->getDeliveredAt())){
-                        $item->setDeliveredAt(new \DateTimeImmutable());
-                    }
-                }
-                if($status == 4){
-                    if(!empty($item->getDeletedAt())) {
-                        $item->setDeletedAt(new \DateTimeImmutable());
-                    }
-                }
+//                if($status == 2){
+//                    if(!empty($item->getDeliveredAt())){
+////                        $item->setDeliveredAt(new \DateTimeImmutable());
+//                    }
+//                }
+//                if($status == 4){
+//                    if(!empty($item->getDeletedAt())) {
+//                        $item->setDeletedAt(new \DateTimeImmutable());
+//                    }
+//                }
                 $entityManager->persist($item);
             }
 
         }else{
-            $cart[0]->setStatus($status);
-            $cart[0]->setUpdatedAt(new \DateTimeImmutable());
-            if($status == 2){
-                if(!empty($cart[0]->getDeliveredAt())){
-                    $cart[0]->setDeliveredAt(new \DateTimeImmutable());
+//            dd(count($cart));
+
+            if(empty($refundQ)) $refundQ = 1;
+            $x=0;
+            foreach ($cart as $singleCart) {
+                $singleCart->setStatus($status);
+                $singleCart->setUpdatedAt(new \DateTimeImmutable());
+                if($status == 2){
+                    if(!empty($singleCart->getDeliveredAt())){
+                        $singleCart->setDeliveredAt(new \DateTimeImmutable());
+                    }
                 }
-            }
-            if($status == 4){
-                if(!empty($cart[0]->getDeletedAt())) {
-                    $cart[0]->setDeletedAt(new \DateTimeImmutable());
+                if($status == 4){
+                    if(!empty($singleCart->getDeletedAt())) {
+                        $singleCart->setDeletedAt(new \DateTimeImmutable());
+                    }
                 }
+                $entityManager->persist($singleCart);
+                $x++;
+                if($x == intval($refundQ)) break;
             }
-            $entityManager->persist($cart[0]);
+
         }
 
         $entityManager->flush();
