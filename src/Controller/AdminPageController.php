@@ -162,9 +162,9 @@ class AdminPageController extends AbstractController
         $status = $request->request->get('status');
         $email = $request->request->get('email');
         $category = $request->request->get('category');
+        $all = $request->request->get('all');
 
         $user = $userRepository->findBy(['email' => $email])[0];
-//        dd($category);
         $cart = $cartRepository->createQueryBuilder('c')
             ->where('c.product = :prodId')
             ->setParameter('prodId', $idProduct)
@@ -177,19 +177,40 @@ class AdminPageController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $cart[0]->setStatus($status);
-        $cart[0]->setUpdatedAt(new \DateTimeImmutable());
-        if($status == 2){
-            if(!empty($cart[0]->getDeliveredAt())){
-                $cart[0]->setDeliveredAt(new \DateTimeImmutable());
+        if(!empty($all)){
+
+            foreach ($cart as $item) {
+                $item->setStatus($status);
+                $item->setUpdatedAt(new \DateTimeImmutable());
+                if($status == 2){
+                    if(!empty($item->getDeliveredAt())){
+                        $item->setDeliveredAt(new \DateTimeImmutable());
+                    }
+                }
+                if($status == 4){
+                    if(!empty($item->getDeletedAt())) {
+                        $item->setDeletedAt(new \DateTimeImmutable());
+                    }
+                }
+                $entityManager->persist($item);
             }
-        }
-        if($status == 4){
-            if(!empty($cart[0]->getDeletedAt())) {
-                $cart[0]->setDeletedAt(new \DateTimeImmutable());
+
+        }else{
+            $cart[0]->setStatus($status);
+            $cart[0]->setUpdatedAt(new \DateTimeImmutable());
+            if($status == 2){
+                if(!empty($cart[0]->getDeliveredAt())){
+                    $cart[0]->setDeliveredAt(new \DateTimeImmutable());
+                }
             }
+            if($status == 4){
+                if(!empty($cart[0]->getDeletedAt())) {
+                    $cart[0]->setDeletedAt(new \DateTimeImmutable());
+                }
+            }
+            $entityManager->persist($cart[0]);
         }
-        $entityManager->persist($cart[0]);
+
         $entityManager->flush();
         return new Response();
     }

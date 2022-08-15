@@ -92,13 +92,16 @@
                                     <input type="hidden" class="orders{{ index }}" value="{{ orderedItem.productId }}">
 
                                     {% if app.request.query.get('category') != 2 %}
-                                        <button class="deliver_order">Delivered</button>
+                                        <button class="deliver_order">One Delivered</button>
+                                        <button class="deliver_all_order">All Delivered</button><br>
                                     {% endif %}
                                     {% if app.request.query.get('category') != 3 %}
-                                        <button class="refund_order">Refund</button>
+                                        <button class="refund_order">Refund One</button>
+                                        <button class="refund_all_order">Refund All</button><br>
                                     {% endif %}
                                     {% if app.request.query.get('category') != 4 %}
-                                        <button class="cancel_order">Cancel</button>
+                                        <button class="cancel_order">Cancel One</button>
+                                        <button class="cancel_all_order">Cancel All</button><br>
                                     {% endif %}
                                     <br><br><br>
                                 </div>
@@ -169,6 +172,73 @@
                     status: 4,
                     category: {{ app.request.query.get('category') }},
                     email:email
+                },
+                complete: function (data) {
+                    location.reload();
+                }
+            });
+
+        });
+
+
+        $('.deliver_all_order').click((e) => {
+            var path = '{{ path('app_change_status') }}';
+            var fullUrl = window.location.origin + path;
+            var id = $(e.target).parent().attr('id');
+            var idProduct = $('.' + id).val();
+            var email = $('#'+id).parent().attr('class');
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    idProduct: idProduct,
+                    status: 2,
+                    email:email,
+                    category: {{ app.request.query.get('category') }},
+                    all : 'all'
+                },
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        });
+        $('.refund_all_order').click((e) => {
+            var path = '{{ path('app_change_status') }}';
+            var fullUrl = window.location.origin + path;
+            var id = $(e.target).parent().attr('id');
+            var idProduct = $('.' + id).val();
+            var email = $('#'+id).parent().attr('class');
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    idProduct: idProduct,
+                    status: 3,
+                    email:email,
+                    category: {{ app.request.query.get('category') }},
+                    all : 'all'
+                },
+                complete: function (data) {
+                    location.reload();
+                }
+            });
+
+        });
+        $('.cancel_all_order').click((e) => {
+            var path = '{{ path('app_change_status') }}';
+            var fullUrl = window.location.origin + path;
+            var id = $(e.target).parent().attr('id');
+            var idProduct = $('.' + id).val();
+            var email = $('#'+id).parent().attr('class');
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    idProduct: idProduct,
+                    status: 4,
+                    category: {{ app.request.query.get('category') }},
+                    email:email,
+                    all : 'all'
                 },
                 complete: function (data) {
                     location.reload();
