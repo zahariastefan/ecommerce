@@ -2,13 +2,13 @@
   "entrypoints": {
     "app": {
       "js": [
-        "https://wineandflower.ro/tablouri/public//build/runtime.js",
-        "https://wineandflower.ro/tablouri/public//build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-c17a64.js",
-        "https://wineandflower.ro/tablouri/public//build/app.js"
+        "/build/runtime.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-c17a64.js",
+        "/build/app.js"
       ],
       "css": [
-        "https://wineandflower.ro/tablouri/public//build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-c17a64.css",
-        "https://wineandflower.ro/tablouri/public//build/app.css"
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-c17a64.css",
+        "/build/app.css"
       ]
     }
   }

@@ -16,8 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function profile(): Response
+    public function profile(UserRepository $userRepository): Response
     {
+//        $user= $userRepository
         return $this->render('profile.html.twig');
     }
 
@@ -28,10 +29,12 @@ class ProfileController extends AbstractController
         $status1 = $this->getResultsGroupedByDate($cartRepository,$productRepository,1);
         $status2 = $this->getResultsGroupedByDate($cartRepository,$productRepository,2);
         $status3 = $this->getResultsGroupedByDate($cartRepository,$productRepository,3);
+        $status4 = $this->getResultsGroupedByDate($cartRepository,$productRepository,4);
         return $this->render('orders.html.twig', [
             'orderedItems' => $status1,
             'deliveredItems' => $status2,
-            'refundedItems' => $status3
+            'refundedItems' => $status3,
+            'canceledItems' => $status4
         ]);
     }
 
@@ -89,10 +92,12 @@ class ProfileController extends AbstractController
         ])[0];
         //search in Cart For user_id and status 1  and change status to 4 and add deleted_at
 
+        $id = $request->request->get('cartItemId');
+//        dd($id);
         $carts = $cartRepository->createQueryBuilder('c')
             ->where('c.user = :user')
-            ->andWhere('c.status = 1')
             ->setParameter('user', $user)
+            ->andWhere('c.status = 1')
             ->getQuery()
             ->getResult();
 
@@ -107,7 +112,7 @@ class ProfileController extends AbstractController
     }
 
 
-    #[Route('/refund-product', name:'app_refund_product')]
+    #[Route('/refund-product', name:'app_change_status')]
     public function refundProduct(UserRepository $userRepository,
                                   Request $request,
                                   CartRepository $cartRepository,
@@ -116,17 +121,25 @@ class ProfileController extends AbstractController
     {
         $productId = $request->request->get('cartItemId');
         $refundQ = $request->request->get('refundQ');
+        $status = $request->request->get('status');
         $cart = $cartRepository->createQueryBuilder('c')
             ->where('c.user = :user')
             ->setParameter('user', $this->getUser()->getId())
             ->andWhere('c.product = :product')
             ->setParameter('product', $productId)
+            ->andWhere('c.status = 1')
             ->getQuery()
             ->getResult()
         ;
-        $cartRandom = $cart[array_rand($cart)];
-        $cartRandom->setStatus(3);
-        $entityManager->persist($cartRandom);
+
+        $x=0;
+
+        foreach ($cart as $item) {
+            $item->setStatus($status);
+            $entityManager->persist($item);
+            $x++;
+            if($x == intval(($refundQ))) break;
+        }
         $entityManager->flush();
         return new Response();
     }

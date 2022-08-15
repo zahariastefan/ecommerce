@@ -10,35 +10,35 @@
 {#        {% endfor %}#}
         <form action="{{ path('app_update_user_data') }}" class="d-grid">
             <label for="name">
-                <input type="text" name="name" id="name" placeholder="name" class="form-control">
+                <input type="text" name="name" id="name" placeholder="name" class="form-control" value="{{ app.user.name }}">
             </label>
 
             <label for="surname">
-                <input type="text" name="surname" id="surname" placeholder="surname" class="form-control"> <br><br>
+                <input type="text" name="surname" id="surname" placeholder="surname" class="form-control" value="{{ app.user.surname }}"> <br><br>
             </label>
 
             <label for="city">
-                <input type="text" name="city" id="city" placeholder="City" class="form-control">
+                <input type="text" name="city" id="city" placeholder="City" class="form-control" value="{{ app.user.city }}">
             </label>
 
             <label for="street">
-                <input type="text" name="street" id="street" placeholder="Street" class="form-control">
+                <input type="text" name="street" id="street" placeholder="Street" class="form-control" value="{{ app.user.street }}">
             </label>
 
             <label for="number">
-                <input type="number" name="number" id="number" placeholder="Number" class="form-control">
+                <input type="number" name="number" id="number" placeholder="Number" class="form-control" value="{{ app.user.streetNumber }}">
             </label>
 
             <label for="building">
-                <input type="number" name="building" id="building" placeholder="Building" class="form-control"> <br><br>
+                <input type="number" name="building" id="building" placeholder="Building" class="form-control" value="{{ app.user.building }}"> <br><br>
             </label>
 
             <label for="phone">
-                <input type="number" name="phone" id="phone" placeholder="phone" class="form-control"><br><br>
+                <input type="number" name="phone" id="phone" placeholder="phone" class="form-control" value="0{{ app.user.phone }}"><br><br>
             </label>
 
             <label for="email">
-                <input type="email" name="email" id="email" placeholder="Email" class="form-control"><br><br>
+                <input type="email" name="email" id="email" placeholder="Email" class="form-control" value="{{ app.user.email }}"><br><br>
             </label>
 
             <label for="pass">
@@ -120,6 +120,7 @@
         $(function () {
             var $password = $(".form-control-psw[type='password']");
             var $passwordAlert = $(".password-alert");
+            $passwordAlert.hide();
             var $requirements = $(".requirements");
             var leng, bigLetter, num, specialChar;
             var $leng = $(".leng");
@@ -214,6 +215,11 @@
                     }
                 });
             });
+        });
+        $(window).click((e)=>{
+                if ($(e.target).attr('id') != 'txtNewPassword' && $('#txtNewPassword').val() === '') {
+                    $('.password-alert').hide();
+                }
         });
         //end from web
         $(function (e){
