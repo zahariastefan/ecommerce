@@ -178,7 +178,9 @@
     }
     cookieAccept();
 
-
+{#    {% if app.user %}#}
+//     alert( $.cookie('product_item', '{"productsId":[]}'));
+{#    {%  endif %}#}
     var path = '{{ path('app_base') }}';
     var fullUrl   = window.location.origin + path;
     $.ajax({

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\GuestOrders;
 use App\Repository\CartRepository;
 use App\Repository\GuestOrdersRepository;
@@ -33,10 +34,34 @@ class CartController extends AbstractController
      */
 
     #[Route('/cart', name:'app_cart')]
-    public function cart(UserRepository $userRepository,GuestOrdersRepository $guestOrdersRepository, CartRepository $cartRepository, ProductRepository $productRepository)
+    public function cart(EntityManagerInterface $entityManager, UserRepository $userRepository,GuestOrdersRepository $guestOrdersRepository, CartRepository $cartRepository, ProductRepository $productRepository)
     {
 
         if($this->getUser()) {
+            if(isset($_COOKIE['product_item'])){
+                $productsId = json_decode($_COOKIE['product_item'],true);
+                $formattedArrayProductsAndQuantities = [];
+                foreach ($productsId['productsId'] as $productId) {
+                    $product = $productRepository->findBy([
+                        'id' =>$productId
+                    ])[0];
+                    $user = $userRepository->findBy(['email' => $this->getUser()->getUserIdentifier()])[0];
+                    $cart = new Cart();
+                    $cart->setUser($user);
+                    $cart->setProduct($product);
+                    $cart->setAddedAt(new \DateTimeImmutable());
+                    $cart->setStatus(0);
+                    $cart->setOrderNr($this->getUser()->getUniqueNr());
+                    $entityManager->persist($cart);
+                    $formattedArrayProductsAndQuantities[] =$product->getTitle();
+                }
+
+                $entityManager->flush();
+//                setcookie('product_item',time()-3600);
+                setcookie('product_item', '', time() - 3600, '/');
+//                $listOfTitles = $formattedArrayProductsAndQuantities;
+
+            }
             $listOfTitles = [];
             $cart = $cartRepository->createQueryBuilder('c')
                 ->where('c.user = '.$this->getUser()->getId())
@@ -44,6 +69,7 @@ class CartController extends AbstractController
                 ->getQuery()
                 ->getResult()
             ;
+
             foreach ($cart as $singleCart){
                 $productsFromCart = $productRepository->findBy([
                     'id' => $singleCart->getProduct()->getId()
@@ -56,14 +82,15 @@ class CartController extends AbstractController
                     }
                 }
             }
+//            dd($listOfTitles);
+            return $this->render('cart.html.twig', [
+                'productsInCart' => array_count_values($listOfTitles)
+            ]);
         }else{
 //            //get products from cart
-
             if(isset($_COOKIE['product_item'])){
                 $productsId = json_decode($_COOKIE['product_item'],true);
-
                 $formattedArrayProductsAndQuantities = [];
-//            $productsIdUnique = array_unique($productsId['productsId']);
                 foreach ($productsId['productsId'] as $productId) {
                     $product = $productRepository->findBy([
                         'id' =>$productId

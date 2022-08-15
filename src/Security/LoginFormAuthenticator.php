@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Repository\CartRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,9 +74,14 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        dd('we here');
         if ($target = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($target);
+        }
+
+        if(isset($_COOKIE['product_item'])){
+            return new RedirectResponse(
+                $this->router->generate('app_cart')
+            );
         }
 
         return new RedirectResponse(
@@ -97,10 +103,7 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-//        dd($request->request->get('password'));
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-
-//        dd('failure');
         return new RedirectResponse(
             $this->router->generate('app_login')
         );

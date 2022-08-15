@@ -130,9 +130,7 @@
                 var classNameOfParent = $(e.target).parent().attr('class');
                 var oneItemName = $('.'+classNameOfParent + '  p.oneItemTitle').text();
                 var nrOfPresence = $('.'+classNameOfParent + '  p.nr_total_presence').text();
-                $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
 
-                $('.'+classNameOfParent+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) + 1) +'}');
                 // alert(classNameOfParent);
 
 
@@ -144,6 +142,8 @@
                         cartPage : 1,
                     },
                     complete: function (data) {
+                        $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
+                        $('.'+classNameOfParent+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) + 1) +'}');
 
                     }
                 });
@@ -158,9 +158,7 @@
 
                 var oneItemName = $('.'+classNameOfParent2 + '  p.oneItemTitle').text();
                 var nrOfPresence = $('.'+classNameOfParent2 + '  p.nr_total_presence').text();
-                $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);
 
-                $('.'+classNameOfParent2+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) - 1) +'}');
 
 
                 if(parseInt(nrOfPresence) === 1){
@@ -175,7 +173,9 @@
                         cartPage : 1,
                     },
                     complete: function (data) {
+                        $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);
 
+                        $('.'+classNameOfParent2+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) - 1) +'}');
                     }
                 });
             });

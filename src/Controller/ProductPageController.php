@@ -70,6 +70,7 @@ class ProductPageController extends  AbstractController
             $productObject = $productRepository->findBy([
                 'id' => $itemId
             ]);
+
         } else {
             $productObject = $productRepository->findBy([
                 'title' => $itemId
@@ -89,6 +90,7 @@ class ProductPageController extends  AbstractController
             $cart->setOrderNr($user[0]->getUniqueNr());
             $entityManager->persist($cart);
             $entityManager->flush();
+//            dd($cart);
         } else {//if not logged in add to cookie!
             $getIDFromProdObj =[];
             if ((!preg_match('~[0-9]+~', $itemId))) {
@@ -132,12 +134,18 @@ class ProductPageController extends  AbstractController
             ]);
         }
         if ($this->getUser()) {
-            $productObject = $productRepository->findBy([
-                'title' => $itemId
+//            $productObject = $productRepository->findBy([
+//                'title' => $itemId
+//            ]);
+            $user = $userRepository->findBy([
+                'email' => $this->getUser()->getUserIdentifier()
+            ])[0];
+            $cart = $cartRepository->findBy([
+                'product' => $productObject[0],
+                'user' => $user,
+                'status' => 0
             ]);
-            $productsFromCart = $productObject[0]->getCarts()->toArray();
-            $productToRemove = $productsFromCart[array_rand($productsFromCart)];
-            $entityManager->remove($productToRemove);
+            $entityManager->remove($cart[0]);
             $entityManager->flush();
         }else{
             $productsId = json_decode($_COOKIE['product_item'],true);
