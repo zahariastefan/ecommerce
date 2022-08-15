@@ -58,10 +58,8 @@ class CartController extends AbstractController
                 }
 
                 $entityManager->flush();
-//                setcookie('product_item',time()-3600);
-                setcookie('product_item', '', time() - 3600, '/');
-//                $listOfTitles = $formattedArrayProductsAndQuantities;
-
+                unset($_COOKIE['product_item']);
+                setcookie('product_item', '', time() - 3600);
             }
             $listOfTitles = [];
             $cart = $cartRepository->createQueryBuilder('c')
@@ -83,7 +81,6 @@ class CartController extends AbstractController
                     }
                 }
             }
-//            dd($listOfTitles);
             return $this->render('cart.html.twig', [
                 'productsInCart' => array_count_values($listOfTitles)
             ]);
@@ -107,9 +104,7 @@ class CartController extends AbstractController
                     'productsInCart' => [0=>'No product']
                 ]);
             }
-
         }
-
         return $this->render('cart.html.twig', [
             'productsInCart' => array_count_values($listOfTitles)
         ]);

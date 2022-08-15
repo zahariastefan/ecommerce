@@ -130,9 +130,8 @@
         type: "POST",
         url: fullUrl,
         complete: function (data) {
-            var itemNr = data.responseText;
-            console.log(itemNr);
-            $('.items_number').text(itemNr);
+            var itemNr = parseInt(data.responseText);
+                $('.items_number').text(itemNr);
             var items_number = $('.items_number').text();
             if(parseInt(items_number) === 0){
                 $('.container_cart').html('<p class="no_products">You don\'t have products in cart</p>');
@@ -142,8 +141,6 @@
             }
         }
     });
-
-    // if(confirm('Do you agree')){}
 
     function cookieAccept(){
 
@@ -177,10 +174,6 @@
         }
     }
     cookieAccept();
-
-{#    {% if app.user %}#}
-//     alert( $.cookie('product_item', '{"productsId":[]}'));
-{#    {%  endif %}#}
     var path = '{{ path('app_base') }}';
     var fullUrl   = window.location.origin + path;
     $.ajax({
