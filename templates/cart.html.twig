@@ -1,59 +1,67 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    {%  set arrayItems = [] %}
-    {% for nameOfProduct, nrOfPresence in productsInCart %}
-        {% if nameOfProduct == 0 %}
-        {% set nameOfProduct = 1 %}
-        {% endif %}
-
-        {%  set arrayItems = arrayItems|merge(
-            [
-                {
-                    nrPresence : nrOfPresence,
-                    title : nameOfProduct
-                }
-            ]
-        ) %}
-    {% endfor %}
     <div class="container container_cart justify-content-center">
         <form action="{{ path('app_thanks') }}" class="d-grid form_checkout ">
-            <div class="row">
-                <div class="col-sm first_column_cart">
-                    {% for key, oneItemArr in arrayItems %}
-                        <div class="oneItemDiv{{ key }}">
-                            <p class="oneItemTitle">{{ oneItemArr.title }} </p>
-                            <p class="nr_total_presence">{{ oneItemArr.nrPresence }}</p> <br>
-                            <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-                            <i class="fas fa-minus remove_to_cart_button m-3"></i>
-                            <input type="hidden" name="item{{ key }}" value='{"item":"{{ oneItemArr.title }}","quantity":{{ oneItemArr.nrPresence }}}'>
+            <div class="container_orders_cart row">
+                <h2 class="mb-4">My Cart</h2>
+                <div class="orders_all d-grid col-9">
+                    {% for index, product in products %}
+                        <div class="order_body_cart d-inline-flex">
+                            <img src="{{ absolute_url(asset(product.urlImage.url)) }}" alt="{{ product.title }}"
+                                 width="160px" height="120px">
+                            <div class="oneItemDiv{{ index }}">
+                                <p class="oneItemTitle">{{ product.title }} </p>
+                                <div class="product_price_div">
+                                    <p class="order_price_cart1">Product Price</p>
+                                    <p class="order_price_cart">{{ product.price }} $</p>
+                                    <p class="cancel_all_order_cart">Delete</p>
+                                </div>
+
+                                <p class="edit_qunaity_cart">Edit Quantity</p>
+                                <div class="second_div_cart{{ index }}">
+                                    <p class="order_quantity_cart{{ index }}">{{ product.quantity }}</p>
+                                    <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+                                    <i class="fas fa-minus remove_to_cart_button m-3"></i>
+                                </div>
+
+                                <input type="hidden" name="item{{ index }}"
+                                       value='{"item":"{{ product.title }}","quantity":{{ product.quantity }}}'>
+                            </div>
                         </div>
                     {% endfor %}
-
                 </div>
-                <div class="col-sm second_column_cart">
-                    <p>Payment Details</p>
-                    <label for="user_data"> Use My Own Data
-                        <input type="checkbox" name="user_data" id="user_data">
-                    </label><br>
-
-                    <input type="text" name="name" placeholder="Name" id="name" required>
-                    <input type="text" name="surname" placeholder="Surname" id="surname" required>
-                    <input type="text" name="city" placeholder="City" id="city" required>
-                    <input type="text" name="street" placeholder="Street" id="street" required>
-                    <input type="text" name="number" placeholder="Number" id="number" required>
-                    <input type="text" name="building" placeholder="Building" id="building" required>
-                    <input type="text" name="phone" placeholder="phone" id="phone" required>
-                    <input type="text" name="email" placeholder="Email" id="email"><br><br>
-                    <p>Choose payment type</p>
-                    <div class="d-inline-flex">
-                        <input type="checkbox" name="ramburs" required>
-                        <label for="ramburs">Offline Pay</label>
-                    </div>
-                    <br>
-                    <button type="submit">Send Order</button>
+                <div class="price_total col-3">
+                    <p class="summary_text">Summery :</p>
+                    <p class="cost_products">Cost of products:</p>
+                    <p class="price_total_p">
+                        total here
+                    </p>
+                    <button type="button" class="btn btn-primary btn-continue">Continue</button>
                 </div>
+            </div>
+            <div class="form_checkout">
+                <p>Payment Details</p>
+                <label for="user_data"> Use My Own Data
+                    <input type="checkbox" name="user_data" id="user_data">
+                </label><br>
+
+                <input type="text" name="name" placeholder="Name" id="name" required>
+                <input type="text" name="surname" placeholder="Surname" id="surname" required>
+                <input type="text" name="city" placeholder="City" id="city" required>
+                <input type="text" name="street" placeholder="Street" id="street" required>
+                <input type="text" name="number" placeholder="Number" id="number" required>
+                <input type="text" name="building" placeholder="Building" id="building" required>
+                <input type="text" name="phone" placeholder="phone" id="phone" required>
+                <input type="text" name="email" placeholder="Email" id="email"><br><br>
+                <p>Choose payment type</p>
+                <div class="d-inline-flex">
+                    <input type="checkbox" name="ramburs" required>
+                    <label for="ramburs">Offline Pay</label>
+                </div>
+                <br>
+                <button type="submit">Send Order</button>
+                <button class="go_back">Go Back</button>
             </div>
         </form>
     </div>
@@ -62,68 +70,69 @@
     <script>
 
         var path = '{{ path('app_add_cart') }}';
-        var fullUrl   = window.location.origin + path;
+        var fullUrl = window.location.origin + path;
         addToCart(fullUrl);
         var path2 = '{{ path('app_remove_cart') }}';
-        var fullUrl2   = window.location.origin + path2;
+        var fullUrl2 = window.location.origin + path2;
         removeToCart(fullUrl2);
-        function addToCart(fullUrl){
-            $('.add_to_cart_button').click((e)=>{
+        function addToCart(fullUrl) {
+            $('.add_to_cart_button').click((e) => {
                 var items_number = $('.items_number').text();
-                $('.items_number').text(parseInt(items_number) + 1);
-                var classNameOfParent = $(e.target).parent().attr('class');
-                var oneItemName = $('.'+classNameOfParent + '  p.oneItemTitle').text();
-                var nrOfPresence = $('.'+classNameOfParent + '  p.nr_total_presence').text();
+
+                var classNameOfParentSecondDiv = $(e.target).parent().attr('class');
+                var classNameOfParentFirstDiv = $(e.target).parent().parent().attr('class');
+                var oneItemName = $('.' + classNameOfParentFirstDiv + '  p.oneItemTitle').text();
+                var nrOfPresence = $('.' + classNameOfParentSecondDiv + '  p').text();
                 $.ajax({
                     type: "POST",
                     url: fullUrl,
                     data: {
-                        itemId :oneItemName,
-                        cartPage : 1,
+                        itemId: oneItemName,
+                        cartPage: 1,
                     },
                     complete: function (data) {
-                        $('.'+classNameOfParent + ' > p.nr_total_presence').text(parseInt(nrOfPresence) + 1);
-                        $('.'+classNameOfParent+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) + 1) +'}');
-
+                        $('.' + classNameOfParentSecondDiv + '  p').text(parseInt(nrOfPresence) + 1);
+                        $('.' + classNameOfParentFirstDiv + '  input').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) + 1) + '}');
+                        $('.items_number').text(parseInt(items_number) + 1);
+                        getTotal();
                     }
                 });
             });
         }
-
-        function removeToCart(fullUrl){
-            $('.remove_to_cart_button').click((e)=>{
+        function removeToCart(fullUrl) {
+            $('.remove_to_cart_button').click((e) => {
                 var items_number = $('.items_number').text();
-                $('.items_number').text(parseInt(items_number) - 1);
-                var classNameOfParent2 = $(e.target).parent().attr('class');
 
-                var oneItemName = $('.'+classNameOfParent2 + '  p.oneItemTitle').text();
-                var nrOfPresence = $('.'+classNameOfParent2 + '  p.nr_total_presence').text();
+                var classNameOfParentSecondDiv = $(e.target).parent().attr('class');
+                var classNameOfParentFirstDiv = $(e.target).parent().parent().attr('class');
+                var oneItemName = $('.' + classNameOfParentFirstDiv + '  p.oneItemTitle').text();
+                var nrOfPresence = $('.' + classNameOfParentSecondDiv + '  p').text();
 
-
-
-                if(parseInt(nrOfPresence) === 1){
-                    $(e.target).parent().remove();
-                }
 
                 $.ajax({
                     type: "POST",
                     url: fullUrl,
                     data: {
-                        itemId :oneItemName,
-                        cartPage : 1,
+                        itemId: oneItemName,
+                        cartPage: 1,
                     },
                     complete: function (data) {
-                        $('.'+classNameOfParent2 + ' p.nr_total_presence').text(parseInt(nrOfPresence) - 1);
+                        if (parseInt(nrOfPresence) === 1) {
+                            location.reload();
+                        } else {
+                            $('.items_number').text(parseInt(items_number) - 1);
+                        }
+                        $('.' + classNameOfParentSecondDiv + ' p').text(parseInt(nrOfPresence) - 1);
 
-                        $('.'+classNameOfParent2+' > input[type="text"]').val('{"item":"'+oneItemName+'","quantity":'+ (parseInt(nrOfPresence) - 1) +'}');
+                        $('.' + classNameOfParentFirstDiv + ' input').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) - 1) + '}');
+                        getTotal();
                     }
                 });
             });
         }
-
         {% if app.user %}
-        $('#user_data').click(()=>{
-            if($('#user_data').is(':checked')){
+        $('#user_data').click(() => {
+            if ($('#user_data').is(':checked')) {
                 $('#name').attr('value', '{{ app.user.name }}');
                 $('#surname').attr('value', '{{ app.user.surname }}');
                 $('#city').attr('value', '{{ app.user.city }}');
@@ -133,7 +142,7 @@
                 $('#phone').attr('value', '{{ app.user.phone }}');
                 $('#email').attr('value', '{{ app.user.email }}');
             }
-            if(!$('#user_data').is(':checked')){
+            if (!$('#user_data').is(':checked')) {
                 $('#name').removeAttr('value');
                 $('#surname').removeAttr('value');
                 $('#city').removeAttr('value');
@@ -147,5 +156,34 @@
 
         });
         {% endif %}
+        getTotal();
+        function getTotal() {
+            var subTotal = $('.order_price_cart').text();
+            var arrPrices = subTotal.split('$');
+            var totalPrice = 0;
+            for (var x = 0; x < arrPrices.length; x++) {
+                var priceNoSpace = arrPrices[x].replace(/\s/g, '');
+                var quantity = $('.order_quantity_cart' + [x]).text();
+                console.log(quantity);
+                if (priceNoSpace !== '') {
+                    totalPrice = parseInt(totalPrice) + (parseInt(quantity) * parseInt(priceNoSpace));
+                }
+            }
+            $('.price_total_p').text(totalPrice + ' $');
+        }
+
+        $('.form_checkout').hide();
+
+        $('.btn-continue').click(()=>{
+            $('.container_orders_cart').hide();
+            $('.form_checkout').show();
+        });
+
+
+        $('.go_back').click(()=>{
+            $('.container_orders_cart').show();
+            $('.form_checkout').hide();
+        });
+
     </script>
 {% endblock %}

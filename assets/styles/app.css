@@ -5,14 +5,8 @@
 body {
     font-family: Trebuchet MS , sans-serif;
     color: #444;
-    background:#F2F2F7;
+    background:#FAFAFA;
 }
-
-/*.navbar{*/
-/*    position: fixed;*/
-/*    width: 100%;*/
-/*    z-index: 2;*/
-/*}*/
 
 .jumbotron-img {
     background: rgb(237,116,88);
@@ -148,12 +142,10 @@ footer {
 
 .form_checkout input[type=text]{
     margin: 5px !important;
-    /*width: 50%;*/
 }
 
 .form_checkout button {
     margin: 5px !important;
-    /*width: 50%;*/
 }
 
 .container_cart{
@@ -169,15 +161,6 @@ footer {
     padding: 35px;
     width: 50%;
     top: -18px;
-}
-.second_column_cart{
-    /*position: fixed;*/
-}
-
-footer{
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*width: 100%;*/
 }
 
 .thank_you{
@@ -218,10 +201,6 @@ label
     font-size: 12px;
 }
 
-.password-alert{
-    /*display: none;*/
-}
-
 .requirements
 {
     list-style-type: none;
@@ -238,17 +217,27 @@ label
 }
 
 .profile_row_body{
-    /*border: 1px solid black;*/
     padding: 50px;
     margin-top: 50px;
 }
 
-html, body, .container_cart {
+.container_cart {
     height: 100%;
 }
 
-body{
-    /*background: #E3E2E1;*/
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 100px;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .col_design{
@@ -322,7 +311,7 @@ body{
     margin-top: 50px;
 }
 .ordered_orders{
-    background: #DFECF3;
+    background: wheat;
     border-radius: 10px;
 }
 .ordered_orders  p {
@@ -386,7 +375,6 @@ button{
 }
 
 div[class^='refund_div'] i {
-    border: 1px solid black;
     padding: 15px;
     border-radius: 50%;
     margin: 5px;
@@ -400,20 +388,8 @@ div[class^='refund_div'] p {
 }
 div[class^='refund_div']{
     display: inline-flex;
-    /*all: initial;*/
-    /*position: relative;*/
-    /*left: 900px;*/
-    /*display: inline-flex;*/
-    /*bottom: 102px;*/
 }
 
-.cancel_order{
-    /*position: relative;*/
-    /*left: 1000px;*/
-    /*display: inline-flex;*/
-    /*bottom: 50px;*/
-    /*padding: 5px 15px 5px 15px;*/
-}
 
 .refund_button{
     padding: 0 15px 0 15px;
@@ -425,4 +401,87 @@ div[class^='refund_div']{
     padding: 20px;
     margin-bottom: 50px;
     border-radius: 10px;
+}
+
+
+.order_body_cart img{
+    margin-right: 45px;
+}
+.order_body_cart{
+    height: auto;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+}
+
+div[class^=oneItemDiv]{
+    width: 100%;
+}
+
+.order_price_cart  {
+    float: right;
+}
+
+
+.container_orders_cart{
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.oneItemTitle{
+    font-size: 20px
+}
+
+div[class^=second_div_cart]{
+    display:inline-flex;
+    position: relative;
+    top: -10px;
+    font-size: 18px;
+    font-weight: 900;
+}
+p[class^=order_quantity_cart]{
+    padding-top:12px;
+}
+
+.product_price_div p:first-child{
+    font-size: 20px;
+}
+.product_price_div{
+    display: grid;
+    float: right;
+    position: relative;
+    top: -41px;
+    text-align: center;
+}
+
+.price_total{
+    background: white;
+    height: 250px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+}
+
+.summary_text{
+    font-weight: 900;
+    font-size: 22px;
+}
+
+
+.btn-continue{
+    position: relative;
+    top: 21px;
+    width: 100%;
+}
+
+.price_total_p{
+    font-size: 30px;
+    position: relative;
+    top: 10px;
 }

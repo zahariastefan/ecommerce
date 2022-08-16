@@ -61,6 +61,7 @@ class CartController extends AbstractController
                 unset($_COOKIE['product_item']);
                 setcookie('product_item', '', time() - 3600);
             }
+            $products = [];
             $listOfTitles = [];
             $cart = $cartRepository->createQueryBuilder('c')
                 ->where('c.user = '.$this->getUser()->getId())
@@ -78,13 +79,27 @@ class CartController extends AbstractController
                     $title = $productsFromCart[0]->getTitle();
                     if(!empty($title)){
                         $listOfTitles[] = $title;
+//                        dd($productsFromCart[0]);
+                        $products[]= $productsFromCart[0];
                     }
                 }
             }
+            $countedList = array_count_values($listOfTitles);
+
+            $withQuantityProducts=[];
+            foreach ($countedList as $product => $quantity) {
+                $productC = $productRepository->findBy([
+                    'title' => $product
+                ])[0];
+                $productC->quantity = $quantity;
+                $withQuantityProducts[]=$productC;
+            }
+
             return $this->render('cart.html.twig', [
-                'productsInCart' => array_count_values($listOfTitles)
+                'products' =>$withQuantityProducts
             ]);
-        }else{
+        }
+        else{
 //            //get products from cart
             if(isset($_COOKIE['product_item'])){
                 $productsId = json_decode($_COOKIE['product_item'],true);
