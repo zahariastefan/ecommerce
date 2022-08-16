@@ -5,6 +5,7 @@
 body {
     font-family: Trebuchet MS , sans-serif;
     color: #444;
+    background:#F2F2F7;
 }
 
 /*.navbar{*/
@@ -64,7 +65,7 @@ body {
 }
 
 .answer-link:hover .magic-wand {
-  transform: rotate(20deg);
+    transform: rotate(20deg);
 }
 
 .vote-arrows, .vote-arrows .btn {
@@ -95,9 +96,9 @@ body {
 }
 
 .btn-question {
-  color: #FFFFFF;
-  background-color: #ED7458;
-  border-color: #D45B3F;
+    color: #FFFFFF;
+    background-color: #ED7458;
+    border-color: #D45B3F;
 }
 
 .btn-question:hover,
@@ -105,15 +106,15 @@ body {
 .btn-question:active,
 .btn-question.active,
 .open .dropdown-toggle.btn-question {
-  color: #FFFFFF;
-  background-color: #D45B3F;
-  border-color: #D45B3F;
+    color: #FFFFFF;
+    background-color: #D45B3F;
+    border-color: #D45B3F;
 }
 
 .btn-question:active,
 .btn-question.active,
 .open .dropdown-toggle.btn-question {
-  background-image: none;
+    background-image: none;
 }
 
 .btn-question.disabled,
@@ -131,13 +132,13 @@ fieldset[disabled] .btn-question:active,
 .btn-question.disabled.active,
 .btn-question[disabled].active,
 fieldset[disabled] .btn-question.active {
-  background-color: #ED7458;
-  border-color: #D45B3F;
+    background-color: #ED7458;
+    border-color: #D45B3F;
 }
 
 .btn-question .badge {
-  color: #ED7458;
-  background-color: #FFFFFF;
+    color: #ED7458;
+    background-color: #FFFFFF;
 }
 
 footer {
@@ -321,7 +322,7 @@ body{
     margin-top: 50px;
 }
 .ordered_orders{
-    background: aliceblue;
+    background: #DFECF3;
     border-radius: 10px;
 }
 .ordered_orders  p {
@@ -334,7 +335,7 @@ body{
     background: white;
     border-radius: 6px;
     box-shadow: 0 0 8px 0 rgb(0 0 0 / 20%), 0 0 20px 0 rgb(0 0 0 / 19%);
-    height: 266px;
+    height: auto;
 
 }
 
@@ -398,19 +399,20 @@ div[class^='refund_div'] p {
     padding: 10px;
 }
 div[class^='refund_div']{
-    all: initial;
-    position: relative;
-    left: 900px;
     display: inline-flex;
-    bottom: 102px;
+    /*all: initial;*/
+    /*position: relative;*/
+    /*left: 900px;*/
+    /*display: inline-flex;*/
+    /*bottom: 102px;*/
 }
 
 .cancel_order{
-    position: relative;
-    left: 1000px;
-    display: inline-flex;
-    bottom: 50px;
-    padding: 5px 15px 5px 15px;
+    /*position: relative;*/
+    /*left: 1000px;*/
+    /*display: inline-flex;*/
+    /*bottom: 50px;*/
+    /*padding: 5px 15px 5px 15px;*/
 }
 
 .refund_button{
@@ -418,3 +420,9 @@ div[class^='refund_div']{
     margin: 12px 0px 12px 0px;
 }
 
+.order_card_admin{
+    background: white;
+    padding: 20px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+}

@@ -88,6 +88,7 @@ class AdminPageController extends AbstractController
                 $productObj = $productRepository->findBy([
                     'id' => $productId
                 ])[0];
+//                dd($itemByDateAndUser);
                 $arrayCount[$itemByDateAndUser->getUser()->getUserIdentifier()][] = [
                     'productId' => $productId,
                     'quantity' => $quantity,
@@ -95,7 +96,8 @@ class AdminPageController extends AbstractController
                     'address' => $itemByDateAndUser->getAddress(),
                     'phone' => $itemByDateAndUser->getPhone(),
                     'status' => $itemByDateAndUser->getStatus(),
-                    'orderNr' => $itemByDateAndUser->getOrderNr()
+                    'orderNr' => $itemByDateAndUser->getOrderNr(),
+                    'price' => $itemByDateAndUser->getProduct()->getPrice()
                 ];
             }
             $finalArray[$date]=$arrayCount;

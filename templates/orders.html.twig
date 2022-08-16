@@ -29,6 +29,7 @@
                                             <p class="product_title">Product Title: {{ orderedItemSingle.product.title }}</p>
                                             <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
                                             <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
+                                            <p class="price_order">Amount : {{ orderedItemSingle.product.price * orderedItemSingle.quantity }} $</p>
                                             <p class="status_order">
                                                 Status: {% if orderedItemSingle.status == 1 %}
                                                     Not Delivered
@@ -73,6 +74,7 @@
                                             <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
                                             <p class="delivered_at_order">Delivered
                                                 on: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }}</p>
+                                            <p class="price_order">Amount : {{ orderedItemSingle.product.price * orderedItemSingle.quantity }} $</p>
                                             <p class="status_order">
                                                 Status: {% if orderedItemSingle.status == 1 %}
                                                     Not Delivered
@@ -122,6 +124,7 @@
                                             <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
                                             <p class="delivered_at_order">Delivered
                                                 On: {{ orderedItemSingle.deliveredAt|date('Y-m-d H:m:s') }}</p>
+                                            <p class="price_order">Amount : {{ orderedItemSingle.product.price * orderedItemSingle.quantity }} $</p>
                                             <p class="status_order">
                                                 Status: {% if orderedItemSingle.status == 1 %}
                                                     Not Delivered
@@ -159,6 +162,7 @@
                         <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
                         <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>
                         <p class="canceled_order_at">Canceled On: {{ orderedItemSingle.deletedAt|date('Y-m-d H:m:s') }}</p>
+                        <p class="price_order">Amount : {{ orderedItemSingle.product.price * orderedItemSingle.quantity }} $</p>
                         <p class="status_order">
                             Status: {% if orderedItemSingle.status == 1 %}
                                 Not Delivered
