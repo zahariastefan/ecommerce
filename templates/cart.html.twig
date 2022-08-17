@@ -8,21 +8,20 @@
                 <div class="orders_all d-grid col-9">
                     {% for index, product in products %}
                         <div class="order_body_cart d-inline-flex">
-                            <img src="{{ absolute_url(asset(product.urlImage.url)) }}" alt="{{ product.title }}"
-                                 width="160px" height="120px">
+                            <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}" width="160px" height="120px">
                             <div class="oneItemDiv{{ index }}">
                                 <p class="oneItemTitle">{{ product.title }} </p>
                                 <div class="product_price_div">
                                     <p class="order_price_cart1">Product Price</p>
                                     <p class="order_price_cart">{{ product.price }} $</p>
-                                    <p class="cancel_all_order_cart">Delete</p>
+                                    <p class="cancel_all_order_cart"><a href="">Delete</a></p>
                                 </div>
 
                                 <p class="edit_qunaity_cart">Edit Quantity</p>
                                 <div class="second_div_cart{{ index }}">
+                                    <i class="fas fa-minus remove_to_cart_button m-3"></i>
                                     <p class="order_quantity_cart{{ index }}">{{ product.quantity }}</p>
                                     <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-                                    <i class="fas fa-minus remove_to_cart_button m-3"></i>
                                 </div>
 
                                 <input type="hidden" name="item{{ index }}"

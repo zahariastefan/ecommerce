@@ -408,13 +408,12 @@ div[class^='refund_div']{
     margin-right: 45px;
 }
 .order_body_cart{
-    height: auto;
+    height: 200px;
     padding: 40px;
     background: white;
     border-radius: 10px;
     margin-bottom: 50px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-
 }
 
 div[class^=oneItemDiv]{
@@ -454,7 +453,7 @@ p[class^=order_quantity_cart]{
     display: grid;
     float: right;
     position: relative;
-    top: -41px;
+    top: -47px;
     text-align: center;
 }
 

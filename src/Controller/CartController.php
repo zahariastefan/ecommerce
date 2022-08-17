@@ -79,8 +79,6 @@ class CartController extends AbstractController
                     $title = $productsFromCart[0]->getTitle();
                     if(!empty($title)){
                         $listOfTitles[] = $title;
-//                        dd($productsFromCart[0]);
-                        $products[]= $productsFromCart[0];
                     }
                 }
             }
@@ -94,7 +92,6 @@ class CartController extends AbstractController
                 $productC->quantity = $quantity;
                 $withQuantityProducts[]=$productC;
             }
-
             return $this->render('cart.html.twig', [
                 'products' =>$withQuantityProducts
             ]);
@@ -111,17 +108,28 @@ class CartController extends AbstractController
                     $formattedArrayProductsAndQuantities[] =$product[0]->getTitle();
                 }
                 $listOfTitles = $formattedArrayProductsAndQuantities;
+                $countedList = array_count_values($listOfTitles);
+
+                $withQuantityProducts=[];
+                foreach ($countedList as $product => $quantity) {
+                    $productC = $productRepository->findBy([
+                        'title' => $product
+                    ])[0];
+                    $productC->quantity = $quantity;
+                    $withQuantityProducts[]=$productC;
+                }
+
                 return $this->render('cart.html.twig', [
-                    'productsInCart' => array_count_values($listOfTitles)
+                    'products' => $withQuantityProducts
                 ]);
             }else{
                 return $this->render('cart.html.twig', [
-                    'productsInCart' => [0=>'No product']
+                    'products' => [0=>'No product']
                 ]);
             }
         }
         return $this->render('cart.html.twig', [
-            'productsInCart' => array_count_values($listOfTitles)
+            'products' => array_count_values($listOfTitles)
         ]);
     }
 
