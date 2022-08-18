@@ -1,57 +1,40 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    <div>
-{#        {% for message in app.flashes('success') %}#}
-{#            <div class="alert alert-success">#}
-{#                {{ message }}#}
-{#            </div>#}
-{#        {% endfor %}#}
+    {#        {% for message in app.flashes('success') %}#}
+    {#            <div class="alert alert-success">#}
+    {#                {{ message }}#}
+    {#            </div>#}
+    {#        {% endfor %}#}
+    <div class="container mt-4 mb-4">
+        <h2 class="mb-2">My personal data</h2>
         <form action="{{ path('app_update_user_data') }}" class="d-grid">
-            <label for="name">
+            <label for="name">Name
                 <input type="text" name="name" id="name" placeholder="name" class="form-control" value="{{ app.user.name }}">
             </label>
 
-            <label for="surname">
-                <input type="text" name="surname" id="surname" placeholder="surname" class="form-control" value="{{ app.user.surname }}"> <br><br>
+            <label for="surname">surname
+                <input type="text" name="surname" id="surname" placeholder="surname" class="form-control" value="{{ app.user.surname }}"> 
             </label>
 
-            <label for="city">
-                <input type="text" name="city" id="city" placeholder="City" class="form-control" value="{{ app.user.city }}">
+            <label for="phone">phone
+                <input type="number" name="phone" id="phone" placeholder="phone" class="form-control" value="0{{ app.user.phone }}">
             </label>
 
-            <label for="street">
-                <input type="text" name="street" id="street" placeholder="Street" class="form-control" value="{{ app.user.street }}">
+            <label for="email">email
+                <input type="email" name="email" id="email" placeholder="Email" class="form-control" value="{{ app.user.email }}">
             </label>
 
-            <label for="number">
-                <input type="number" name="number" id="number" placeholder="Number" class="form-control" value="{{ app.user.streetNumber }}">
-            </label>
-
-            <label for="building">
-                <input type="number" name="building" id="building" placeholder="Building" class="form-control" value="{{ app.user.building }}"> <br><br>
-            </label>
-
-            <label for="phone">
-                <input type="number" name="phone" id="phone" placeholder="phone" class="form-control" value="0{{ app.user.phone }}"><br><br>
-            </label>
-
-            <label for="email">
-                <input type="email" name="email" id="email" placeholder="Email" class="form-control" value="{{ app.user.email }}"><br><br>
-            </label>
-
-            <label for="pass">
+            <label for="pass">password
                 <input type="password" id="txtNewPassword" placeholder="Enter password" name="pass"
                        class="form-control form-control-psw validate">
             </label>
 
-            <label for="confpass">
+            <label for="confpass">Confirm Password
                 <input type="password" id="txtConfirmPassword" placeholder="Confirm password" name="confpass"
                        class="form-control">
             </label>
             <div class="registrationFormAlert" id="CheckPasswordMatch"></div>
-
             <div class="alert alert-warning password-alert" role="alert">
                 <ul>
                     <li class="requirements leng"><i class="fas fa-check green-text"></i><i
@@ -69,7 +52,25 @@
                 </ul>
             </div>
 
-            <button type="button" class="check_button">Save</button>
+            <h2 class="mb-2">Shipping address</h2>
+
+            <label for="city">city
+                <input type="text" name="city" id="city" placeholder="City" class="form-control" value="{{ app.user.city }}">
+            </label>
+
+            <label for="street">street
+                <input type="text" name="street" id="street" placeholder="Street" class="form-control" value="{{ app.user.street }}">
+            </label>
+
+            <label for="number">number
+                <input type="number" name="number" id="number" placeholder="Number" class="form-control" value="{{ app.user.streetNumber }}">
+            </label>
+
+            <label for="building">building
+                <input type="number" name="building" id="building" placeholder="Building" class="form-control" value="{{ app.user.building }}"> 
+            </label>
+
+            <button type="button" class="check_button mt-4">Save Changes</button>
             <button type="submit" class="save_button" style="display: none"></button>
         </form>
     </div>

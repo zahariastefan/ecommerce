@@ -27,7 +27,7 @@
 
     {% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}sub_page{% endblock %}">
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-1">
     <div class="container-fluid justify-content-center">
         <a class="navbar-brand" href="{{ path('app_homepage') }}">
@@ -78,6 +78,9 @@
 </nav>
 <nav class="navbar navbar2 navbar-expand-lg navbar-light px-1">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_homepage') }}">Products</a>
+        </li>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_profile') }}">Profile</a>
@@ -126,12 +129,7 @@
             var itemNr = parseInt(data.responseText);
             $('.items_number').text(itemNr);
             var items_number = $('.items_number').text();
-            if (parseInt(items_number) === 0) {
-                $('.container_cart').html('<p class="no_products">You don\'t have products in cart</p>');
-                $('html').show();
-            } else {
-                $('html').show();
-            }
+            $('html').show();
         }
     });
 

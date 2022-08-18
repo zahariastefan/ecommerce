@@ -1,68 +1,112 @@
 {% extends 'base.html.twig' %}
-
+{% block body_class %}cart_page{% endblock %}
 {% block body %}
     <div class="container container_cart justify-content-center">
-        <form action="{{ path('app_thanks') }}" class="d-grid form_checkout ">
-            <div class="container_orders_cart row">
-                <h2 class="mb-4">My Cart</h2>
-                <div class="orders_all d-grid col-9">
-                    {% for index, product in products %}
-                        <div class="order_body_cart d-inline-flex">
-                            <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}" width="160px" height="120px">
-                            <div class="oneItemDiv{{ index }}">
-                                <p class="oneItemTitle">{{ product.title }} </p>
-                                <div class="product_price_div">
-                                    <p class="order_price_cart1">Product Price</p>
-                                    <p class="order_price_cart">{{ product.price }} $</p>
-                                    <p class="cancel_all_order_cart"><a href="">Delete</a></p>
-                                </div>
+        {% if products|length  > 1 %}
+            <form action="{{ path('app_thanks') }}" class="d-grid form_checkout ">
+                <div class="container_orders_cart row">
+                    <h2 class="mb-4">My Cart</h2>
+                    <div class="orders_all d-grid col-9">
+                        {% for index, product in products %}
+                            <div class="order_body_cart d-inline-flex">
+                                <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}"
+                                     width="160px" height="120px">
+                                <div class="oneItemDiv{{ index }}">
+                                    <p class="oneItemTitle">{{ product.title }} </p>
+                                    <div class="product_price_div">
+                                        <p class="order_price_cart1">Product Price</p>
+                                        <p class="order_price_cart">{{ product.price }} $</p>
+                                        <p class="cancel_all_order_cart"><a href="">Delete</a></p>
+                                    </div>
 
-                                <p class="edit_qunaity_cart">Edit Quantity</p>
-                                <div class="second_div_cart{{ index }}">
-                                    <i class="fas fa-minus remove_to_cart_button m-3"></i>
-                                    <p class="order_quantity_cart{{ index }}">{{ product.quantity }}</p>
-                                    <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
-                                </div>
+                                    <p class="edit_qunaity_cart">Edit Quantity</p>
+                                    <div class="second_div_cart{{ index }}">
+                                        <i class="fas fa-minus remove_to_cart_button m-3"></i>
+                                        <p class="order_quantity_cart{{ index }}">{{ product.quantity }}</p>
+                                        <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+                                    </div>
 
-                                <input type="hidden" name="item{{ index }}"
-                                       value='{"item":"{{ product.title }}","quantity":{{ product.quantity }}}'>
+                                    <input type="hidden" name="item{{ index }}"
+                                           value='{"item":"{{ product.title }}","quantity":{{ product.quantity }}}'>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
+                    <div class="price_total col-3 fill_price_total">
+                        <p class="summary_text">Summery :</p>
+                        <p class="cost_products">Cost of products - shipping cost next step</p>
+                        <p class="total_price">
+                            <span class="price_total_p">
+                            total here
+                            </span> $
+                        </p>
+                        <button type="button" class="btn btn-primary btn-continue">Continue</button>
+                    </div>
                 </div>
-                <div class="price_total col-3">
-                    <p class="summary_text">Summery :</p>
-                    <p class="cost_products">Cost of products:</p>
-                    <p class="price_total_p">
-                        total here
-                    </p>
-                    <button type="button" class="btn btn-primary btn-continue">Continue</button>
-                </div>
-            </div>
-            <div class="form_checkout">
-                <p>Payment Details</p>
-                <label for="user_data"> Use My Own Data
-                    <input type="checkbox" name="user_data" id="user_data">
-                </label><br>
+                <div class="form_checkout">
+                    <div class="payment_details_head">
+                        <p>Payment Details</p>
+                        <label for="user_data"> Use My Own Data
+                            <input type="checkbox" name="user_data" id="user_data">
+                        </label><br>
+                    </div>
 
-                <input type="text" name="name" placeholder="Name" id="name" required>
-                <input type="text" name="surname" placeholder="Surname" id="surname" required>
-                <input type="text" name="city" placeholder="City" id="city" required>
-                <input type="text" name="street" placeholder="Street" id="street" required>
-                <input type="text" name="number" placeholder="Number" id="number" required>
-                <input type="text" name="building" placeholder="Building" id="building" required>
-                <input type="text" name="phone" placeholder="phone" id="phone" required>
-                <input type="text" name="email" placeholder="Email" id="email"><br><br>
-                <p>Choose payment type</p>
-                <div class="d-inline-flex">
-                    <input type="checkbox" name="ramburs" required>
-                    <label for="ramburs">Offline Pay</label>
+                    <div class="form_checkout_labels ">
+                        <label for="name">name
+                            <input type="text" name="name" class="form-control"  placeholder="Name" id="name" required></label>
+
+                        <label for="surname"> surname
+                            <input type="text" name="surname" class="form-control"   placeholder="Surname" id="surname" required></label>
+
+                        <label for="city">city
+                            <input type="text" name="city" class="form-control"   placeholder="City" id="city" required></label>
+
+                        <label for="street">street
+                            <input type="text" name="street" class="form-control"   placeholder="Street" id="street" required></label>
+
+                        <label for="number">number
+                            <input type="text" name="number" class="form-control"   placeholder="Number" id="number" required></label>
+
+                        <label for="building">building
+                            <input type="text" name="building" class="form-control"   placeholder="Building" id="building" required></label>
+
+                        <label for="building">phone
+                            <input type="text" name="phone"  class="form-control"  placeholder="phone" id="phone" required></label>
+
+                        <label for="building">phone
+                            <input type="text" name="email" class="form-control"   placeholder="Email" id="email"></label>
+                        <br>
+                    </div>
+
+                    <div class="offline_payment">
+                        <div class="row">
+                            <div class="col">
+                                <p>Choose payment type</p>
+                                <label for="offline_payment" class="d-inline-flex">Offline Pay - 15 RON
+                                    <input type="checkbox" name="offline_payment" class="offline_payment_input" required>
+                                </label>
+                            </div>
+                            <div class="col fill_price_total second_price">
+                                <p class="summary_text">Summery:</p>
+                                <p class="cost_products">Total cost:</p>
+                                <p class="total_price second_price">
+                                    <span class="price_total_p">
+                                    total here
+                                    </span> $
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <br>
+                    <button type="submit">Send Order</button>
+                    <button class="go_back">Go Back</button>
                 </div>
-                <br>
-                <button type="submit">Send Order</button>
-                <button class="go_back">Go Back</button>
-            </div>
-        </form>
+            </form>
+        {% else %}
+            No products on your cart!
+        {% endif %}
     </div>
 
 
@@ -74,6 +118,7 @@
         var path2 = '{{ path('app_remove_cart') }}';
         var fullUrl2 = window.location.origin + path2;
         removeToCart(fullUrl2);
+
         function addToCart(fullUrl) {
             $('.add_to_cart_button').click((e) => {
                 var items_number = $('.items_number').text();
@@ -98,6 +143,7 @@
                 });
             });
         }
+
         function removeToCart(fullUrl) {
             $('.remove_to_cart_button').click((e) => {
                 var items_number = $('.items_number').text();
@@ -156,6 +202,7 @@
         });
         {% endif %}
         getTotal();
+
         function getTotal() {
             var subTotal = $('.order_price_cart').text();
             var arrPrices = subTotal.split('$');
@@ -168,21 +215,51 @@
                     totalPrice = parseInt(totalPrice) + (parseInt(quantity) * parseInt(priceNoSpace));
                 }
             }
-            $('.price_total_p').text(totalPrice + ' $');
+            $('.fill_price_total .price_total_p').text(totalPrice);
         }
 
         $('.form_checkout').hide();
 
-        $('.btn-continue').click(()=>{
+        $('.btn-continue').click(() => {
             $('.container_orders_cart').hide();
             $('.form_checkout').show();
         });
 
 
-        $('.go_back').click(()=>{
+        $('.go_back').click(() => {
             $('.container_orders_cart').show();
             $('.form_checkout').hide();
         });
 
+        $('.offline_payment_input').click(()=>{
+            if($('.offline_payment_input').is(':checked')){
+                var actualPrice = $('.second_price .price_total_p').text();
+                var previousPrice = $('.price_total.fill_price_total .price_total_p').text();
+                if(parseInt(actualPrice) === (parseInt(previousPrice))){
+                    $('.second_price .price_total_p').text(parseInt(actualPrice) + 15);
+                }
+            }else{
+                var actualPrice = $('.second_price .price_total_p').text();
+                var previousPrice = $('.price_total.fill_price_total .price_total_p').text();
+                if(parseInt(actualPrice) === (parseInt(previousPrice) +15)){
+                    $('.second_price .price_total_p').text(parseInt(actualPrice) - 15);
+                }
+            }
+        });
+
+        // $('.next_button').click(()=>{
+        //     $('.payment_details_head').hide();
+        //     $('.form_checkout_labels').hide();
+        //     $('.go_back').hide();
+        //     $('.go_back2').show();
+        //     $('.offline_payment').show();
+        // });
+        // $('.go_back2').click(()=> {
+        //     $('.payment_details_head').show();
+        //     $('.form_checkout_labels').show();
+        //     $('.go_back').show();
+        //     $('.go_back2').hide();
+        //     $('.offline_payment').hide();
+        // });
     </script>
 {% endblock %}

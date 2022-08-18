@@ -459,28 +459,54 @@ p[class^=order_quantity_cart]{
 
 .price_total{
     background: white;
-    height: 250px;
+    height: min-content;
     text-align: center;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
+    padding-bottom: 40px;
 
 }
 
-.summary_text{
+.summary_text
+{
     font-weight: 900;
     font-size: 22px;
 }
 
 
-.btn-continue{
+.btn-continue
+{
     position: relative;
     top: 21px;
     width: 100%;
 }
 
-.price_total_p{
+.total_price
+{
     font-size: 30px;
     position: relative;
     top: 10px;
+}
+
+label{
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+
+label input{
+    margin-top: 10px;
+}
+
+body.cart_page .form_checkout_labels label{
+    display: grid;
+}
+
+body.cart_page .offline_payment label input,
+body.cart_page .payment_details_head label input{
+    margin-left: 10px;
+    margin-top: 0 ;
+}
+.offline_payment p , .payment_details_head p{
+    font-size: 25px;
 }
