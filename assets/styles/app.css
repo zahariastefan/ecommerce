@@ -437,18 +437,14 @@ div[class^=oneItemDiv]{
 .cancel_all_order_cart i{
     font-size: 10px;
     position: relative;
-    top: -4px;
+    /*top: -4px;*/
     pointer-events: none;
 }
 .cancel_all_order_cart {
     position: relative;
-    bottom: 137px;
-    left: 150px;
+    bottom: 24px;
+    left: 587px;
     cursor: pointer;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1px solid #666;
 }
 
 .container_orders_cart{
@@ -773,8 +769,8 @@ input[type=number] {
         width: 100%;
     }
     .cancel_all_order_cart{
-        left: 45px;
-        bottom: 108px;
+        bottom: 30px;
+        left: 586px;
         border: none;
     }
     .edit_quantity_cart, .product_price{
@@ -814,83 +810,84 @@ input[type=number] {
 
 }
 
-body.sub_page .container_cart {
+body:not(body.cart_page) .container_cart {
     margin: 0 !important;
     max-width: 100%;
     padding:0;
     top: 0 ;
 }
-body.sub_page .container_orders_cart{
+body:not(body.cart_page) .container_orders_cart{
     width: 100%;
     display: grid;
 }
-body.sub_page .container_orders_cart h2{
+body:not(body.cart_page) .container_orders_cart h2{
     display:none;
 }
-body.sub_page .order_body_cart{
+body:not(body.cart_page) .order_body_cart{
     padding: 15px;
     height: auto;
     background: whitesmoke;
 }
-body.sub_page .navbar2 ul{
+body:not(body.cart_page) .navbar2 ul{
     flex-direction: row;
 }
-body.sub_page .navbar2 ul li{
+body:not(body.cart_page) .navbar2 ul li{
     margin-right: 10px;
 }
 
-body.sub_page .orders_all{
+body:not(body.cart_page) .orders_all{
     width: 100%;
 }
-body.sub_page .cancel_all_order_cart{
-    left: 45px;
-    bottom: 108px;
+body:not(body.cart_page) .cancel_all_order_cart{
+    left: 303px;
+    bottom: 5px;
     border: none;
 }
-body.sub_page .edit_quantity_cart, .product_price{
+body:not(body.cart_page) .edit_quantity_cart,
+body:not(body.cart_page) .product_price{
     display:none;
 }
-body.sub_page .order_body_cart {
+body:not(body.cart_page) .order_body_cart {
     margin-bottom:11px !important;
     color: black;
 }
-body.sub_page .order_body_cart img {
+body:not(body.cart_page) .order_body_cart img {
     margin-right: 0;
 }
-body.sub_page .total_single_product_price{
+body:not(body.cart_page) .total_single_product_price{
     font-size: 25px !important;
 }
-body.sub_page .oneItemTitle{
+body:not(body.cart_page) .oneItemTitle{
     padding-left:10px;
 }
 
-body.sub_page .product_price_div{
+body:not(body.cart_page) .product_price_div{
     position: relative;
     top: 0;
 }
 
-body.sub_page div[class^=second_div_cart]{
+body:not(body.cart_page) div[class^=second_div_cart]{
     position: relative;
     left: 12px;
 }
 
-body.sub_page .price_total.fill_price_total,
-body.sub_page .form_checkout{
+body:not(body.cart_page) .price_total.fill_price_total,
+body:not(body.cart_page) .form_checkout{
     display: none;
 }
 
 
-body.sub_page .content_cart{
+body:not(body.cart_page) .content_cart{
     width: 400px;
     background: white;
-    z-index: 2;
+    z-index: 3;
     position: absolute;
     top: 59px;
     right: 0;
-    border: 1px solid #666;
+    border: 1px solid #dcdcdc;
 }
 
-body.sub_page .content_cart {
+body:not(body.cart_page) .content_cart {
     color: #fff;
     background-color: white;
     -webkit-border-radius: 5px;
@@ -900,20 +897,20 @@ body.sub_page .content_cart {
 
 }
 
-body.sub_page .content_cart:before {
+body:not(body.cart_page) .content_cart:before {
     content: "";
     position: absolute;
     height: 29px;
     width: 29px;
     transform: rotate(45deg);
-    right: 119px;
+    right: 128px;
     top: -7px;
     background: white;
-    border-left: 1px solid navy;
-    border-top: 1px solid navy;
+    border-left: 1px solid #dcdcdc;
+    border-top: 1px solid #dcdcdc;
 }
 
-body.sub_page .details_button{
+body:not(body.cart_page) .details_button{
     padding-left: 10px;
     padding-right: 10px;
     min-width: 150px;
@@ -921,7 +918,6 @@ body.sub_page .details_button{
     background-color: #3d8b21;
     border-color: #39811e;
     height: 60px;
-    font-size: 20px;
     border-radius: 7px;
     text-align: center;
     padding-top: 10px;
@@ -929,8 +925,20 @@ body.sub_page .details_button{
     text-decoration: none;
 }
 
-body.sub_page .form_checkout {
+body:not(body.cart_page) .form_checkout {
     padding: 20px;
     background: white;
     border-radius: 8px;
+}
+
+.fa-cart-shopping{
+    cursor: pointer;
+}
+
+.content_cart{
+    display:none;
+}
+
+.clicked{
+    display: unset;
 }

@@ -9,6 +9,8 @@
                     <div class="orders_all d-grid col-9">
                         {% for index, product in products %}
                             <div class="order_body_cart d-inline-flex">
+                                <p class="cancel_all_order_cart"><i class="fa-solid fa-x"></i></p>
+
                                 <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}"
                                      width="160px" height="120px">
                                 <div class="oneItemDiv{{ index }}">
@@ -16,8 +18,6 @@
                                     <div class="product_price_div">
                                         <p class="total_single_product_price">{{ product.price * product.quantity }} $</p>
                                         <p class="product_price">Product Price: <span class="order_price_cart">{{ product.price }} $</span></p>
-
-                                        <p class="cancel_all_order_cart"><i class="fa-solid fa-x"></i></p>
                                     </div>
 
                                     <p class="edit_quantity_cart">Edit Quantity</p>
@@ -125,18 +125,10 @@
 
 
     <script>
-        {#var path = '{{ path('app_add_cart') }}';#}
-        // addToCart(path);
-        {#var path2 = '{{ path('app_remove_cart') }}';#}
-        // var fullUrl2 = window.location.origin + path2;
-
         $('.remove_to_cart_button i').click(()=>{
-            // alert('hello');
             $('.remove_to_cart_button').trigger('click');
         });
         $('.add_to_cart_button i').click(()=>{$('.add_to_cart_button').click();});
-        // removeToCart(fullUrl2);
-
         {% if app.user %}
         $('#user_data').click(() => {
             if ($('#user_data').is(':checked')) {
@@ -164,7 +156,6 @@
         });
         {% endif %}
         getTotal();
-
         function getTotal() {
             var subTotal = $('.order_price_cart').text();
             var arrPrices = subTotal.split('$');
@@ -179,7 +170,6 @@
             }
             $('.fill_price_total .price_total_p').text(totalPrice);
         }
-
         $('.form_checkout').hide();
         $('.btn-continue').click(() => {
             $('.container_orders_cart').hide();
