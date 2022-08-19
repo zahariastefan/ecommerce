@@ -2,7 +2,7 @@
 {% block body_class %}cart_page{% endblock %}
 {% block body %}
     <div class="container container_cart justify-content-center">
-        {% if products|length  > 1 %}
+        {% if products|length  > 0 %}
             <form action="{{ path('app_thanks') }}" class="d-grid form_checkout ">
                 <div class="container_orders_cart row">
                     <h2 class="mb-4">My Cart</h2>
@@ -14,23 +14,21 @@
                                 <div class="oneItemDiv{{ index }}">
                                     <p class="oneItemTitle">{{ product.title }} </p>
                                     <div class="product_price_div">
-                                        <p class="order_price_cart1">Product Price</p>
-                                        <p class="order_price_cart">{{ product.price }} $</p>
-                                        <p class="cancel_all_order_cart"><a href="">Delete</a></p>
+                                        <p class="total_single_product_price">{{ product.price * product.quantity }} $</p>
+                                        <p class="product_price">Product Price: <span class="order_price_cart">{{ product.price }} $</span></p>
+
+                                        <p class="cancel_all_order_cart"><i class="fa-solid fa-x"></i></p>
                                     </div>
 
                                     <p class="edit_quantity_cart">Edit Quantity</p>
-                                    {#                                    <div class="second_div_cart{{ index }}"> #}
-                                    {#                                        <i class="fas fa-minus remove_to_cart_button m-3"></i> #}
-                                    {#                                        <p class="order_quantity_cart{{ index }}">{{ product.quantity }}</p> #}
-                                    {#                                        <i class="fa-solid fa-plus add_to_cart_button m-3"></i> #}
-                                    {#                                    </div> #}
                                     <div class="second_div_cart{{ index }}">
-                                        <button type="button" class="btn btn-outline-light remove_to_cart_button">-
+                                        <button type="button" class="btn btn-outline-light remove_to_cart_button" onclick="removeToCart(this, '{{ path('app_remove_cart') }}')">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                         <input type="number" value="{{ product.quantity }}"
                                                class="order_quantity_cart{{ index }}">
-                                        <button type="button" class="btn btn-outline-light add_to_cart_button">+
+                                        <button type="button" class="btn btn-outline-light add_to_cart_button" onclick="addToCart(this, '{{ path('app_add_cart') }}')">
+                                            <i class="fa-solid fa-plus"></i>
                                         </button>
                                     </div>
                                     <input type="hidden" class="value_to_fill" name="item{{ index }}"
@@ -39,6 +37,7 @@
                             </div>
                         {% endfor %}
                     </div>
+                    <a href="{{ path('app_cart') }}" class="details_button">Details</a>
                     <div class="price_total col-3 fill_price_total">
                         <p class="summary_text">Summery :</p>
                         <p class="cost_products">Cost of products - shipping cost next step</p>
@@ -126,72 +125,18 @@
 
 
     <script>
-        var path = '{{ path('app_add_cart') }}';
-        var fullUrl = window.location.origin + path;
-        addToCart(fullUrl);
-        var path2 = '{{ path('app_remove_cart') }}';
-        var fullUrl2 = window.location.origin + path2;
-        removeToCart(fullUrl2);
+        {#var path = '{{ path('app_add_cart') }}';#}
+        // addToCart(path);
+        {#var path2 = '{{ path('app_remove_cart') }}';#}
+        // var fullUrl2 = window.location.origin + path2;
 
-        function addToCart(fullUrl) {
-            $('.add_to_cart_button').click((e) => {
-                var items_number = $('.items_number').text();
-                var second_div_cart0 = $(e.target).parent().attr('class');
-                var second_div_cart = (second_div_cart0.split(' '))[0];
-                var oneItemDiv0 = $(e.target).parent().parent().attr('class');
-                var oneItemDiv = (oneItemDiv0.split(' '))[0];
-                var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
-                var nrOfPresence = $('.' + second_div_cart + '  input').val();
+        $('.remove_to_cart_button i').click(()=>{
+            // alert('hello');
+            $('.remove_to_cart_button').trigger('click');
+        });
+        $('.add_to_cart_button i').click(()=>{$('.add_to_cart_button').click();});
+        // removeToCart(fullUrl2);
 
-                $.ajax({
-                    type: "POST",
-                    url: fullUrl,
-                    data: {
-                        itemId: oneItemName,
-                        cartPage: 1,
-                    },
-                    complete: function (data) {
-                        $('.' + second_div_cart + '  input').val(parseInt(nrOfPresence) + 1);
-                        $('.' + oneItemDiv + '  .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) + 1) + '}');
-                        $('.items_number').text(parseInt(items_number) + 1);
-                        getTotal();
-                    }
-                });
-            });
-        }
-
-        function removeToCart(fullUrl) {
-            $('.remove_to_cart_button').click((e) => {
-                var items_number = $('.items_number').text();
-
-                var second_div_cart = $(e.target).parent().attr('class');
-                var oneItemDiv = $(e.target).parent().parent().attr('class');
-
-                var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
-
-                var nrOfPresence = $('.' + second_div_cart + '  input').val();
-
-                $.ajax({
-                    type: "POST",
-                    url: fullUrl,
-                    data: {
-                        itemId: oneItemName,
-                        cartPage: 1,
-                        quantity: nrOfPresence
-                    },
-                    complete: function (data) {
-                        if (parseInt(nrOfPresence) === 1) {
-                            location.reload();
-                        } else {
-                            $('.items_number').text(parseInt(items_number) - 1);
-                        }
-                        $('.' + second_div_cart + ' input').val(parseInt(nrOfPresence) - 1);
-                        $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) - 1) + '}');
-                        getTotal();
-                    }
-                });
-            });
-        }
         {% if app.user %}
         $('#user_data').click(() => {
             if ($('#user_data').is(':checked')) {
@@ -252,8 +197,8 @@
                     $('.second_price .price_total_p').text(parseInt(actualPrice) + 15);
                 }
             } else {
-                var actualPrice = $('.second_price .price_total_p').text();
-                var previousPrice = $('.price_total.fill_price_total .price_total_p').text();
+                actualPrice = $('.second_price .price_total_p').text();
+                previousPrice = $('.price_total.fill_price_total .price_total_p').text();
                 if (parseInt(actualPrice) === (parseInt(previousPrice) + 15)) {
                     $('.second_price .price_total_p').text(parseInt(actualPrice) - 15);
                 }
@@ -266,29 +211,29 @@
                 if (event.which == '13') {
                     event.preventDefault();
                 }
-            });
+            }
+        );
+
 
         var second_div_cart1, initialValue;
         $('div[class^=second_div_cart] input').on('focusin', (e) => {
-            second_div_cart1 = $(e.target).parent().attr('class');
+            second_div_cart1 = $(e.currentTarget).parent().attr('class');
             initialValue = $('.' + second_div_cart1 + '  input').val();
         });
-
-
         $('div[class^=second_div_cart] input').on('change', (e) => {
             var items_number = $('.items_number').text();
-            var second_div_cart = $(e.target).parent().attr('class');
-            var oneItemDiv = $(e.target).parent().parent().attr('class');
+            var second_div_cart = $(e.currentTarget).parent().attr('class');
+            var oneItemDiv = $(e.currentTarget).parent().parent().attr('class');
             var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
-            var nrOfPresence = $('.' + second_div_cart + '  input').val();
-            if (nrOfPresence > 0) { //that mean is less
-                if (initialValue > nrOfPresence) { //that mean is less
-                    var delta = initialValue - nrOfPresence;
+            var finalValue = $('.' + second_div_cart + '  input').val();
+            if (finalValue > 0) { //that mean is less
+                if (initialValue > finalValue) { //that mean is less
+                    var delta = initialValue - finalValue;
                     var result = 0;
                     var path2 = '{{ path('app_remove_cart') }}';
                     var fullUrl = window.location.origin + path2;
-                } else if (initialValue < nrOfPresence) { //that mean add
-                    delta = nrOfPresence - initialValue;
+                } else if (finalValue > initialValue) { //that mean add
+                    delta = finalValue - initialValue;
                     result = 1;
                     var path = '{{ path('app_add_cart') }}';
                     fullUrl = window.location.origin + path;
@@ -296,6 +241,11 @@
             }
             var x = 1;
             getTotal();
+            if (parseInt(finalValue) === 0) {
+                var path3 = '{{ path('app_remove_cart') }}';
+                fullUrl = window.location.origin + path3;
+                delta = parseInt(initialValue);
+            }
             $.ajax({
                 type: "POST",
                 url: fullUrl,
@@ -305,30 +255,56 @@
                     quantity: delta
                 },
                 complete: function (data) {
-                    if (parseInt(nrOfPresence) === 1) {
+                    if (parseInt(finalValue) === 0) {
                         location.reload();
-                    } else {
-                        if (result === 0) {
-                            $('.items_number').text(parseInt(items_number) - parseInt(delta));
-                        }
                     }
-                    if (result === 0) {
-                        // $('.' + second_div_cart + ' input').val(parseInt(nrOfPresence)  - parseInt(delta) );
-                        $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) - parseInt(delta)) + '}');
+                        if (result === 0) {
+                            $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(finalValue) - parseInt(delta)) + '}');
+                            $('.items_number').text(parseInt(items_number) - parseInt(delta));
+
+                        }
+                    if (result === 1) {
+                        $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(finalValue) + parseInt(delta)) + '}');
+                        $('.items_number').text(parseInt(items_number) + parseInt(delta));
+
                     }
 
+                    var order_price_cart = ($('.'+oneItemDiv + ' span.order_price_cart').text());
+                    var repl = order_price_cart.replace('$', '');
+                    var newTotalSingleProduct = parseInt(repl) * finalValue;
+                    $('.'+oneItemDiv+' .total_single_product_price').text(newTotalSingleProduct + '$');
                     getTotal();
                 }
             });
         });
 
-        // function onChange(fullUrl){
-        // $('div[class^=second_div_cart] input').on('click',(e)=>{
 
-        //     onChange(nrOfPresence1);
-        // });
+        $('.cancel_all_order_cart:not(.cancel_all_order_cart i )').click((e)=>{
+            if(confirm('Do you want to delete this order?')){
+                var oneItemDiv = $(e.currentTarget).parent().parent().attr('class');
+                var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
+                var finalValue = $('.' + oneItemDiv + ' div[class^=second_div_cart] input').val();
+                var path2 = '{{ path('app_remove_cart') }}';
+                var fullUrl = window.location.origin + path2;
+                $.ajax({
+                    type: "POST",
+                    url: fullUrl,
+                    data: {
+                        itemId: oneItemName,
+                        cartPage: 1,
+                        quantity: finalValue
+                    },
+                    complete: function (data) {
+                        location.reload();
+                    }
+                });
+            }
+        });
 
-        // }
+
+
+
+
 
     </script>
 {% endblock %}

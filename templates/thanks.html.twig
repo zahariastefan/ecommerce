@@ -10,6 +10,9 @@
                 $.removeCookie('product_item');
             }
         }
+        // window.history.pushState({}, document.title, "/" + "my-new-url.html");
+        window.history.replaceState({}, document.title, "/");
 
+        // window.location.href.replace(window.location.origin);
     </script>
 {% endblock %}
