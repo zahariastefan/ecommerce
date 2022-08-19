@@ -2,66 +2,110 @@
 
 {%  block body  %}
     <div class="container div_product_page">
-        <p class="title_product_page">
-            <strong>Product Title:</strong> {{ product.title }}
-        </p>
-
-        <div class="row">
-            <div class="col">
-                <img src="{{ absolute_url(asset('tablou.jpg')) }}" class="img_product_page">
+        <div class="row p-5">
+            <div class="col-5">
+                <img src="{{ absolute_url(asset('tablou.jpg')) }}" class="img_product_page" width="350" height="350">
             </div>
-
-            <div class="col">
-                <strong>Product Description:</strong>  {{ product.description }}
-            </div>
-
-            <div class="col">
-                <p class="product_price_page"> {{ product.price }} $</p>
-                <div class="d-inline-flex">
-                    <button type="button" class="add_to_cart_button">Add To Cart</button>
-                    <form action="{{  path('app_cart') }}">
-                        <button type="submit">Buy</button>
-                    </form>
+            <div class="col-7">
+                <p class="title_product_page">
+                    {{ product.title }}
+                </p>
+                <p class="product_category">Painting</p>
+                <p class="available_product">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span>
+                        Product available
+                    </span>
+                </p>
+                <div class="div_product_page_card">
+                    <div class="d-inline-flex">
+                        <p class="product_price_page"> {{ product.price }} </p><span class="product_price_page_span">&nbsp$</span>
+                        <div class="div_fa_question">
+                            <i class="fas fa-question"></i>
+                        </div>
+                    </div>
+                    <div class="d-inline-flex">
+                        <div class="d-flex card_price_pr_page">
+                            <button class="btn btn-outline-light" onclick="decrement()">
+                                <i class="fas fa-minus i_pr_page remove_to_cart_button_pr_page m-3"></i>
+                            </button>
+                            <input type="number" value="1" class="order_quantity_cart_pr_page">
+                            <button class="btn btn-outline-light" onclick="increment()">
+                                <i class="fa-solid i_pr_page fa-plus m-3" ></i>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_cart') }}" class="form_submit_pr_page">
+                            <button type="button" class="add_to_cart_button_pr_page">Add To Cart</button>
+                        </form>
+                    </div>
                 </div>
+                <br><br>
+                <i class="fa-solid fa-asterisk"></i>The displayed price includes VAT and is only valid for online orders at www.wineandflowers.ro.
+            </div>
+        </div>
+        <div class="product_description_div d-grid">
+            <div class="nav_product_description d-inline-flex">
+                <div class="description_tab">Description</div>
+                <div class="other_tab">Other</div>
+            </div>
+            <div class="box_content_main_description">
+                 {{ product.description }}
+            </div>
+            <div class="box_content_main_other">
+                {{ product.description }}
             </div>
 
         </div>
-
     </div>
 
-
-
-
-{#
-    <form action="{{ path('app_comment') }}">
-        <label for="comment"></label>
-        <textarea name="comment" id="comment" cols="40" rows="3"></textarea><br>
-        <button type="submit">Comment</button>
-    </form>
-        {% for comment in product.comment %}
-            {% for user in comment.user %}
-
-                <strong>Product Comment:</strong> {{ comment.content }} <br>
-                <strong>User That Commented:</strong>  {{ user.name }} {{ user.surname }}<br><br><br><br>
-            {% endfor %}
-        {% endfor %}
-
-#}
     <script>
-        $('.add_to_cart_button').click(()=>{
+        $('.box_content_main_other').hide();
+        $('.add_to_cart_button_pr_page').click(()=>{
             var items_number = $('.items_number').text();
-            $('.items_number').text(parseInt(items_number) + 1);
+            var quantity = parseInt($('.order_quantity_cart_pr_page').val());
+            $('.items_number').text(parseInt(items_number) + quantity);
             var path = '{{ path('app_add_cart', {itemId: product.id}) }}';
             var fullUrl   = window.location.origin + path;
             $.ajax({
                 type: "POST",
                 url: fullUrl,
+                data: {
+                    quantity:quantity
+                },
                 complete: function (data) {
-
+                    // location.reload();
                 }
             });
         });
+        $(function () {
+            $('.div_fa_question').popover({
+                placement: 'right',
+                title: 'VAT regulations',
+                content: 'The displayed price includes VAT and is only valid for online orders at www.wineandflowers.ro.',
+                trigger: 'click'
+            })
+        })
+        $('.description_tab').click(()=>{
+            $('.box_content_main_description').show();
+            $('.box_content_main_other').hide();
+            $('.description_tab').css('background-color','white');
+            $('.other_tab').css('background-color','#f1f5fa');
+        });
+        $('.other_tab').click(()=> {
+            $('.box_content_main_description').hide();
+            $('.box_content_main_other').show();
+            $('.description_tab').css('background-color','#f1f5fa');
+            $('.other_tab').css('background-color','white');
+        });
+        function increment(){
+            var quantity = parseInt($('.order_quantity_cart_pr_page').val());
+            $('.order_quantity_cart_pr_page').val(quantity+1)
+        }
+        function decrement() {
+            var quantity = parseInt($('.order_quantity_cart_pr_page').val());
+            if(quantity > 1 ){
+                $('.order_quantity_cart_pr_page').val(quantity-1);
+            }
+        }
     </script>
-
-
 {% endblock %}

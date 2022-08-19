@@ -145,7 +145,7 @@ footer {
 }
 
 .form_checkout button {
-    margin: 5px !important;
+    /*margin: 5px !important;*/
 }
 
 .container_cart{
@@ -277,8 +277,8 @@ footer{
 
 
 .img_product_page{
-    height: 400px;
-    width: 500px;
+    height: 350px;
+    width: 350px;
     border-radius: 10px;
 }
 
@@ -286,14 +286,16 @@ footer{
     padding: 50px;
 }
 .div_product_page .row div:nth-child(3){
-    background: white;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
+    /*background: white;*/
+    /*margin: 20px;*/
+    /*padding: 20px;*/
+    /*border-radius: 10px;*/
 }
 
 .title_product_page{
     font-size: 20px;
+    line-height: 12px;
+
 }
 
 .type_of_orders{
@@ -413,7 +415,7 @@ div[class^='refund_div']{
     background: white;
     border-radius: 10px;
     margin-bottom: 50px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
 }
 
 div[class^=oneItemDiv]{
@@ -422,6 +424,8 @@ div[class^=oneItemDiv]{
 
 .order_price_cart  {
     float: right;
+    font-size: 38px;
+    color: #af0023;
 }
 
 
@@ -434,14 +438,38 @@ div[class^=oneItemDiv]{
 .oneItemTitle{
     font-size: 20px
 }
-
-div[class^=second_div_cart]{
-    display:inline-flex;
-    position: relative;
-    top: -10px;
-    font-size: 18px;
-    font-weight: 900;
+div[class^=second_div_cart] button {
+    background-color:  unset !important;
+    font-size: 31px;
+    padding: 0 !important;
+    margin: 0 !important;
 }
+div[class^=second_div_cart]{
+    /*display:inline-flex;*/
+    /*position: relative;*/
+    /*top: -10px;*/
+    /*font-size: 18px;*/
+    /*font-weight: 900;*/
+    width: fit-content;
+    height: 60px;
+    border-radius: 7px;
+    border: 1px solid #dcdcdc;
+}
+
+div[class^=second_div_cart] input {
+    background-size: 10px 10px;
+    background-position: 90% 90%;
+    border: 1px solid #dcdcdc;
+    padding: 0 3px;
+    font-size: inherit;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+    width: 42px;
+    box-shadow: inset 0 5px 5px 0 hsl(0deg 0% 86% / 86%);
+    height: 100%;
+}
+
 p[class^=order_quantity_cart]{
     padding-top:12px;
 }
@@ -463,7 +491,7 @@ p[class^=order_quantity_cart]{
     text-align: center;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;*/
     padding-bottom: 40px;
 
 }
@@ -477,9 +505,15 @@ p[class^=order_quantity_cart]{
 
 .btn-continue
 {
-    position: relative;
-    top: 21px;
-    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 150px;
+    color: #fff;
+    background-color: #3d8b21;
+    border-color: #39811e;
+    height: 60px;
+    font-size: 20px;
+    border-radius: 7px;
 }
 
 .total_price
@@ -509,4 +543,166 @@ body.cart_page .payment_details_head label input{
 }
 .offline_payment p , .payment_details_head p{
     font-size: 25px;
+}
+
+.title_product_page{
+    font-size: 33px;
+    font-weight: 900;
+}
+
+.product_price_page , .product_price_page_span{
+    font-size: 38px;
+    color: #af0023;
+
+}
+.div_product_page_card{
+    border-radius: 7px;
+    padding: 24px;
+    background: #FBFBFB;
+    border: 1px solid #dcdcdc;
+    height: 110px;
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+    display: inline-flex;
+}
+
+.btn-outline-light{
+    /*position: relative;*/
+    width: 20px;
+    padding: 3px;
+    /*height: auto;*/
+    /*flex-grow: 1;*/
+    height: 100%;
+    text-align: center;
+    color: #a7a8aa;
+    background-color: #fff;
+}
+
+.i_pr_page {
+    margin: 0 !important;
+}
+
+.card_price_pr_page{
+    border-radius: 7px;
+    border: 1px solid #dcdcdc;
+}
+
+.card_price_pr_page input {
+    background-size: 10px 10px;
+    background-position: 90% 90%;
+    border: 1px solid #dcdcdc;
+    padding: 0 3px;
+    font-size: inherit;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+    width: 42px;
+    box-shadow: inset 0 5px 5px 0 hsl(0deg 0% 86% / 86%)
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.add_to_cart_button_pr_page{
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 150px;
+    color: #fff;
+    background-color: #3d8b21;
+    border-color: #39811e;
+    height: 60px;
+    font-size: 20px;
+    border-radius: 7px;
+}
+.form_submit_pr_page{
+    padding-left: 15px;
+}
+
+.div_fa_question i {
+    font-size: 12px;
+    position: relative;
+    top: -2px;
+    color:#92988E;
+}
+.div_fa_question{
+    border: 1px solid #92988E;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    position: relative;
+    top: 17px;
+    left: 12px;
+}
+
+.fa-asterisk{
+    color:green;
+    margin-right:10px;
+}
+
+.fa-box-open{
+    font-size: 39px;
+    color: green;
+}
+
+.available_product span{
+    font-size: 23px;
+    position: relative;
+    top: -8px;
+    left: 7px;
+}
+
+.product_category{
+    color: #a7a8aa!important;
+}
+
+.nav_product_description{
+    align-items: flex-end;
+    padding: 12px 30px 0;
+    position: relative;
+    z-index: 2;
+    min-height: 62px;
+    background-color: #e1ebf5;
+    border-radius: 7px;
+}
+
+.description_tab{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 5px 22px;
+    font-weight: 600;
+    color: #0078be;
+    font-family: inherit;
+    border: 0;
+    background-color: white;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.other_tab{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 5px 22px;
+    font-weight: 600;
+    color: #0078be;
+    font-family: inherit;
+    border: 0;
+    background-color: #f1f5fa;
+    cursor: pointer;
+}
+
+.box_content_main_description, .box_content_main_other{
+    padding: 50px;
 }

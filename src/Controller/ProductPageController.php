@@ -60,8 +60,11 @@ class ProductPageController extends  AbstractController
     }
 
     #[Route('/add-to-cart', name:'app_add_cart')]
-    public function addToCart(Request $request, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function addToCart(Request $request, ProductRepository $productRepository,
+                              UserRepository $userRepository,
+                              EntityManagerInterface $entityManager, int $quantity = 1)
     {
+        if(!empty($request->request->get('quantity')))$quantity=$request->request->get('quantity');
         $itemId = trim($request->request->get('itemId'));
         if (empty($itemId)) {
             $itemId = trim($request->query->get('itemId'));
@@ -81,14 +84,16 @@ class ProductPageController extends  AbstractController
             $user = $userRepository->findBy([
                 'id' => $userId
             ]);
-            //check if logged in
-            $cart = new Cart();
-            $cart->setUser($user[0]);
-            $cart->setProduct($productObject[0]);
-            $cart->setAddedAt(new \DateTimeImmutable());
-            $cart->setStatus(0);
-            $cart->setOrderNr($user[0]->getUniqueNr());
-            $entityManager->persist($cart);
+            for ($x=0;$x<$quantity;$x++) {
+                $cart = new Cart();
+                $cart->setUser($user[0]);
+                $cart->setProduct($productObject[0]);
+                $cart->setAddedAt(new \DateTimeImmutable());
+                $cart->setStatus(0);
+                $cart->setOrderNr($user[0]->getUniqueNr());
+                $entityManager->persist($cart);
+            }
+
             $entityManager->flush();
 //            dd($cart);
         } else {//if not logged in add to cookie!
@@ -121,8 +126,11 @@ class ProductPageController extends  AbstractController
     }
 
     #[Route('/remove-to-cart', name:'app_remove_cart')]
-    public function removeToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function removeToCart(Request $request, CartRepository $cartRepository, ProductRepository $productRepository,
+                                 UserRepository $userRepository, EntityManagerInterface $entityManager, int $quantity = 1)
     {
+        if(!empty($request->request->get('quantity')))$quantity=$request->request->get('quantity');
+
         $itemId = trim($request->request->get('itemId'));
         if ((preg_match('~[0-9]+~', $itemId))) {
             $productObject = $productRepository->findBy([

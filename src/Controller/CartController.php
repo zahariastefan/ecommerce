@@ -83,7 +83,8 @@ class CartController extends AbstractController
                 }
             }
             $countedList = array_count_values($listOfTitles);
-
+            arsort($countedList);
+//            dd($countedList);
             $withQuantityProducts=[];
             foreach ($countedList as $product => $quantity) {
                 $productC = $productRepository->findBy([
@@ -92,6 +93,8 @@ class CartController extends AbstractController
                 $productC->quantity = $quantity;
                 $withQuantityProducts[]=$productC;
             }
+//            dd($withQuantityProducts);
+
             return $this->render('cart.html.twig', [
                 'products' =>$withQuantityProducts
             ]);

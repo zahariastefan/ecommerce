@@ -19,14 +19,21 @@
                                         <p class="cancel_all_order_cart"><a href="">Delete</a></p>
                                     </div>
 
-                                    <p class="edit_qunaity_cart">Edit Quantity</p>
+                                    <p class="edit_quantity_cart">Edit Quantity</p>
+                                    {#                                    <div class="second_div_cart{{ index }}"> #}
+                                    {#                                        <i class="fas fa-minus remove_to_cart_button m-3"></i> #}
+                                    {#                                        <p class="order_quantity_cart{{ index }}">{{ product.quantity }}</p> #}
+                                    {#                                        <i class="fa-solid fa-plus add_to_cart_button m-3"></i> #}
+                                    {#                                    </div> #}
                                     <div class="second_div_cart{{ index }}">
-                                        <i class="fas fa-minus remove_to_cart_button m-3"></i>
-                                        <p class="order_quantity_cart{{ index }}">{{ product.quantity }}</p>
-                                        <i class="fa-solid fa-plus add_to_cart_button m-3"></i>
+                                        <button type="button" class="btn btn-outline-light remove_to_cart_button">-
+                                        </button>
+                                        <input type="number" value="{{ product.quantity }}"
+                                               class="order_quantity_cart{{ index }}">
+                                        <button type="button" class="btn btn-outline-light add_to_cart_button">+
+                                        </button>
                                     </div>
-
-                                    <input type="hidden" name="item{{ index }}"
+                                    <input type="hidden" class="value_to_fill" name="item{{ index }}"
                                            value='{"item":"{{ product.title }}","quantity":{{ product.quantity }}}'>
                                 </div>
                             </div>
@@ -40,7 +47,7 @@
                             total here
                             </span> $
                         </p>
-                        <button type="button" class="btn btn-primary btn-continue">Continue</button>
+                        <button type="button" class="btn btn-continue">Continue</button>
                     </div>
                 </div>
                 <div class="form_checkout">
@@ -53,28 +60,35 @@
 
                     <div class="form_checkout_labels ">
                         <label for="name">name
-                            <input type="text" name="name" class="form-control"  placeholder="Name" id="name" required></label>
+                            <input type="text" name="name" class="form-control" placeholder="Name" id="name"
+                                   required></label>
 
                         <label for="surname"> surname
-                            <input type="text" name="surname" class="form-control"   placeholder="Surname" id="surname" required></label>
+                            <input type="text" name="surname" class="form-control" placeholder="Surname" id="surname"
+                                   required></label>
 
                         <label for="city">city
-                            <input type="text" name="city" class="form-control"   placeholder="City" id="city" required></label>
+                            <input type="text" name="city" class="form-control" placeholder="City" id="city"
+                                   required></label>
 
                         <label for="street">street
-                            <input type="text" name="street" class="form-control"   placeholder="Street" id="street" required></label>
+                            <input type="text" name="street" class="form-control" placeholder="Street" id="street"
+                                   required></label>
 
                         <label for="number">number
-                            <input type="text" name="number" class="form-control"   placeholder="Number" id="number" required></label>
+                            <input type="text" name="number" class="form-control" placeholder="Number" id="number"
+                                   required></label>
 
                         <label for="building">building
-                            <input type="text" name="building" class="form-control"   placeholder="Building" id="building" required></label>
+                            <input type="text" name="building" class="form-control" placeholder="Building" id="building"
+                                   required></label>
 
                         <label for="building">phone
-                            <input type="text" name="phone"  class="form-control"  placeholder="phone" id="phone" required></label>
+                            <input type="text" name="phone" class="form-control" placeholder="phone" id="phone"
+                                   required></label>
 
                         <label for="building">phone
-                            <input type="text" name="email" class="form-control"   placeholder="Email" id="email"></label>
+                            <input type="text" name="email" class="form-control" placeholder="Email" id="email"></label>
                         <br>
                     </div>
 
@@ -83,7 +97,8 @@
                             <div class="col">
                                 <p>Choose payment type</p>
                                 <label for="offline_payment" class="d-inline-flex">Offline Pay - 15 RON
-                                    <input type="checkbox" name="offline_payment" class="offline_payment_input" required>
+                                    <input type="checkbox" name="offline_payment" class="offline_payment_input"
+                                           required>
                                 </label>
                             </div>
                             <div class="col fill_price_total second_price">
@@ -111,7 +126,6 @@
 
 
     <script>
-
         var path = '{{ path('app_add_cart') }}';
         var fullUrl = window.location.origin + path;
         addToCart(fullUrl);
@@ -122,11 +136,13 @@
         function addToCart(fullUrl) {
             $('.add_to_cart_button').click((e) => {
                 var items_number = $('.items_number').text();
+                var second_div_cart0 = $(e.target).parent().attr('class');
+                var second_div_cart = (second_div_cart0.split(' '))[0];
+                var oneItemDiv0 = $(e.target).parent().parent().attr('class');
+                var oneItemDiv = (oneItemDiv0.split(' '))[0];
+                var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
+                var nrOfPresence = $('.' + second_div_cart + '  input').val();
 
-                var classNameOfParentSecondDiv = $(e.target).parent().attr('class');
-                var classNameOfParentFirstDiv = $(e.target).parent().parent().attr('class');
-                var oneItemName = $('.' + classNameOfParentFirstDiv + '  p.oneItemTitle').text();
-                var nrOfPresence = $('.' + classNameOfParentSecondDiv + '  p').text();
                 $.ajax({
                     type: "POST",
                     url: fullUrl,
@@ -135,8 +151,8 @@
                         cartPage: 1,
                     },
                     complete: function (data) {
-                        $('.' + classNameOfParentSecondDiv + '  p').text(parseInt(nrOfPresence) + 1);
-                        $('.' + classNameOfParentFirstDiv + '  input').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) + 1) + '}');
+                        $('.' + second_div_cart + '  input').val(parseInt(nrOfPresence) + 1);
+                        $('.' + oneItemDiv + '  .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) + 1) + '}');
                         $('.items_number').text(parseInt(items_number) + 1);
                         getTotal();
                     }
@@ -148,11 +164,12 @@
             $('.remove_to_cart_button').click((e) => {
                 var items_number = $('.items_number').text();
 
-                var classNameOfParentSecondDiv = $(e.target).parent().attr('class');
-                var classNameOfParentFirstDiv = $(e.target).parent().parent().attr('class');
-                var oneItemName = $('.' + classNameOfParentFirstDiv + '  p.oneItemTitle').text();
-                var nrOfPresence = $('.' + classNameOfParentSecondDiv + '  p').text();
+                var second_div_cart = $(e.target).parent().attr('class');
+                var oneItemDiv = $(e.target).parent().parent().attr('class');
 
+                var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
+
+                var nrOfPresence = $('.' + second_div_cart + '  input').val();
 
                 $.ajax({
                     type: "POST",
@@ -160,6 +177,7 @@
                     data: {
                         itemId: oneItemName,
                         cartPage: 1,
+                        quantity: nrOfPresence
                     },
                     complete: function (data) {
                         if (parseInt(nrOfPresence) === 1) {
@@ -167,9 +185,8 @@
                         } else {
                             $('.items_number').text(parseInt(items_number) - 1);
                         }
-                        $('.' + classNameOfParentSecondDiv + ' p').text(parseInt(nrOfPresence) - 1);
-
-                        $('.' + classNameOfParentFirstDiv + ' input').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) - 1) + '}');
+                        $('.' + second_div_cart + ' input').val(parseInt(nrOfPresence) - 1);
+                        $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) - 1) + '}');
                         getTotal();
                     }
                 });
@@ -209,8 +226,8 @@
             var totalPrice = 0;
             for (var x = 0; x < arrPrices.length; x++) {
                 var priceNoSpace = arrPrices[x].replace(/\s/g, '');
-                var quantity = $('.order_quantity_cart' + [x]).text();
-                console.log(quantity);
+                var quantity = $('.order_quantity_cart' + [x]).val();
+
                 if (priceNoSpace !== '') {
                     totalPrice = parseInt(totalPrice) + (parseInt(quantity) * parseInt(priceNoSpace));
                 }
@@ -219,47 +236,99 @@
         }
 
         $('.form_checkout').hide();
-
         $('.btn-continue').click(() => {
             $('.container_orders_cart').hide();
             $('.form_checkout').show();
         });
-
-
         $('.go_back').click(() => {
             $('.container_orders_cart').show();
             $('.form_checkout').hide();
         });
-
-        $('.offline_payment_input').click(()=>{
-            if($('.offline_payment_input').is(':checked')){
+        $('.offline_payment_input').click(() => {
+            if ($('.offline_payment_input').is(':checked')) {
                 var actualPrice = $('.second_price .price_total_p').text();
                 var previousPrice = $('.price_total.fill_price_total .price_total_p').text();
-                if(parseInt(actualPrice) === (parseInt(previousPrice))){
+                if (parseInt(actualPrice) === (parseInt(previousPrice))) {
                     $('.second_price .price_total_p').text(parseInt(actualPrice) + 15);
                 }
-            }else{
+            } else {
                 var actualPrice = $('.second_price .price_total_p').text();
                 var previousPrice = $('.price_total.fill_price_total .price_total_p').text();
-                if(parseInt(actualPrice) === (parseInt(previousPrice) +15)){
+                if (parseInt(actualPrice) === (parseInt(previousPrice) + 15)) {
                     $('.second_price .price_total_p').text(parseInt(actualPrice) - 15);
                 }
             }
         });
 
-        // $('.next_button').click(()=>{
-        //     $('.payment_details_head').hide();
-        //     $('.form_checkout_labels').hide();
-        //     $('.go_back').hide();
-        //     $('.go_back2').show();
-        //     $('.offline_payment').show();
+        //disable enter submitting
+        $(document).keypress(
+            function (event) {
+                if (event.which == '13') {
+                    event.preventDefault();
+                }
+            });
+
+        var second_div_cart1, initialValue;
+        $('div[class^=second_div_cart] input').on('focusin', (e) => {
+            second_div_cart1 = $(e.target).parent().attr('class');
+            initialValue = $('.' + second_div_cart1 + '  input').val();
+        });
+
+
+        $('div[class^=second_div_cart] input').on('change', (e) => {
+            var items_number = $('.items_number').text();
+            var second_div_cart = $(e.target).parent().attr('class');
+            var oneItemDiv = $(e.target).parent().parent().attr('class');
+            var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
+            var nrOfPresence = $('.' + second_div_cart + '  input').val();
+            if (nrOfPresence > 0) { //that mean is less
+                if (initialValue > nrOfPresence) { //that mean is less
+                    var delta = initialValue - nrOfPresence;
+                    var result = 0;
+                    var path2 = '{{ path('app_remove_cart') }}';
+                    var fullUrl = window.location.origin + path2;
+                } else if (initialValue < nrOfPresence) { //that mean add
+                    delta = nrOfPresence - initialValue;
+                    result = 1;
+                    var path = '{{ path('app_add_cart') }}';
+                    fullUrl = window.location.origin + path;
+                }
+            }
+            var x = 1;
+            getTotal();
+            $.ajax({
+                type: "POST",
+                url: fullUrl,
+                data: {
+                    itemId: oneItemName,
+                    cartPage: 1,
+                    quantity: delta
+                },
+                complete: function (data) {
+                    if (parseInt(nrOfPresence) === 1) {
+                        location.reload();
+                    } else {
+                        if (result === 0) {
+                            $('.items_number').text(parseInt(items_number) - parseInt(delta));
+                        }
+                    }
+                    if (result === 0) {
+                        // $('.' + second_div_cart + ' input').val(parseInt(nrOfPresence)  - parseInt(delta) );
+                        $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(nrOfPresence) - parseInt(delta)) + '}');
+                    }
+
+                    getTotal();
+                }
+            });
+        });
+
+        // function onChange(fullUrl){
+        // $('div[class^=second_div_cart] input').on('click',(e)=>{
+
+        //     onChange(nrOfPresence1);
         // });
-        // $('.go_back2').click(()=> {
-        //     $('.payment_details_head').show();
-        //     $('.form_checkout_labels').show();
-        //     $('.go_back').show();
-        //     $('.go_back2').hide();
-        //     $('.offline_payment').hide();
-        // });
+
+        // }
+
     </script>
 {% endblock %}
