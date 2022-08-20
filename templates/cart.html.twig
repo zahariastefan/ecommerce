@@ -12,8 +12,11 @@
                             <div class="order_body_cart{{ index}} order_body_cart d-inline-flex">
                                 <p class="cancel_all_order_cart"><i class="fa-solid fa-x"></i></p>
 
-                                <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}"
-                                     width="160px" height="120px">
+                                <a href="{{ path('app_product_page',{slug:product.slug}) }}" class="img_a_href">
+                                    <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}"
+                                         width="160px" height="120px">
+                                </a>
+
                                 <div class="oneItemDiv{{ index }}">
                                     <p class="oneItemTitle">{{ product.title }} </p>
                                     <div class="product_price_div">
@@ -121,7 +124,7 @@
             </form>
         {% endif %}
         {% else %}
-            No products on your cart!
+            <p class="no_product_cart">No products on your cart, yet! :-( </p>
         {% endif %}
     </div>
 

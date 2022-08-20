@@ -30,12 +30,15 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-1">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid justify-content-center">
         <a class="navbar-brand" href="{{ path('app_homepage') }}">
             <p class="pl-2 d-inline font-weight-bold" style="color: #444;">
                 Painting Arts</p>
         </a>
+        <form class="search_navbar" action="{{ path('app_homepage') }}">
+            <input id="search_navbar" name="searchTerm" type="search" value="{{ app.request.get('searchTerm') }}" placeholder="Search for a product on the website...">
+        </form>
         <div class="collapse navbar-collapse " id="navbar-collapsable">
             <div class="d-inline-flex ">
                 <div class="content_cart"></div>
@@ -96,6 +99,13 @@
                 </li>
             {% endif %}
         {% endif %}
+
+{#        <li class="nav-item">#}
+{#            <a class="nav-link" href="">About Us</a>#}
+{#        </li>#}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_contacts_page') }}">Contacts</a>
+        </li>
     </ul>
 </nav>
 <div class="modal modal_cookie" tabindex="-1" role="dialog" id="cookie_div">

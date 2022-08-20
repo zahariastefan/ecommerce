@@ -20,7 +20,8 @@ class HomepageController extends AbstractController
     {
         $orderBy = $request->query->get('orderBy');
 
-        $queryBuilder = $productRepository->getProductsAndDescription($search = null,  $orderBy);
+        $search = $request->query->get('searchTerm');
+        $queryBuilder = $productRepository->getProductsAndDescription($search,  $orderBy);
         $alertDisabled2fa = $request->query->get('alertDisabled2fa');
         if(!isset($alertDisabled2fa)) $alertDisabled2fa =  false;
 

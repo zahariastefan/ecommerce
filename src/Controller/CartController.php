@@ -39,7 +39,7 @@ class CartController extends AbstractController
     public function cart(EntityManagerInterface $entityManager,
                          UserRepository $userRepository,
                          CartRepository $cartRepository,
-                         ProductRepository $productRepository)
+                         ProductRepository $productRepository, Request $request)
     {
         if($this->getUser()) {
             if(isset($_COOKIE['product_item'])){
