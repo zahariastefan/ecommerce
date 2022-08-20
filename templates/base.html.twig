@@ -253,8 +253,6 @@
                 // $('.content_cart').hide();
             }else{
                 $('.content_cart').addClass('clicked');
-
-
                 var path = '{{ path('app_cart') }}';
                 var fullUrl = window.location.origin + path;
                 $.ajax({
@@ -266,14 +264,12 @@
                         if(parseInt($('.items_number').text()) !== 0){
                             console.log(htmlParse);
                             $('.content_cart').html(htmlParse[25]);
-
                         }else{
                             $('.content_cart').html('<div class="no_product_cart_preview">No products on cart' +
                                 '<br><br>' +
                                 '<a href="{{ path('app_cart') }}" class="details_button">Go To Cart</a>' +
                                 '</div>' +
                                 '');
-
                         }
 
                         // $('.content_cart').html(htmlParse[23]);

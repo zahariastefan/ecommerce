@@ -127,7 +127,7 @@ class CartController extends AbstractController
                 ]);
             }else{
                 return $this->render('cart.html.twig', [
-                    'products' => [0]
+                    'products' => []
                 ]);
             }
         }

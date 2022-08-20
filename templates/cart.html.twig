@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container container_cart justify-content-center">
         {% if products|length  >= 1 %}
-{#        {% if products.title is defined %}#}
+        {% if products.0 is not empty %}
             <form action="{{ path('app_thanks') }}" class="d-grid form_checkout ">
                 <div class="container_orders_cart row">
                     <h2 class="mb-4">My Cart</h2>
@@ -119,7 +119,7 @@
                     <button class="go_back">Go Back</button>
                 </div>
             </form>
-{#        {% endif %}#}
+        {% endif %}
         {% else %}
             No products on your cart!
         {% endif %}
