@@ -283,28 +283,23 @@ class CartController extends AbstractController
                 $itemId=$getIDFromProdObj;
             }
             if(!isset($_COOKIE['product_item'])){
-                setcookie('product_item','{"productsId":["'.$itemId.'"]}');
+                $products = '{"productsId":[]}';
+                $products = json_decode($products, true);
             }else{
                 $products = $_COOKIE['product_item'];
                 $products = json_decode($products, true);
-                if(count($products['productsId']) == 0 ){
-                    unset($_COOKIE['product_item']);
-                    setcookie('product_item', '', time() - 3600);
-                    setcookie('product_item','{"productsId":["'.$itemId.'"]}');
-                }
-                $newListCookie['productsId'] = [];
-                if(gettype($products['productsId']) != 'integer'){
-                    if(count($products['productsId']) > 0){
-                        foreach ($products as $product) {
-                            $newListCookie['productsId']=$product;
-                        }
-                        for ($x=0;$x<$quantity;$x++) {
-                            $newListCookie['productsId'][] = $itemId;
-                        }
-                    }
-                }
-                setcookie('product_item',json_encode($newListCookie));
             }
+
+            $newListCookie['productsId'] = [];
+            if (gettype($products['productsId']) != 'integer') {
+                foreach ($products as $product) {
+                    $newListCookie['productsId'] = $product;
+                }
+                for ($x = 0; $x < $quantity; $x++) {
+                    $newListCookie['productsId'][] = $itemId;
+                }
+            }
+            setcookie('product_item', json_encode($newListCookie));
         }
         return new JsonResponse(['hello'=>'world']);
     }
@@ -347,6 +342,8 @@ class CartController extends AbstractController
             if(isset($_COOKIE['product_item'])){
                 $productsId = json_decode($_COOKIE['product_item'],true);
                 $idFromGET = $productObject[0]->getId();
+
+
 
                 $allIdWithoutItemId = [];
                 $selectedId=[];

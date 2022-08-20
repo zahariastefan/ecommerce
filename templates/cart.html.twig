@@ -8,7 +8,7 @@
                     <h2 class="mb-4">My Cart</h2>
                     <div class="orders_all d-grid col-9">
                         {% for index, product in products %}
-                            <div class="order_body_cart d-inline-flex">
+                            <div class="order_body_cart{{ index}} order_body_cart d-inline-flex">
                                 <p class="cancel_all_order_cart"><i class="fa-solid fa-x"></i></p>
 
                                 <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}"
@@ -37,7 +37,7 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <a href="{{ path('app_cart') }}" class="details_button">Details</a>
+                    <a href="{{ path('app_cart') }}" class="details_button">Go To Cart</a>
                     <div class="price_total col-3 fill_price_total">
                         <p class="summary_text">Summery :</p>
                         <p class="cost_products">Cost of products - shipping cost next step</p>
@@ -208,32 +208,32 @@
         var second_div_cart1, initialValue;
         $('div[class^=second_div_cart] input').on('focusin', (e) => {
             second_div_cart1 = $(e.currentTarget).parent().attr('class');
-            initialValue = $('.' + second_div_cart1 + '  input').val();
+            initialValue = parseInt($('.' + second_div_cart1 + '  input').val());
         });
         $('div[class^=second_div_cart] input').on('change', (e) => {
-            var items_number = $('.items_number').text();
+            var items_number = parseInt($('.items_number').text());
             var second_div_cart = $(e.currentTarget).parent().attr('class');
             var oneItemDiv = $(e.currentTarget).parent().parent().attr('class');
             var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
-            var finalValue = $('.' + second_div_cart + '  input').val();
+            var finalValue = parseInt($('.' + second_div_cart + '  input').val());
             if (finalValue > 0) { //that mean is less
-                if (parseInt(initialValue) > parseInt(finalValue)) { //that mean is less
-                    var delta = parseInt(initialValue) - parseInt(finalValue);
+                if ((initialValue) > (finalValue)) { //that mean is less
+                    var delta = (initialValue - finalValue);
                     var result = 0;
                     var path2 = '{{ path('app_remove_cart') }}';
                     var fullUrl = window.location.origin + path2;
-                } else if (parseInt(finalValue) > parseInt(initialValue)) { //that mean add
-                    delta = parseInt(finalValue) - parseInt(initialValue);
+                } else if ((finalValue) > (initialValue)) { //that mean add
+                    delta = (finalValue - initialValue);
                     result = 1;
                     var path = '{{ path('app_add_cart') }}';
                     fullUrl = window.location.origin + path;
                 }
             }
             getTotal();
-            if (parseInt(finalValue) === 0) {
+            if ((finalValue) === 0) {
                 var path3 = '{{ path('app_remove_cart') }}';
                 fullUrl = window.location.origin + path3;
-                delta = parseInt(initialValue);
+                delta = (initialValue);
             }
             $.ajax({
                 type: "POST",
@@ -244,17 +244,17 @@
                     quantity: delta
                 },
                 complete: function (data) {
-                    if (parseInt(finalValue) === 0) {
+                    if ((finalValue) === 0) {
                         location.reload();
                     }
                         if (result === 0) {
-                            $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(finalValue) - parseInt(delta)) + '}');
-                            $('.items_number').text(parseInt(items_number) - parseInt(delta));
+                            $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + ((finalValue) - (delta)) + '}');
+                            $('.items_number').text((items_number) - (delta));
 
                         }
                     if (result === 1) {
-                        $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(finalValue) + parseInt(delta)) + '}');
-                        $('.items_number').text(parseInt(items_number) + parseInt(delta));
+                        $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + ((finalValue) + (delta)) + '}');
+                        $('.items_number').text((items_number) + (delta));
 
                     }
 
