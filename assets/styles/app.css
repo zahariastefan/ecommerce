@@ -389,7 +389,7 @@ button{
 }
 
 .status_order{
-    color: #11B2F8;
+    color: #3d8b21;
     font-weight: 900;
 
 }
@@ -771,7 +771,7 @@ input[type=number] {
 .fa-cart-shopping{
     margin:11px;
     font-size: 20px;
-    color: blue;
+    color: #3d8b21;
 }
 
 .content_cart{
@@ -942,13 +942,15 @@ body:not(body.cart_page) .content_cart:before {
     height: 29px;
     width: 29px;
     transform: rotate(45deg);
-    right: 168px;
+    right: 90px;
     top: -6px;
     background: white;
     border-left: 1px solid #dcdcdc;
     border-top: 1px solid #dcdcdc;
 }
-
+.content_cart.before:before{
+    right:168px !important;
+}
 body:not(body.cart_page) .details_button{
     padding-left: 10px;
     padding-right: 10px;
