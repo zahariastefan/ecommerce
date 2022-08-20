@@ -29,6 +29,7 @@
     {% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-1">
     <div class="container-fluid justify-content-center">
         <a class="navbar-brand" href="{{ path('app_homepage') }}">
@@ -37,10 +38,11 @@
         </a>
         <div class="collapse navbar-collapse " id="navbar-collapsable">
             <div class="d-inline-flex ">
-                <i class="fa-solid fa-cart-shopping"></i>
                 <div class="content_cart"></div>
                 <p class="items_number m-2"></p>
             </div>
+            <i class="fa-solid fa-cart-shopping"></i>
+
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <div class="dropdown">
                     <button
@@ -96,7 +98,21 @@
         {% endif %}
     </ul>
 </nav>
-
+<div class="modal modal_cookie" tabindex="-1" role="dialog" id="cookie_div">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="{{ absolute_url(asset('cookie.png')) }}" alt="Cookie" width="150" height="100">
+                <h2>We use cookies</h2>
+                <p>This website uses cookies to ensure you get the beste experience on our website.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary">Accept</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Deny</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% for flash in app.flashes('success') %}
     <div class="alert alert-success">
@@ -116,6 +132,19 @@
 
 
 <script>
+    $(document).ready(()=>{
+        if(parseInt($('.items_number').text()) >= 100){
+            $('.items_number').css({
+                'padding-top': "2px",
+                'padding-right': "20px",
+                'font-size': "10px",
+                "height":"20px"
+            });
+        }else if(parseInt($('.items_number').text()) < 10){
+            $('.items_number').css('text-align','center');
+            // alert('here');
+        }
+    });
     $('.details_button').hide();
     if ((window.location.href).includes('/cart')) {
         $('html').hide();
@@ -129,6 +158,17 @@
             var itemNr = parseInt(data.responseText);
             $('.items_number').text(itemNr);
             var items_number = $('.items_number').text();
+                if(parseInt($('.items_number').text()) >= 100){
+                    $('.items_number').css({
+                        'padding-top': "2px",
+                        'padding-right': "20px",
+                        'font-size': "10px",
+                        "height":"20px"
+                    });
+                }else if(parseInt($('.items_number').text()) < 10){
+                    $('.items_number').css('text-align','center');
+                    // alert('here');
+                }
             $('html').show();
         }
     });
@@ -137,25 +177,22 @@
 
         if (typeof $.cookie('cookie') !== 'undefined') {
             if (parseInt($.cookie('cookie')) === 0) {
-                $('body').append('<div class="cookie_accept d-grid">' +
-                    'do you accept cookie?' +
-                    '<div class="d-inline-flex justify-content-center">' +
-                    '<button class="accept">Accept</button>' +
-                    '<button class="refuse">Refuse</button>' +
-                    '</div>' +
-                    '</div>');
+                $('#cookie_div').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#cookie_div').modal('show');
             }
 
-            $('.cookie_accept button.refuse').click(() => {
+            $('.modal_cookie .btn-secondary').click(() => {
                 if (parseInt($.cookie('cookie')) === 0) {
-                    window.location.replace(window.location.origin);
-                    // $.removeCookie('product_item');
+                    location.reload();
                 }
             });
-            $('.cookie_accept button.accept').click(() => {
+            $('.modal_cookie .btn-primary').click(() => {
                 if (parseInt($.cookie('cookie')) === 0) {
                     $.cookie('cookie', 1);
-                    window.location.replace(window.location.origin);
+                    location.reload();
                 }
             });
 
@@ -175,7 +212,6 @@
             var timePassed = data.responseJSON;
             var path = '{{ path('app_logout') }}';
             var fullUrl = window.location.origin + path;
-            console.log(timePassed)
             if (typeof timePassed != 'undefined') {
                 if (typeof timePassed['timePassed'] != 'undefined' && timePassed['timePassed'] === true) {
                     $.ajax({
@@ -215,7 +251,19 @@
                     complete: function (data) {
                         var all_html = data.responseText;
                         var htmlParse = $.parseHTML(all_html);
-                        $('.content_cart').html(htmlParse[23]);
+                        if(parseInt($('.items_number').text()) !== 0){
+                            console.log(htmlParse);
+                            $('.content_cart').html(htmlParse[25]);
+
+                        }else{
+                            $('.content_cart').html('<div class="no_product_cart_preview">No products on cart' +
+                                '<br><br>' +
+                                '<a href="{{ path('app_cart') }}" class="details_button">Go To Cart</a>' +
+                                '</div>' +
+                                '');
+
+                        }
+                        // $('.content_cart').html(htmlParse[23]);
                         $('.content_cart').addClass('clicked');
                         var second_div_cart1, initialValue;
                         $('div[class^=second_div_cart] input').on('focusin', (e) => {
@@ -344,6 +392,45 @@
                 $('.' + second_div_cart + '  input').val(parseInt(finalValue) + 1);
                 $('.' + oneItemDiv + '  .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(finalValue) + 1) + '}');
                 $('.items_number').text(parseInt(items_number) + 1);
+                if(parseInt($('.items_number').text()) >= 100){
+                    $(".items_number").animate({
+                        width: '25px',
+                        height: '25px',
+                        'font-size': '18px',
+                        left: '56px'
+                    }, 100, function(){
+                        $(".items_number").animate({
+                            width: "18px",
+                            height: "20px",
+                            left: '52',
+                            'padding-top': "2px",
+                            'padding-right': "20px",
+                            'font-size': "10px",
+                        }, 100);
+                    });
+                }else{
+                    $(".items_number").animate({
+                        width: '25px',
+                        height: '25px',
+                        'font-size': '18px',
+                        left: '56px'
+                    }, 100, function(){
+                        $(".items_number").animate({
+                            width: "18px",
+                            height: "18px",
+                            left: '52',
+                            'padding-top': "0px",
+                            'padding-right': "0px",
+                            'font-size': "13px",
+                        }, 100);
+                    });
+                }
+                if(parseInt($('.items_number').text()) >= 10 && parseInt($('.items_number').text()) < 100){
+                    $('.items_number').css('text-align','left');
+                }
+                if(parseInt($('.items_number').text()) < 10){
+                    $('.items_number').css('text-align','center');
+                }
                 getTotal();
             }
         });
@@ -373,9 +460,65 @@
                 $('.' + second_div_cart + ' input').val(parseInt(finalValue) - 1);
                 $('.' + oneItemDiv + ' .value_to_fill').val('{"item":"' + oneItemName + '","quantity":' + (parseInt(finalValue) - 1) + '}');
                 getTotal();
+                if(parseInt($('.items_number').text()) >= 100){
+                    $(".items_number").animate({
+                        width: '25px',
+                        height: '25px',
+                        'font-size': '18px',
+                        left: '56px'
+                    }, 100, function(){
+                        $(".items_number").animate({
+                            width: "18px",
+                            height: "20px",
+                            left: '52',
+                            'padding-top': "2px",
+                            'padding-right': "20px",
+                            'font-size': "10px",
+                        }, 100);
+                    });
+                }else{
+                    $(".items_number").animate({
+                        width: '25px',
+                        height: '25px',
+                        'font-size': '18px',
+                        left: '56px'
+                    }, 100, function(){
+                        $(".items_number").animate({
+                            width: "18px",
+                            height: "18px",
+                            left: '52',
+                            'padding-top': "0px",
+                            'padding-right': "0px",
+                            'font-size': "13px",
+                        }, 100);
+                    });
+                }
+                if(parseInt($('.items_number').text()) >= 10 && parseInt($('.items_number').text()) < 100){
+                    $('.items_number').css('text-align','left');
+                }
+                if(parseInt($('.items_number').text()) < 10){
+                    $('.items_number').css('text-align','center');
+                }
             }
         });
     }
+
+
+    $('.col_design').mouseover((e) => {
+        var id = ($(e.currentTarget).attr('id'));
+        $('#' + id + ' .title_product').css({
+            'color': 'darkblue',
+            'text-decoration': 'underline',
+        });
+    });
+
+    $('.col_design').mouseleave((e) => {
+        var id = ($(e.currentTarget).attr('id'));
+        $('#' + id + ' .title_product').css({
+            'color': 'black',
+            'text-decoration': 'none',
+        });
+    });
 
 
 </script>

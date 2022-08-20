@@ -74,6 +74,45 @@
                     quantity:quantity
                 },
                 complete: function (data) {
+                    if(parseInt($('.items_number').text()) >= 100){
+                        $(".items_number").animate({
+                            width: '25px',
+                            height: '25px',
+                            'font-size': '18px',
+                            left: '56px'
+                        }, 100, function(){
+                            $(".items_number").animate({
+                                width: "18px",
+                                height: "20px",
+                                left: '52',
+                                'padding-top': "2px",
+                                'padding-right': "20px",
+                                'font-size': "10px",
+                            }, 100);
+                        });
+                    }else{
+                        $(".items_number").animate({
+                            width: '25px',
+                            height: '25px',
+                            'font-size': '18px',
+                            left: '56px'
+                        }, 100, function(){
+                            $(".items_number").animate({
+                                width: "18px",
+                                height: "18px",
+                                left: '52',
+                                'padding-top': "0px",
+                                'padding-right': "0px",
+                                'font-size': "13px",
+                            }, 100);
+                        });
+                    }
+                    if(parseInt($('.items_number').text()) >= 10 && parseInt($('.items_number').text()) < 100){
+                        $('.items_number').css('text-align','left');
+                    }
+                    if(parseInt($('.items_number').text()) < 10){
+                        $('.items_number').css('text-align','center');
+                    }
                     // location.reload();
                 }
             });
