@@ -2,7 +2,7 @@
 {% block body_class %}cart_page{% endblock %}
 {% block body %}
     <div class="container container_cart justify-content-center">
-        {% if products|length  > 0 %}
+        {% if products|length  >= 1 %}
             <form action="{{ path('app_thanks') }}" class="d-grid form_checkout ">
                 <div class="container_orders_cart row">
                     <h2 class="mb-4">My Cart</h2>
@@ -217,19 +217,18 @@
             var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
             var finalValue = $('.' + second_div_cart + '  input').val();
             if (finalValue > 0) { //that mean is less
-                if (initialValue > finalValue) { //that mean is less
-                    var delta = initialValue - finalValue;
+                if (parseInt(initialValue) > parseInt(finalValue)) { //that mean is less
+                    var delta = parseInt(initialValue) - parseInt(finalValue);
                     var result = 0;
                     var path2 = '{{ path('app_remove_cart') }}';
                     var fullUrl = window.location.origin + path2;
-                } else if (finalValue > initialValue) { //that mean add
-                    delta = finalValue - initialValue;
+                } else if (parseInt(finalValue) > parseInt(initialValue)) { //that mean add
+                    delta = parseInt(finalValue) - parseInt(initialValue);
                     result = 1;
                     var path = '{{ path('app_add_cart') }}';
                     fullUrl = window.location.origin + path;
                 }
             }
-            var x = 1;
             getTotal();
             if (parseInt(finalValue) === 0) {
                 var path3 = '{{ path('app_remove_cart') }}';

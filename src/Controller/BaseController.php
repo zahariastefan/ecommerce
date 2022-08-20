@@ -13,9 +13,10 @@ class BaseController extends AbstractController
     #[Route('/base', name: 'app_base')]
     public function index(): Response
     {
-        $timeLoggedIn = $_SESSION['_sf2_meta']['c'];
 
         if(!empty($this->getUser())){
+            $timeLoggedIn = $_SESSION['_sf2_meta']['c'];
+
             if((time()) >= ($timeLoggedIn+86400)){
                 $timePassed = true;
             }else{

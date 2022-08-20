@@ -60,7 +60,7 @@
 
     <script>
         $('.box_content_main_other').hide();
-        $('.add_to_cart_button_pr_page').click(()=>{
+        $('.add_to_cart_button_pr_page').click((e)=>{
             var items_number = $('.items_number').text();
             var quantity = parseInt($('.order_quantity_cart_pr_page').val());
             $('.items_number').text(parseInt(items_number) + quantity);
@@ -70,6 +70,7 @@
                 type: "POST",
                 url: fullUrl,
                 data: {
+                    itemId:{{ product.id }},
                     quantity:quantity
                 },
                 complete: function (data) {

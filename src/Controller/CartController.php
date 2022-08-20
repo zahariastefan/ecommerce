@@ -113,16 +113,15 @@ class CartController extends AbstractController
                 }
                 $listOfTitles = $formattedArrayProductsAndQuantities;
                 $countedList = array_count_values($listOfTitles);
-
+                ksort($countedList);
                 $withQuantityProducts=[];
-                foreach ($countedList as $product => $quantity) {
+                foreach ($countedList as $product => $quantityC) {
                     $productC = $productRepository->findBy([
                         'title' => $product
                     ])[0];
-                    $productC->quantity = $quantity;
+                    $productC->quantity = $quantityC;
                     $withQuantityProducts[]=$productC;
                 }
-
                 return $this->render('cart.html.twig', [
                     'products' => $withQuantityProducts
                 ]);
@@ -250,7 +249,8 @@ class CartController extends AbstractController
                 'id' => $itemId
             ]);
 
-        } else {
+        }
+        else {
             $productObject = $productRepository->findBy([
                 'title' => $itemId
             ]);
@@ -272,7 +272,8 @@ class CartController extends AbstractController
 
             $entityManager->flush();
 //            dd($cart);
-        } else {//if not logged in add to cookie!
+        }
+        else {//if not logged in add to cookie!
             $getIDFromProdObj =[];
             if ((!preg_match('~[0-9]+~', $itemId))) {
                 $product = $productRepository->findBy([
@@ -286,13 +287,20 @@ class CartController extends AbstractController
             }else{
                 $products = $_COOKIE['product_item'];
                 $products = json_decode($products, true);
+                if(count($products['productsId']) == 0 ){
+                    unset($_COOKIE['product_item']);
+                    setcookie('product_item', '', time() - 3600);
+                    setcookie('product_item','{"productsId":["'.$itemId.'"]}');
+                }
                 $newListCookie['productsId'] = [];
                 if(gettype($products['productsId']) != 'integer'){
                     if(count($products['productsId']) > 0){
                         foreach ($products as $product) {
                             $newListCookie['productsId']=$product;
                         }
-                        $newListCookie['productsId'][]=$itemId;
+                        for ($x=0;$x<$quantity;$x++) {
+                            $newListCookie['productsId'][] = $itemId;
+                        }
                     }
                 }
                 setcookie('product_item',json_encode($newListCookie));
@@ -319,9 +327,6 @@ class CartController extends AbstractController
             ]);
         }
         if ($this->getUser()) {
-//            $productObject = $productRepository->findBy([
-//                'title' => $itemId
-//            ]);
             $user = $userRepository->findBy([
                 'email' => $this->getUser()->getUserIdentifier()
             ])[0];
@@ -337,34 +342,39 @@ class CartController extends AbstractController
                 $x++;
                 if($x == $quantity) break;
             }
-//            dd($cart);
             $entityManager->flush();
         }else{
-            $productsId = json_decode($_COOKIE['product_item'],true);
-            $idFromGET = $productObject[0]->getId();
+            if(isset($_COOKIE['product_item'])){
+                $productsId = json_decode($_COOKIE['product_item'],true);
+                $idFromGET = $productObject[0]->getId();
 
-            $allIdWithoutItemId = [];
-            $selectedId=[];
-            foreach ($productsId['productsId'] as $idCookie) {
-                if($idFromGET == $idCookie){
-                    $selectedId[] = $idCookie;
-                }else{
-                    $allIdWithoutItemId[]=$idCookie;
+                $allIdWithoutItemId = [];
+                $selectedId=[];
+                foreach ($productsId['productsId'] as $key =>$idCookie) {
+                    if($idFromGET == $idCookie[0]){
+                        $selectedId[] = $idCookie;
+                    }else{
+                        $allIdWithoutItemId[]=$idCookie;
+                    }
                 }
-            }
 
-            if(count($selectedId) > 0){
-                unset($selectedId[array_rand($selectedId)]);
+                if(count($selectedId) > 1){
+                    for ($x=0;$x<$quantity;$x++) {
+                        unset($selectedId[$x]);
+                    }
+                }
+                else{
+                    unset($selectedId[0]);
+                }
+
+                foreach ($selectedId as $item) {
+                    $allIdWithoutItemId[] = $item;
+                }
+                $productsId['productsId']= $allIdWithoutItemId;
+                setcookie('product_item', json_encode($productsId));
             }else{
-                unset($selectedId[0]);
+                setcookie('product_item', '[]');
             }
-
-            foreach ($selectedId as $item) {
-                $allIdWithoutItemId[] = $item;
-            }
-            $productsId['productsId']= $allIdWithoutItemId;
-
-            setcookie('product_item', json_encode($productsId));
         }
 
         return new JsonResponse(['hello' => 'world']);

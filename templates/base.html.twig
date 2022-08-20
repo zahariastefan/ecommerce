@@ -220,14 +220,14 @@
                         var second_div_cart1, initialValue;
                         $('div[class^=second_div_cart] input').on('focusin', (e) => {
                             second_div_cart1 = $(e.currentTarget).parent().attr('class');
-                            initialValue = $('.' + second_div_cart1 + '  input').val();
+                            initialValue = parseInt($('.' + second_div_cart1 + '  input').val());
                         });
                         $('div[class^=second_div_cart] input').on('change', (e) => {
                             var items_number = $('.items_number').text();
                             var second_div_cart = $(e.currentTarget).parent().attr('class');
                             var oneItemDiv = $(e.currentTarget).parent().parent().attr('class');
                             var oneItemName = $('.' + oneItemDiv + '  p.oneItemTitle').text();
-                            var finalValue = $('.' + second_div_cart + '  input').val();
+                            var finalValue = parseInt($('.' + second_div_cart + '  input').val());
                             if (finalValue > 0) { //that mean is less
                                 if (initialValue > finalValue) { //that mean is less
                                     var delta = initialValue - finalValue;
