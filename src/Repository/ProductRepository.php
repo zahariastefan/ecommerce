@@ -71,10 +71,10 @@ class ProductRepository extends ServiceEntityRepository
             $queryBuilder->orderBy($orderBy, $secParam);
         }
 
-        $queryBuilder->leftJoin('p.comment', 'comment')
-            ->innerJoin('comment.user', 'user')
-            ->addSelect(['comment','user'])
-        ;
+//        $queryBuilder->leftJoin('p.comment', 'comment')
+//            ->innerJoin('comment.user', 'user')
+//            ->addSelect(['comment','user'])
+//        ;
         return $queryBuilder;
     }
 

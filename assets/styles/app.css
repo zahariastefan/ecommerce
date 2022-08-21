@@ -341,7 +341,11 @@ footer{
 
 .title_product_page{
     font-size: 20px;
-    line-height: 12px;
+    /*line-height: 12px;*/
+
+}
+img{
+    object-fit: cover;
 
 }
 
@@ -465,7 +469,7 @@ div[class^='refund_div']{
     width: 120px;
 }
 .order_body_cart{
-    height: 200px;
+    height: auto;
     padding: 40px;
     background: white;
     border-radius: 10px;
@@ -554,7 +558,7 @@ p[class^=order_quantity_cart]{
     display: grid;
     float: right;
     position: relative;
-    top: -47px;
+    top: 0;
     text-align: center;
 }
 

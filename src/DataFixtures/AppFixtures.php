@@ -22,10 +22,11 @@ class AppFixtures extends Fixture
             'roles'=>['ROLE_ADMIN', 'ROLE_USER'],
             'is_verified' => 1
         ]);
+        UserFactory::createMany(20);
 
-        self::factoryUserProductComment($manager, 9);
+//        self::factoryUserProductComment($manager, 9);
 
-        $manager->flush();
+//        $manager->flush();
     }
 
     public function factoryUserProductComment($manager, $length)

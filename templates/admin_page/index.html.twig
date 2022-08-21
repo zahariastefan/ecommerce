@@ -3,121 +3,111 @@
 {% block title %}Hello AdminPageController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper {
-        margin: 1em auto;
-        max-width: 800px;
-        width: 95%;
-        font: 18px/1.5 sans-serif;
-    }
+{% if is_granted('ROLE_ADMIN') %}
 
-    .example-wrapper code {
-        background: #F5F5F5;
-        padding: 2px 6px;
-    }
-</style>
 
-<div class="example-wrapper">
-
-    <form action="{{ path('admin_dashboard') }}" method="GET">
-        <input type="text" name="searchTerm" placeholder="Search..." value="{{ app.request.query.get('searchTerm') }}">
-        <input type="hidden" name="category" placeholder="Search..." value="{{ app.request.query.get('category') }}">
-        <input type="hidden" name="orderBy" placeholder="Search..." value="{{ app.request.query.get('orderBy') }}">
-    </form>
-    <div class="d-inline-flex">
-        <div class="dropdown m-3">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Category
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item dropdown-item_newest"
-                   href="{{ path('admin_dashboard', { category : 1 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">To
-                    Delivery</a>
-                <a class="dropdown-item dropdown-item_low_price"
-                   href="{{ path('admin_dashboard', { category : 2 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">Delivered</a>
-                <a class="dropdown-item dropdown-item_high_price"
-                   href="{{ path('admin_dashboard', { category : 3 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">Refunded</a>
-                <a class="dropdown-item dropdown-item_high_price"
-                   href="{{ path('admin_dashboard', { category : 4 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">Canceled</a>
-            </div>
-        </div>
-        <div class="dropdown m-3">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort By
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item dropdown-item_newest"
-                   href="{{ path('admin_dashboard', { orderBy : 'DESC', category : app.request.query.get('category') , searchTerm : app.request.query.get('searchTerm')}) }}">Newest</a>
-                <a class="dropdown-item dropdown-item_newest"
-                   href="{{ path('admin_dashboard', { orderBy : 'ASC', category : app.request.query.get('category'), searchTerm : app.request.query.get('searchTerm') }) }}">Oldest</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row profile_row_body">
-
-        {% if orderedItems is empty %}
-        {% else %}
-        <div class="col refunded_orders">
-{#            <p class="type_of_orders"></p>#}
-            {% set index = 0 %}
-            {% for date,orderedItem in orderedItems %}
-                <div class="order_card_admin">
-                    <div class="order_head">
-                        <p class="order_number">Order nr. :{{ (orderedItem|first.0.orderNr) }}</p>
-                        <p class="date_orders">Date of order: {{ date }}</p>
-                        <p class="address_order">Address Delivery: {{ orderedItem|first.0.address }}</p>
-                    </div>
-                    <div class="order_body">
-                        {% for  email, orderedItemSingle in orderedItem %}
-                            <div class="{{ email }}" >
-                                <p class="email_order_admin">Email User:<span class="email_user">{{ email }}</span></p>
-
-                                {% for  orderedItem in orderedItemSingle %}
-                                    <div id="orders{{ index }}" style="border-bottom: 1px solid #cecece;padding-bottom:20px; margin-bottom: 20px;">
-                                        <p class="product_title">Product Title: {{ orderedItem.productTitle }}</p>
-                                        <p class="quantity_items">Quantity: {{ orderedItem.quantity }}</p>
-                                        <p class="phone_order">Phone: +40{{ orderedItem.phone }}</p>
-                                        <p class="price_order">Amount : {{ orderedItem.price * orderedItem.quantity }} $</p>
-
-                                        <p class="status_order">
-                                            Status: {% if orderedItem.status == 1 %}
-                                                Not Delivered
-                                            {% elseif orderedItem.status == 2 %}
-                                                Delivered
-                                            {% elseif orderedItem.status == 3 %}
-                                                Refunded
-                                            {% elseif orderedItem.status == 4 %}
-                                                Canceled
-                                            {% endif %}
-                                        </p>
-
-                                        <input type="hidden" class="orders{{ index }}"
-                                               value="{{ orderedItem.productId }}">
-
-                                        {% if app.request.query.get('category') != 2 %}
-                                            <button class="deliver_order">One Delivered</button>
-                                            <button class="deliver_all_order">All Delivered</button><br>
-                                        {% endif %}
-                                        {% if app.request.query.get('category') != 3 %}
-                                            <button class="refund_order">Refund One</button>
-                                            <button class="refund_all_order">Refund All</button><br>
-                                        {% endif %}
-                                        {% if app.request.query.get('category') != 4 %}
-                                            <button class="cancel_order">Cancel One</button>
-                                            <button class="cancel_all_order">Cancel All</button><br>
-                                        {% endif %}
-                                    </div>
-                                    {% set index = index + 1 %}
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    </div>
+    <div class="container pt-5">
+        <form action="{{ path('admin_dashboard') }}" method="GET">
+            <input type="text" name="searchTerm" placeholder="Search..." value="{{ app.request.query.get('searchTerm') }}">
+            <input type="hidden" name="category" placeholder="Search..." value="{{ app.request.query.get('category') }}">
+            <input type="hidden" name="orderBy" placeholder="Search..." value="{{ app.request.query.get('orderBy') }}">
+        </form>
+        <div class="d-inline-flex">
+            <div class="dropdown m-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item dropdown-item_newest"
+                       href="{{ path('admin_dashboard', { category : 1 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">To
+                        Delivery</a>
+                    <a class="dropdown-item dropdown-item_low_price"
+                       href="{{ path('admin_dashboard', { category : 2 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">Delivered</a>
+                    <a class="dropdown-item dropdown-item_high_price"
+                       href="{{ path('admin_dashboard', { category : 3 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">Refunded</a>
+                    <a class="dropdown-item dropdown-item_high_price"
+                       href="{{ path('admin_dashboard', { category : 4 ,orderBy : app.request.query.get('orderBy'), searchTerm : app.request.query.get('searchTerm')}) }}">Canceled</a>
                 </div>
-            {% endfor %}
-            {% endif %}
+            </div>
+            <div class="dropdown m-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item dropdown-item_newest"
+                       href="{{ path('admin_dashboard', { orderBy : 'DESC', category : app.request.query.get('category') , searchTerm : app.request.query.get('searchTerm')}) }}">Newest</a>
+                    <a class="dropdown-item dropdown-item_newest"
+                       href="{{ path('admin_dashboard', { orderBy : 'ASC', category : app.request.query.get('category'), searchTerm : app.request.query.get('searchTerm') }) }}">Oldest</a>
+                </div>
+            </div>
+        </div>
+        <div class="row profile_row_body">
+
+            {% if orderedItems is empty %}
+            {% else %}
+            <div class="col refunded_orders">
+                {#            <p class="type_of_orders"></p> #}
+                {% set index = 0 %}
+                {% for date,orderedItem in orderedItems %}
+                    <div class="order_card_admin">
+                        <div class="order_head">
+                            <p class="order_number">Order nr. :{{ (orderedItem|first.0.orderNr) }}</p>
+                            <p class="date_orders">Date of order: {{ date }}</p>
+                            <p class="address_order">Address Delivery: {{ orderedItem|first.0.address }}</p>
+                        </div>
+                        <div class="order_body">
+                            {% for  email, orderedItemSingle in orderedItem %}
+                                <div class="{{ email }}">
+                                    <p class="email_order_admin">Email User:<span class="email_user">{{ email }}</span></p>
+
+                                    {% for  orderedItem in orderedItemSingle %}
+                                        <div id="orders{{ index }}"
+                                             style="border-bottom: 1px solid #cecece;padding-bottom:20px; margin-bottom: 20px;">
+                                            <p class="product_title">Product Title: {{ orderedItem.productTitle }}</p>
+                                            <p class="quantity_items">Quantity: {{ orderedItem.quantity }}</p>
+                                            <p class="phone_order">Phone: +40{{ orderedItem.phone }}</p>
+                                            <p class="price_order">Amount : {{ orderedItem.price * orderedItem.quantity }}
+                                                $</p>
+
+                                            <p class="status_order">
+                                                Status: {% if orderedItem.status == 1 %}
+                                                    Not Delivered
+                                                {% elseif orderedItem.status == 2 %}
+                                                    Delivered
+                                                {% elseif orderedItem.status == 3 %}
+                                                    Refunded
+                                                {% elseif orderedItem.status == 4 %}
+                                                    Canceled
+                                                {% endif %}
+                                            </p>
+
+                                            <input type="hidden" class="orders{{ index }}"
+                                                   value="{{ orderedItem.productId }}">
+
+                                            {% if app.request.query.get('category') != 2 %}
+                                                <button class="deliver_order">One Delivered</button>
+                                                <button class="deliver_all_order">All Delivered</button><br>
+                                            {% endif %}
+                                            {% if app.request.query.get('category') != 3 %}
+                                                <button class="refund_order">Refund One</button>
+                                                <button class="refund_all_order">Refund All</button><br>
+                                            {% endif %}
+                                            {% if app.request.query.get('category') != 4 %}
+                                                <button class="cancel_order">Cancel One</button>
+                                                <button class="cancel_all_order">Cancel All</button><br>
+                                            {% endif %}
+                                        </div>
+                                        {% set index = index + 1 %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 
@@ -184,8 +174,6 @@
             });
 
         });
-
-
         $('.deliver_all_order').click((e) => {
             var path = '{{ path('app_change_status') }}';
             var fullUrl = window.location.origin + path;
@@ -251,5 +239,9 @@
             });
 
         });
+
+
     </script>
+
+    {% endif %}
     {% endblock %}

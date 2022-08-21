@@ -25,6 +25,7 @@
                                 </div>
                                 <div class="order_body">
                                     {% for orderedItemSingle in orderedItemArray2 %}
+                                        <img src="{{ absolute_url(asset(orderedItemSingle.product.urlImage.url)) }}" class="mb-4" width="100" height="100">
                                         <div id="refundO_{{ orderedItemSingle.id }}">
                                             <p class="product_title">Product Title: {{ orderedItemSingle.product.title }}</p>
                                             <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
@@ -67,6 +68,7 @@
                                 </div>
                                 <div class="order_body">
                                     {% for orderedItemSingle in orderedItemArray %}
+                                        <img src="{{ absolute_url(asset(orderedItemSingle.product.urlImage.url)) }}" class="mb-4" width="100" height="100">
                                         <div id="refund_{{ orderedItemSingle.id }}">
                                             <p class="product_title">Product
                                                 Title: {{ orderedItemSingle.product.title }}</p>
@@ -118,6 +120,7 @@
 
                                     <div class="order_body">
                                         {% for orderedItemSingle in orderedItemArray %}
+                                            <img src="{{ absolute_url(asset(orderedItemSingle.product.urlImage.url)) }}" class="mb-4" width="100" height="100">
                                             <p class="product_title">Product
                                                 Title: {{ orderedItemArray.0.product.title }}</p>
                                             <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
@@ -158,6 +161,7 @@
                         </div>
                     <div class="order_body">
                     {% for orderedItemSingle in orderedItemArray %}
+                        <img src="{{ absolute_url(asset(orderedItemSingle.product.urlImage.url)) }}" class="mb-4" width="100" height="100">
                         <p class="product_title">Product Title: {{ orderedItemSingle.product.title }}</p>
                         <p class="quantity_items">Quantity: {{ orderedItemSingle.quantity }}</p>
                         <p class="phone_order">Phone: +40{{ orderedItemSingle.phone }}</p>

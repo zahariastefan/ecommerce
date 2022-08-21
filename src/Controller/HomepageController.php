@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +20,7 @@ class HomepageController extends AbstractController
     #[Route('/{page<\d+>}', name:'app_homepage')]
     public function homepage(ProductRepository $productRepository, Request $request, int $page = 1)
     {
+
         $orderBy = $request->query->get('orderBy');
 
         $search = $request->query->get('searchTerm');
@@ -25,6 +28,7 @@ class HomepageController extends AbstractController
         $alertDisabled2fa = $request->query->get('alertDisabled2fa');
         if(!isset($alertDisabled2fa)) $alertDisabled2fa =  false;
 
+//        dd($queryBuilder->getQuery()->getResult());
         $pagerfanta = new Pagerfanta(
             new QueryAdapter($queryBuilder)
         );

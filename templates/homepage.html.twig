@@ -30,7 +30,8 @@
         <div class="row">
             {% for index, product in pager %}
                     <div class="col col_design" id="col_design{{ index }}">
-                        <img src="{{ absolute_url(asset('tablou.jpg')) }}" class="img_product">
+{#                        {{ dump(product.urlImage.url) }}#}
+                        <img src="{{ absolute_url(asset(product.urlImage.url)) }}" class="img_product">
                         <div class="d-grid">
                             <a class="title_product" href="{{ path('app_product_page', { slug: product.slug } ) }}">{{ product.title }} </a>
                             <strong>Description:</strong>

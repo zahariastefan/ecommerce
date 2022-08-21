@@ -13,7 +13,7 @@
                                 <p class="cancel_all_order_cart"><i class="fa-solid fa-x"></i></p>
 
                                 <a href="{{ path('app_product_page',{slug:product.slug}) }}" class="img_a_href">
-                                    <img src="{{ absolute_url(asset('tablou.jpg')) }}" alt="{{ product.title }}"
+                                    <img src="{{ absolute_url(asset(product.urlImage.url)) }}" alt="{{ product.title }}"
                                          width="160px" height="120px">
                                 </a>
 
@@ -99,7 +99,7 @@
                         <div class="row">
                             <div class="col">
                                 <p>Choose payment type</p>
-                                <label for="offline_payment" class="d-inline-flex">Offline Pay - 15 RON
+                                <label for="offline_payment" class="d-inline-flex">Offline Pay - 4 $
                                     <input type="checkbox" name="offline_payment" class="offline_payment_input"
                                            required>
                                 </label>
@@ -189,13 +189,13 @@
                 var actualPrice = $('.second_price .price_total_p').text();
                 var previousPrice = $('.price_total.fill_price_total .price_total_p').text();
                 if (parseInt(actualPrice) === (parseInt(previousPrice))) {
-                    $('.second_price .price_total_p').text(parseInt(actualPrice) + 15);
+                    $('.second_price .price_total_p').text(parseInt(actualPrice) + 4);
                 }
             } else {
                 actualPrice = $('.second_price .price_total_p').text();
                 previousPrice = $('.price_total.fill_price_total .price_total_p').text();
-                if (parseInt(actualPrice) === (parseInt(previousPrice) + 15)) {
-                    $('.second_price .price_total_p').text(parseInt(actualPrice) - 15);
+                if (parseInt(actualPrice) === (parseInt(previousPrice) + 4)) {
+                    $('.second_price .price_total_p').text(parseInt(actualPrice) - 4);
                 }
             }
         });
