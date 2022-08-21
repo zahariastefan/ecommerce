@@ -291,7 +291,7 @@ footer{
     text-align: center;
     max-width: 260px;
     min-width: 260px;
-    max-height: 407px;
+    max-height: 460px;
     min-height: 390px;
     background: white;
     padding: 10px;
@@ -513,7 +513,7 @@ div[class^=oneItemDiv]{
 }
 
 .oneItemTitle{
-    font-size: 20px
+    font-size: 20px;
 }
 div[class^=second_div_cart] button {
     background-color:  unset !important;
@@ -923,6 +923,12 @@ body:not(body.cart_page) .total_single_product_price{
 }
 body:not(body.cart_page) .oneItemTitle{
     padding-left:10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 12rem;
 }
 
 body:not(body.cart_page) .product_price_div{
@@ -1048,7 +1054,7 @@ body:not(body.cart_page) .form_checkout {
 }
 .price_product{
     position: relative;
-    top: -18px;
+    top: 0;
     font-size: 30px;
     font-weight: 900;
 }
@@ -1167,4 +1173,8 @@ body.contacts_page{
 
 .jumbotron {
     padding-top: 9%;
+}
+
+.pagination{
+    margin-top: 150px;
 }

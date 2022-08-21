@@ -47,6 +47,9 @@ class Product
     #[ORM\Column]
     private ?int $price = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $other = null;
+
     public function __construct()
     {
         $this->comment = new ArrayCollection();
@@ -235,6 +238,18 @@ class Product
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getOther(): ?string
+    {
+        return $this->other;
+    }
+
+    public function setOther(?string $other): self
+    {
+        $this->other = $other;
 
         return $this;
     }

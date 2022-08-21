@@ -49,10 +49,14 @@
                 <div class="other_tab">Other</div>
             </div>
             <div class="box_content_main_description">
-                 {{ product.description }}
+                {% autoescape false %}
+                {{ product.description }}
+                {% endautoescape %}
             </div>
             <div class="box_content_main_other">
-                {{ product.description }}
+                {% autoescape false %}
+                {{ product.other }}
+                {% endautoescape %}
             </div>
 
         </div>

@@ -33,10 +33,12 @@
 {#                        {{ dump(product.urlImage.url) }}#}
                         <img src="{{ absolute_url(asset(product.urlImage.url)) }}" class="img_product">
                         <div class="d-grid">
-                            <a class="title_product" href="{{ path('app_product_page', { slug: product.slug } ) }}">{{ product.title }} </a>
-                            <strong>Description:</strong>
+                            <a class="title_product" href="{{ path('app_product_page', { slug: product.slug } ) }}">{{ product.title|length > 30 ? product.title|slice(0, 30) ~ '...' : product.title }} </a>
+                            <strong class="description_strong">Description:</strong>
                             <p class="descriptionHomePage">
-                                {{ product.description|length > 50 ? product.description|slice(0, 50) ~ '...' : product.description  }}
+                                {% autoescape false %}
+                                    {{ product.description|length > 30 ? product.description|slice(0, 30) ~ '...' : product.description  }}
+                                {% endautoescape %}
                             </p>
                             <p class="price_product">{{ product.price }} $</p>
                         </div>
